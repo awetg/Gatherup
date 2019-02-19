@@ -1,5 +1,7 @@
 {
   "name": "Gatherup",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
