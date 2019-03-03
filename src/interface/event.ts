@@ -3,7 +3,7 @@ export interface Event {
     filename: string;
     filesize: number;
     title: string;
-    description: EventDescribtion;
+    description: EventDescription;
     user_id: number;
     media_type: string;
     mime_type: string;
@@ -17,8 +17,8 @@ export interface EventUploadResponse {
     file_id: number;
 }
 
-export interface EventDescribtion {
-    category?: string;
+export interface EventDescription {
+    category?: string[];
     details?: string;
     time?: Date;
     location?: string;

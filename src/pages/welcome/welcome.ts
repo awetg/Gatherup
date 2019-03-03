@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { PageItem } from '../../interface/page';
-import { AuthProvider } from '../../providers/auth/auth';
-import { MainPage } from '..';
 import { EventProvider } from '../../providers/event/event';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the WelcomePage page.
@@ -21,17 +20,16 @@ export class WelcomePage {
 
   logInPage: PageItem = { title: 'LogIn', component: 'LoginPage' };
   signUpPage: PageItem = { title: 'SignUp', component: 'LoginPage' };
-  mainPage: PageItem = { title: '', component: MainPage };
 
-  userLoggedIn = false;
-
-  constructor(public navCtrl: NavController, public auth: AuthProvider, public eventProvider: EventProvider) {
-    this.userLoggedIn = auth.isLoggedIn();
-    if (this.userLoggedIn) this.openPage(this.mainPage);
+  constructor(public navCtrl: NavController, public eventProvider: EventProvider, public authProvider: AuthProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WelcomePage');
+  }
+
+  ionViewCanEnter() {
+    return !this.authProvider.canEnterPage();
   }
 
   openPage(page: PageItem) {

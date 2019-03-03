@@ -38,22 +38,10 @@ export class EventProvider {
       },
       ),
     };
-    this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions).subscribe(
-      response => {
-        const httpParams = {
-          file_id: response.file_id,
-          tag: 'EVENT'
-        };
-        this.http.post(this.appConstant.API.API_ENDPOINT + '/tags', httpParams, httpOptions).subscribe(
-          tagResponse => {
-            this.loadSingleEvent(response.file_id);
-            return tagResponse;
-          },
-          error => {throw new Error(error); }
-        );
-      },
-      error => { throw new Error(error); }
-    );
+    const uploadResponse = await this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions)
+      .toPromise().then(res => res);
+    return this.tagMedia(uploadResponse.file_id, 'EVENT');
+
   }
 
   loadSingleEvent(file_id: number) {
@@ -64,6 +52,17 @@ export class EventProvider {
       },
       error => console.log(error)
     );
+  }
+
+  async tagMedia(file_id: number, tag: string): Promise<any> {
+    const httpParams = { file_id, tag };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'x-access-token': localStorage.getItem('token'),
+      },
+      ),
+    };
+    return this.http.post(this.appConstant.API.API_ENDPOINT + '/tags', httpParams, httpOptions).toPromise().then(res => res);
   }
 
   fetchThumbnail(file_id: number) {
