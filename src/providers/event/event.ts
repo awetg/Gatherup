@@ -38,8 +38,7 @@ export class EventProvider {
       },
       ),
     };
-    const uploadResponse = await this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions)
-      .toPromise().then(res => res);
+    const uploadResponse = await this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions).toPromise();
     return this.tagMedia(uploadResponse.file_id, 'EVENT');
 
   }
@@ -62,7 +61,7 @@ export class EventProvider {
       },
       ),
     };
-    return this.http.post(this.appConstant.API.API_ENDPOINT + '/tags', httpParams, httpOptions).toPromise().then(res => res);
+    return this.http.post(this.appConstant.API.API_ENDPOINT + '/tags', httpParams, httpOptions).toPromise();
   }
 
   fetchThumbnail(file_id: number) {
