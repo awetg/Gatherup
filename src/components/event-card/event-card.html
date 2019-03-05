@@ -12,7 +12,7 @@
   </ion-card> -->
   <ion-card *ngFor="let event of events">
 
-      <ion-item>
+      <ion-item (click)="openEvent(event)">
         <ion-avatar item-left>
           <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
         </ion-avatar>
