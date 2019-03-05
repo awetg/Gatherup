@@ -19,7 +19,7 @@ import { PageItem } from '../../interface/page';
 export class LoginPage {
 
   user: LogInForm = { };
-  signUpPage: PageItem = { title: 'SignUp', component: 'LoginPage' };
+  signUpPage: PageItem = { title: 'SignUp', component: 'SignupPage' };
 
   constructor(
     public navCtrl: NavController,
