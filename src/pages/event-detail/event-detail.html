@@ -1,0 +1,35 @@
+<!--
+  Generated template for the EventDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{event.title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-item>
+      <ion-avatar item-left>
+        <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
+      </ion-avatar>
+      <h4>{{event.user_id}}</h4>
+    </ion-item>
+
+    <ion-item>
+      <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + event.filename " />
+    </ion-item>
+
+    <ion-item>
+      <h1>{{event.title}}</h1>
+      <p>{{ event.time_added | date: 'longDate'}}</p>
+      <p>{{event.description}}</p>
+    </ion-item>
+
+  </ion-card>
+
+</ion-content>
