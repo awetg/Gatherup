@@ -3,6 +3,7 @@ export interface User {
     username?: string;
     email?: string;
     time_created?: Date;
+    avatar?: string;
 }
 
 export interface UserInfo {
@@ -34,6 +35,17 @@ export interface LoginResponse {
     message: string;
     token: string;
     user: User;
+}
+
+export interface RegisterResponse {
+  message: string;
+  user_id: number;
+
+}
+
+export interface CheckUserResponse {
+  username: string;
+  available: boolean;
 }
 
 export interface UserInfoDescribtion {

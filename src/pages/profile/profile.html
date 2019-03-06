@@ -11,6 +11,35 @@
 </ion-header>
 
 <ion-content padding>
+  <div class="profile-image">
+    <img class="profile-image" [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( user.avatar || 'ab6e8a71b39981a6422125f476d40005-tn160.png' )" alt="profile image">
+  </div>
+  <div class="profile-details">
+    <h2>{{ (user.full_name || 'Unkown') }}</h2>
+    <h6>email: {{ user.email }}</h6>
+    <p>joined: {{ user.time_created | date: 'dd.MM.yy'}}</p>
+  </div>
+  <ion-segment mode="md" [(ngModel)]="selectedSegment">
+    <ion-segment-button value="Own Events">
+      Own Events
+    </ion-segment-button>
+    <ion-segment-button value="Going">
+      Going
+    </ion-segment-button>
+    <ion-segment-button value="Interested">
+      Interested
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="selectedSegment === 'Going'">
+    <event-card [events]="(eventProvider.events$ | async)"></event-card>
+  </div>
+  <ion-row>
+    <button ion-button block class="my-btn" color="primary" (click)="toMyFilesPage()">My Files</button>
+    <button ion-button block class="my-btn" color="primary" (click)="logout()">Logout</button>
+  </ion-row>
+</ion-content>
+<ion-content padding>
     <ion-fab bottom right>
         <button ion-fab><ion-icon name="add"></ion-icon></button>
     </ion-fab>

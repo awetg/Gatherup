@@ -19,8 +19,20 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="selectedSegment === 'recommended'">
-    <event-card [events]="(eventProvider.events$ | async)"></event-card>
+  <div [ngSwitch]="selectedSegment">
+    <ion-grid ngSwitch="'recommended'">
+      <ion-row>
+        <ion-col *ngFor="let events of [1,2,3,4,5,6,7,8,9,10,11]">
+          <div clas
+
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+    <ion-row>
+      <event-card [events]="(eventProvider.events$ | async)"></event-card>
+    </ion-row>
+
   </div>
 
   <div *ngIf="selectedSegment === 'explore'">

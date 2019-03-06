@@ -30,3 +30,8 @@ export interface Thumbnail {
     w320?: string;
     w640?: string;
 }
+
+export interface Avatar extends Event {
+  tag_id: number;
+  tag: string;
+}

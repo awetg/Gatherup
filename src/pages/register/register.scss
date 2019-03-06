@@ -1,0 +1,18 @@
+page-register {
+
+}
+.register-form {
+  margin: 0 auto;
+}
+.register-btn {
+  margin: 30px auto;
+}
+@media (min-width: 767px) {
+  .register-btn {
+    max-width: 240px;
+  }
+
+  .register-form{
+    max-width: 320px;
+  }
+}

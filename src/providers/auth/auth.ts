@@ -1,9 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LogInForm, LoginResponse, User } from '../../interface/user';
+import {
+  CheckUserResponse,
+  LogInForm,
+  LoginResponse, RegisterResponse,
+  User,
+  SignUpForm,
+} from '../../interface/user';
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Avatar } from '../../interface/event';
 
 /*
   Generated class for the AuthProvider provider.
@@ -14,6 +21,8 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthProvider {
 
+  mediaAPI = 'http://media.mw.metropolia.fi/wbma/';
+  loggedIn = false;
   private _authenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly authenticated: Observable<boolean> = this._authenticated.asObservable();
 
@@ -23,8 +32,6 @@ export class AuthProvider {
   constructor(public http: HttpClient, public appConstant: AppConstantProvider) {
     console.log('Hello AuthProvider Provider');
   }
-
-
 
   // signup(data: any) {
 
@@ -53,6 +60,25 @@ export class AuthProvider {
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
     this._authenticated.next(false);
+  }
+
+  checkUser(username) {
+    return this.http.get<CheckUserResponse>(this.appConstant.API.API_ENDPOINT + '/users/username/' + username);
+  }
+
+  register(userData: SignUpForm) {
+    userData.confirmPassword = undefined;
+
+    return this.http.post<RegisterResponse>(this.appConstant.API.API_ENDPOINT + '/users', userData).subscribe(
+      response => {
+        const user: LogInForm = {username: userData.username, password: userData.password };
+        this.logIn(user);
+      }
+    );
+  }
+
+  getAvatar() {
+    return this.http.get<Avatar[]>(this.appConstant.API.API_ENDPOINT + '/tags/profile');
   }
 
   isAuthecticated(): Observable<boolean> {
