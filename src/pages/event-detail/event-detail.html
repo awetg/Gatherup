@@ -12,24 +12,36 @@
 
 <ion-content padding>
 
-  <ion-card>
-    <ion-item>
-      <ion-avatar item-left>
-        <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
-      </ion-avatar>
-      <h4>{{event.user_id}}</h4>
-    </ion-item>
 
-    <ion-item>
-      <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + event.filename " />
-    </ion-item>
+  <ion-item>
+    <ion-avatar item-left>
+      <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
+    </ion-avatar>
+    <h4>{{event.user_id}}</h4>
+  </ion-item>
 
-    <ion-item>
-      <h1>{{event.title}}</h1>
+  <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + event.filename " />
+
+  <h2>{{event.title}}</h2>
+
+  <ion-segment mode="md" [(ngModel)]="selectedSegment">
+    <ion-segment-button value="details">
+      Details
+    </ion-segment-button>
+    <ion-segment-button value="comments">
+      Comments
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-content padding>
+    <div *ngIf="selectedSegment === 'details'">
       <p>{{ event.time_added | date: 'longDate'}}</p>
       <p>{{event.description}}</p>
-    </ion-item>
+    </div>
 
-  </ion-card>
+    <div *ngIf="selectedSegment === 'comments'">
+      <h1>Comments</h1>
+    </div>
+  </ion-content>
 
 </ion-content>
