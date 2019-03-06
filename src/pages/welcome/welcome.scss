@@ -1,3 +1,9 @@
 page-welcome {
+    .acc-button {
+        margin-right: 8px;
+    }
 
+    .toolbar-md-white .toolbar-title-md {
+        color: map-get($map: $colors, $key: primary);
+    }
 }
