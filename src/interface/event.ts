@@ -22,11 +22,18 @@ export interface EventDescription {
     details?: string;
     time?: Date;
     location?: string;
-    attends?: number[];
+    attendees?: number[];
+    organizer?: EventOrganizer;
 }
 
 export interface Thumbnail {
     w160?: string;
     w320?: string;
     w640?: string;
+}
+
+export interface EventOrganizer {
+    username?: string;
+    fullname?: string;
+    avatar?: string;
 }

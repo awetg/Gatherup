@@ -26,7 +26,9 @@ export class EventProvider {
     console.log('Loading Events');
     this.http.get<Event[]>(this.appConstant.API.API_ENDPOINT + '/tags/EVENT').subscribe(
       (events) => {
-        this._events.next(events);
+        if (this._events.getValue().length < events.length) {
+          this._events.next(events);
+        }
       }
     );
   }
