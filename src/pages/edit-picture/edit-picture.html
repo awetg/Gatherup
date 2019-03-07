@@ -1,0 +1,30 @@
+<!--
+  Generated template for the EditPicturePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<div class="alert-content">
+<ion-header>
+  <ion-title>Choose profile picture</ion-title>
+</ion-header>
+
+<ion-content padding>
+  <form class="upload-form" (submit)="upload()" #uploadForm="ngForm">
+  <ion-item>
+    <button ion-button type="button" (click)="chooseFile()"  accept="image/*, video/*, audio/*">Choose from gallery</button>
+    <button type="button" ion-button (click)="takePhoto()">Take a new photo</button>
+  </ion-item>
+  </form>
+</ion-content>
+</div>
+
+<ion-grid full-height (click)="$event.stopPropagation(); hide_overlay()" ion-text color=white text-center>
+  <ion-row full-height align-items-center>
+    <ion-col col-md-8 push-md-2>
+      <ng-content></ng-content>
+
+      <button ion-button>Got it</button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -11,7 +11,7 @@ export interface UserInfo {
     filename: string;
     filesize: number;
     title: string;
-    description: UserInfoDescribtion;
+    description: UserInfoDescription;
     user_id: number;
     media_type: string;
     mime_type: string;
@@ -48,11 +48,16 @@ export interface CheckUserResponse {
   available: boolean;
 }
 
-export interface UserInfoDescribtion {
+export interface UserInfoDescription {
     fullname?: string;
     interest?: string [];
     avatar?: string;
     events?: number[];
     joinedEvents?: number[];
     favEvents?: number[];
+}
+
+export interface UploadResponse {
+  message: string;
+  file_id: number;
 }

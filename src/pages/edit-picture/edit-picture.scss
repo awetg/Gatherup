@@ -1,0 +1,21 @@
+page-edit-picture {
+  @media (min-width: 300px) and (min-height: 500px) {
+    ion-backdrop {
+      visibility: visible;
+    }
+  }
+
+    background: rgba(0, 0, 0, 0.5);
+
+  .alert-content{
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    display: block;
+    width: 80%;
+    height: 50%;
+
+  }
+
+}
+

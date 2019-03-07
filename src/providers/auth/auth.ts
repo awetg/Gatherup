@@ -10,7 +10,7 @@ import {
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Avatar } from '../../interface/event';
+import { Avatar, EventUploadResponse } from '../../interface/event';
 
 /*
   Generated class for the AuthProvider provider.
@@ -108,5 +108,14 @@ export class AuthProvider {
 
   canEnterPage(): boolean {
     return this._authenticated.getValue();
+  }
+  uploadMedia(data: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+          'x-access-token': localStorage.getItem('token'),
+        },
+      ),
+    };
+    return this.http.post<EventUploadResponse>(this.mediaAPI + 'media', data, httpOptions);
   }
 }
