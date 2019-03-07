@@ -31,13 +31,7 @@ export class AuthProvider {
   // }
 
   async logIn(user: LogInForm): Promise<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-type': 'application/json',
-      },
-      ),
-    };
-    this.http.post<LoginResponse>(this.appConstant.API.API_ENDPOINT + '/login', user, httpOptions).subscribe(
+    this.http.post<LoginResponse>(this.appConstant.API.API_ENDPOINT + '/login', user).subscribe(
       response => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));

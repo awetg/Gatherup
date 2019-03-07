@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
+import { AuthProvider } from '../../providers/auth/auth';
+import { FirstRunPage } from '..';
 
 /**
  * Generated class for the TabMenuPage tabs.
@@ -19,8 +21,11 @@ export class TabMenuPage {
   searchRoot = 'SearchPage';
   profileRoot = 'ProfilePage';
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public authProvider: AuthProvider) {
     console.log('tabs menu');
+    if (!this.authProvider.canEnterPage()) {
+      this.navCtrl.setRoot(FirstRunPage);
+    }
   }
 
 }
