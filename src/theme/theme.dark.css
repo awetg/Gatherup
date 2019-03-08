@@ -1,0 +1,9 @@
+.dark-theme ion-content {
+  background-color: #090f2f; }
+.dark-theme .toolbar-title {
+  color: #fff; }
+.dark-theme .header .toolbar-background {
+  background-color: #090f2f;
+  border-color: #f53d3d; }
+
+/*# sourceMappingURL=theme.dark.css.map */

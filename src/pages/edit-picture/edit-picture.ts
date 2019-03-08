@@ -2,71 +2,43 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input, Renderer2,
+  Input, OnInit, Renderer2,
 } from '@angular/core';
 import {
   IonicPage,
   LoadingController, ModalController,
   NavController,
-  NavParams, ViewController,
+  NavParams, PopoverController, ViewController,
 } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { EventUploadResponse } from '../../interface/event';
 
-
-
-
-
-/**
- * Generated class for the EditPicturePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-edit-picture',
   templateUrl: 'edit-picture.html',
 })
-export class EditPicturePage implements AfterViewInit{
+export class EditPicturePage implements OnInit{
 
-  private _force :boolean = false;
+  passedId = null;
   file: any;
   fileData;
   type = '';
   fileChosen = false;
+  @Input() popover: any;
 
-  @Input()
-  set force(val) {
-    this._force = val == '' ? true : !!val;
+  constructor(private elementRef: ElementRef, private renderer: Renderer2, private _storage: Storage, public navCtrl: NavController, public authProvider: AuthProvider, public chooser: Chooser,
+              public camera: Camera, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public viewCtrl: ViewController, private navParams: NavParams, private popoverController: PopoverController
+
+  ) {}
+  ngOnInit(){
+    this.passedId = this.navParams.get('custom_id');
   }
 
-  constructor( private elementRef : ElementRef, private renderer : Renderer2, private _storage: Storage, public navCtrl: NavController, public authProvider: AuthProvider, public chooser: Chooser,
-               public camera: Camera, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public viewCtrl: ViewController, params: NavParams
-
-  ) {
-    this.renderer.selectRootElement( 'alert-content').scrollIntoView();
-    console.log('User_id', params.get('user_id'))
-  }
-
-  get storage_key() {
-    return `shown-overlay-${this.navCtrl.getActive().id}`;
-  }
-
-  ngAfterViewInit() {
-    // Check local storage to see if we already displayed this...
-    this._storage.get(this.storage_key).then( (val) => {
-      if( !val || this._force )
-        this.renderer.addClass( this.elementRef.nativeElement, 'shown' )
-    });
-  }
-
-  hide_overlay() {
-    this._storage.set(this.storage_key, 1);
-    this.renderer.removeClass( this.elementRef.nativeElement, 'shown' );
+   closePopover(){
+    this.popover.dismiss();
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditPicturePage');
