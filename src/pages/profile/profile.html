@@ -56,20 +56,12 @@
 </ion-content>
 
 <div *ngIf="hideMe" class="alert-content">
-
-
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Choose profile picture</ion-title>
-      <button ion-button (click)="dismiss()">
-        <ion-icon name="md-close"></ion-icon>
-      </button>
-    </ion-toolbar>
-  </ion-header>
   <ion-content padding>
   <ion-list>
     <ion-item class="edit-option">
-      <p style= "font-size: 15px!important; border-bottom: 1px solid grey;">Choose profile picture</p>
+      <p style= "font-size: 14px!important; border-bottom: 1px solid grey;">Choose profile picture <button class="cross" ion-button icon-only icon-right (click)="dismiss()" clear>
+        <ion-icon  name="close" clear></ion-icon>
+      </button></p>
       <br>
       <button style="background-color: rgba(0,0,0,0); color: #000000; border: none rgb(0, 0, 238);font-size: x-small; width: 80%" ion-button (click)="chooseFile()" accept="image/*">Choose from gallery</button>
       <br>

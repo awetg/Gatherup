@@ -12,7 +12,7 @@ export class SettingsProvider {
 
   private theme: BehaviorSubject<string>
   constructor() {
-    this.theme = new BehaviorSubject('dark-theme');
+    this.theme = new BehaviorSubject('light-theme');
   }
   //inform everyone subscribe to the subject
   setActiveTheme(val){

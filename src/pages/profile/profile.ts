@@ -47,10 +47,10 @@ export class ProfilePage {
     this.settings.getActiveTheme().subscribe(val => this.selectedTheme = val);
   }
   toggleAppTheme(){
-    if (this.selectedTheme == 'dark-theme'){
-      this.settings.setActiveTheme('light-theme');
-    } else {
+    if (this.selectedTheme == 'light-theme'){
       this.settings.setActiveTheme('dark-theme');
+    } else {
+      this.settings.setActiveTheme('light-theme');
     }
   }
 
