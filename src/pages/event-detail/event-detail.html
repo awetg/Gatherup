@@ -17,12 +17,43 @@
     <ion-avatar item-left>
       <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
     </ion-avatar>
-    <h4>{{event.user_id}}</h4>
+    <h4>{{event.user_id | organizerName | async }}</h4>
   </ion-item>
 
   <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + event.filename " />
 
   <h2>{{event.title}}</h2>
+  <ion-row>
+
+    <ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="checkmark"></ion-icon>
+        <div>Join Event</div>
+      </button>
+    </ion-col>
+
+    <ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="star-outline"></ion-icon>
+        <div>Interested</div>
+      </button>
+    </ion-col>
+
+  </ion-row>
+
+  <ion-row>
+    <button ion-button icon-left clear small color="grey-light">
+      <ion-icon name="calendar"></ion-icon>
+      <div>{{ event.time_added | date: 'longDate'}}</div>
+    </button>
+  </ion-row>
+
+  <ion-row>
+    <button ion-button icon-left clear small color="grey-light">
+      <ion-icon name="pin"></ion-icon>
+      <div>{{ event.location}}</div>
+    </button>
+  </ion-row>
 
   <ion-segment mode="md" [(ngModel)]="selectedSegment">
     <ion-segment-button value="details">
@@ -35,8 +66,19 @@
 
   <ion-content padding>
     <div *ngIf="selectedSegment === 'details'">
-      <p>{{ event.time_added | date: 'longDate'}}</p>
-      <p>{{event.description}}</p>
+      <ion-row>
+        <button ion-button icon-left clear small color="grey-light">
+          <ion-icon name="calendar"></ion-icon>
+          <div>{{ event.time_added | date: 'longDate'}}</div>
+        </button>
+      </ion-row>
+
+      <ion-row>
+        <button ion-button icon-left clear small color="grey-light">
+          <ion-icon name="pin"></ion-icon>
+          <div>{{ event.location}}</div>
+        </button>
+      </ion-row>
     </div>
 
     <div *ngIf="selectedSegment === 'comments'">

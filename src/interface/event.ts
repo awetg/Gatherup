@@ -30,3 +30,10 @@ export interface Thumbnail {
     w320?: string;
     w640?: string;
 }
+
+export interface Organizer {
+  user_id: number;
+  username: string;
+  email: string;
+  full_name: string;
+}

@@ -4,6 +4,7 @@ import { AppConstantProvider } from '../app-constant/app-constant';
 import { Event, EventUploadResponse } from '../../interface/event';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { User } from '../../interface/user';
 
 /*
   Generated class for the EventProvider provider.
@@ -66,6 +67,10 @@ export class EventProvider {
 
   fetchThumbnail(file_id: number) {
     return this.http.get<Event>(this.appConstant.API.API_ENDPOINT + '/media/' + file_id);
+  }
+
+  fetchOrganizer(user_id: number){
+    return this.http.get<User>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id).toPromise();
   }
 
 }
