@@ -24,7 +24,7 @@ export class TabMenuPage {
   constructor(public navCtrl: NavController, public authProvider: AuthProvider) {
     console.log('tabs menu');
     if (!this.authProvider.canEnterPage()) {
-      this.navCtrl.setRoot(FirstRunPage);
+      this.navCtrl.setRoot(FirstRunPage).catch(error => console.log(error));
     }
   }
 

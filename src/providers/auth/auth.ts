@@ -77,4 +77,8 @@ export class AuthProvider {
   canEnterPage(): boolean {
     return this._authenticated.getValue();
   }
+
+  getUser(): User {
+    return this._user.getValue();
+  }
 }

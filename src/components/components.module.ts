@@ -2,14 +2,17 @@ import { NgModule } from '@angular/core';
 import { EventCardComponent } from './event-card/event-card';
 import { IonicModule } from 'ionic-angular';
 import { PipesModule } from '../pipes/pipes.module';
+
 @NgModule({
   declarations: [
-    EventCardComponent
+    EventCardComponent,
   ],
   imports: [
     IonicModule,
     PipesModule
   ],
-  exports: [EventCardComponent]
+  exports: [
+    EventCardComponent,
+  ]
 })
 export class ComponentsModule {}
