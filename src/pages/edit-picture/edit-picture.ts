@@ -10,8 +10,8 @@ import {
   NavParams, PopoverController, ViewController,
 } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { Chooser } from '@ionic-native/chooser/ngx';
+// import { Camera, CameraOptions } from '@ionic-native/camera';
+// import { Chooser } from '@ionic-native/chooser/ngx';
 import { EventUploadResponse } from '../../interface/event';
 import { PageItem } from '../../interface/page';
 import { EditProfilePage } from '../edit-profile/edit-profile';
@@ -38,8 +38,8 @@ export class EditPicturePage implements OnInit {
     private _storage: Storage,
     public navCtrl: NavController,
     public authProvider: AuthProvider,
-    public chooser: Chooser,
-    public camera: Camera,
+    // public chooser: Chooser,
+    // public camera: Camera,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public viewCtrl: ViewController,
@@ -68,34 +68,34 @@ export class EditPicturePage implements OnInit {
     this.file = $event.target.files[0];
   }
 
-  upload() {
+  // upload() {
 
 
-    this.loading.present().catch(e => console.log(e));
+  //   this.loading.present().catch(e => console.log(e));
 
-    const fd = new FormData();
-    fd.append('file', this.file);
+  //   const fd = new FormData();
+  //   fd.append('file', this.file);
 
-    this.authProvider.uploadMedia(fd).subscribe(
-      (response: EventUploadResponse) => {
-        console.log(response);
-        setTimeout(() => {
-            this.loading.dismiss().catch(e => console.log(e));
-            this.navCtrl.pop().catch(e => console.log(e));
-          },
-          2000,
-        );
-      }
-    );
-  }
+  //   this.authProvider.uploadMedia(fd).subscribe(
+  //     (response: EventUploadResponse) => {
+  //       console.log(response);
+  //       setTimeout(() => {
+  //           this.loading.dismiss().catch(e => console.log(e));
+  //           this.navCtrl.pop().catch(e => console.log(e));
+  //         },
+  //         2000,
+  //       );
+  //     }
+  //   );
+  // }
 
-  chooseFile() {
-    this.chooser.getFile('image/*, video/*, audio/*').then(file => {
-      this.file = new Blob([file.data], { type: file.mediaType });
-      this.fileData = file.uri;
-      this.fileChosen = true;
-    }).catch(e => console.error(e));
-  }
+  // chooseFile() {
+  //   this.chooser.getFile('image/*, video/*, audio/*').then(file => {
+  //     this.file = new Blob([file.data], { type: file.mediaType });
+  //     this.fileData = file.uri;
+  //     this.fileChosen = true;
+  //   }).catch(e => console.error(e));
+  // }
 
 
 }
