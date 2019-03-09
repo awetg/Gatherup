@@ -50,6 +50,7 @@ export interface CheckUserResponse {
 
 export interface UserInfoDescription {
     fullname?: string;
+    email?: string;
     interest?: string [];
     avatar?: string;
     events?: number[];

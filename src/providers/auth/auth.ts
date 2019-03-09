@@ -4,13 +4,14 @@ import {
   CheckUserResponse,
   LogInForm,
   LoginResponse, RegisterResponse,
-  User,
   SignUpForm,
+  User,
 } from '../../interface/user';
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Avatar, EventUploadResponse } from '../../interface/event';
+import { EventProvider } from '../event/event';
 
 /*
   Generated class for the AuthProvider provider.
@@ -29,13 +30,9 @@ export class AuthProvider {
   private _user: BehaviorSubject<User> = new BehaviorSubject<User>({});
   readonly user: Observable<User> = this._user.asObservable();
 
-  constructor(public http: HttpClient, public appConstant: AppConstantProvider) {
+  constructor(public http: HttpClient, public appConstant: AppConstantProvider, public eventProvider: EventProvider) {
     console.log('Hello AuthProvider Provider');
   }
-
-  // signup(data: any) {
-
-  // }
 
   async logIn(user: LogInForm): Promise<any> {
     const httpOptions = {
@@ -59,6 +56,7 @@ export class AuthProvider {
   logOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
+    localStorage.clear();
     this._authenticated.next(false);
   }
 
@@ -71,8 +69,8 @@ export class AuthProvider {
 
     return this.http.post<RegisterResponse>(this.appConstant.API.API_ENDPOINT + '/users', userData).subscribe(
       response => {
-        const user: LogInForm = {username: userData.username, password: userData.password };
-        this.logIn(user);
+        const user: LogInForm = { username: userData.username, password: userData.password };
+        this.logIn(user).catch(error => console.log(error));
       }
     );
   }
@@ -117,5 +115,20 @@ export class AuthProvider {
       ),
     };
     return this.http.post<EventUploadResponse>(this.mediaAPI + 'media', data, httpOptions);
+  }
+
+  async updateUserInfo(data: any): Promise<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') })
+    };
+    return this.http.put(this.appConstant.API.API_ENDPOINT + '/users', data, httpOptions).toPromise();
+  }
+
+  async updateAvatar(data: any): Promise<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token'), })
+    };
+    const uploadResponse = await this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions).toPromise();
+    return this.eventProvider.tagMedia(uploadResponse.file_id, this.appConstant.APP.AVATAR_TAG);
   }
 }

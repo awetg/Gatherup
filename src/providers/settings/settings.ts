@@ -10,15 +10,15 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class SettingsProvider {
 
-  private theme: BehaviorSubject<string>
+  private theme: BehaviorSubject<string>;
   constructor() {
     this.theme = new BehaviorSubject('light-theme');
   }
-  //inform everyone subscribe to the subject
-  setActiveTheme(val){
+  // inform everyone subscribe to the subject
+  setActiveTheme(val) {
     this.theme.next(val);
   }
-  getActiveTheme(){
+  getActiveTheme() {
     return this.theme.asObservable();
   }
 

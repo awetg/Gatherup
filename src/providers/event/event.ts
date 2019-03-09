@@ -39,7 +39,7 @@ export class EventProvider {
       ),
     };
     const uploadResponse = await this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions).toPromise();
-    return this.tagMedia(uploadResponse.file_id, 'EVENT');
+    return this.tagMedia(uploadResponse.file_id, this.appConstant.APP.EVENT_TAG);
 
   }
 

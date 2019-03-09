@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   Input, OnInit, Renderer2,
@@ -14,13 +13,17 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { EventUploadResponse } from '../../interface/event';
+import { PageItem } from '../../interface/page';
+import { EditProfilePage } from '../edit-profile/edit-profile';
 
 @IonicPage()
 @Component({
   selector: 'page-edit-picture',
   templateUrl: 'edit-picture.html',
 })
-export class EditPicturePage implements OnInit{
+export class EditPicturePage implements OnInit {
+
+  
 
   passedId = null;
   file: any;
@@ -29,15 +32,27 @@ export class EditPicturePage implements OnInit{
   fileChosen = false;
   @Input() popover: any;
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2, private _storage: Storage, public navCtrl: NavController, public authProvider: AuthProvider, public chooser: Chooser,
-              public camera: Camera, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public viewCtrl: ViewController, private navParams: NavParams, private popoverController: PopoverController
+  constructor(
+    private elementRef: ElementRef,
+    private renderer: Renderer2,
+    private _storage: Storage,
+    public navCtrl: NavController,
+    public authProvider: AuthProvider,
+    public chooser: Chooser,
+    public camera: Camera,
+    public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController,
+    public viewCtrl: ViewController,
+    private navParams: NavParams,
+    private popoverController: PopoverController
 
   ) {}
-  ngOnInit(){
+
+  ngOnInit() {
     this.passedId = this.navParams.get('custom_id');
   }
 
-   closePopover(){
+  closePopover() {
     this.popover.dismiss();
   }
   ionViewDidLoad() {
@@ -81,4 +96,6 @@ export class EditPicturePage implements OnInit{
       this.fileChosen = true;
     }).catch(e => console.error(e));
   }
+
+
 }

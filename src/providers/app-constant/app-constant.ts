@@ -23,4 +23,10 @@ export class AppConstantProvider {
     'SPORT'
   ];
 
+  APP = {
+    EVENT_TAG: 'EVENT',
+    AVATAR_TAG: 'GATHERUP_AVATAR',
+    AVATAR_TITLE: 'GATHERUP_AVATAR_TITLE'
+  };
+
 }

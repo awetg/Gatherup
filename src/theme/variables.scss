@@ -22,8 +22,6 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-@import "theme.light.scss";
-@import "theme.dark.scss";
 
 
 // Named Color Variables
@@ -35,12 +33,27 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
+  primary:    #5B3AB4,
+  secondary:  #f50057,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  lightdark:  #363636,
+  gray-darker:  #222,
+  gray-dark:  #333,
+  gray:       #555,
+  gray-light:  #777,
+  gray-lighter:#eee,
+  white:      white,
+  dark-theme: #090f2f,
 );
+
+$toolbar-background:  map-get($colors, primary);
+
+
+// Custom theme classess
+@import "theme.light.scss";
+@import "theme.dark.scss";
 
 
 // App iOS Variables

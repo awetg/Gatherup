@@ -1,9 +1,9 @@
 .light-theme{
-  ion-content{
-    background-color: #ffffff;
-  }
+  // ion-content{
+  //   background-color: map-get($colors, primary);
+  // }
 
-  .header .toolbar-background{
-    background-color: #ffffff;
+  .toolbar-background{
+    background-color: map-get($colors, primary);
   }
 }

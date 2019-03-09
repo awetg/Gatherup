@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AACE,uBAAW;EACT,gBAAgB,EAAE,OAAO;AAG3B,0BAAc;EACZ,KAAK,EAAE,IAAI;AAEb,uCAA2B;EACzB,gBAAgB,EAAE,OAAO;EACzB,YAAY,EAAE,OAAO",
-"sources": ["theme.dark.scss"],
-"names": [],
-"file": "theme.dark.css"
-}

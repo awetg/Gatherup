@@ -8,7 +8,7 @@
   <ion-navbar>
     <ion-title>Profile</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="openDotmenu($event)">
+      <button ion-button icon-only (click)="openPopover($event, subComponents.profileContextMenu)">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
@@ -17,17 +17,27 @@
 
 <ion-content padding>
 
-  <div class="profile-image">
-      <button  class="profile-button" ion-button icon-only (click)="toEdit()" clear><ion-icon name= "create"></ion-icon></button>
-    <img class="profile-image" [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( user.avatar || 'ab6e8a71b39981a6422125f476d40005-tn160.png' )" alt="profile image">
+  <div class="user-info">
+    <ion-item no-lines>
+      <ion-avatar>
+        <img class="profile-image"
+          [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( user.avatar || 'ab6e8a71b39981a6422125f476d40005-tn160.png' )"
+          alt="profile image">
+      </ion-avatar>
+    </ion-item>
+    <div class="profile-details">
+      <ion-label>{{ (user.username || 'Full Name') }}</ion-label>
+      <ion-label>Helsinki</ion-label>
+      <ion-label>joined: 12/12/2019</ion-label>
+    </div>
+    <ion-buttons>
+        <button ion-button outline (click)="openPage(editProfilePage)">Edit Profile</button>
+      </ion-buttons>
   </div>
-  <div class="profile-details">
-    <h2>{{ (user.username || 'Ola') }}</h2>
-    <h6>email: {{ user.email }}</h6>
-    <p>joined: {{ user.time_created | date: 'dd.MM.yy'}}</p>
-  </div>
+
+
   <ion-segment mode="md" [(ngModel)]="selectedSegment">
-    <ion-segment-button value="Own Events">
+    <ion-segment-button value="OwnEvents">
       Own Events
     </ion-segment-button>
     <ion-segment-button value="Going">
@@ -41,37 +51,31 @@
   <div *ngIf="selectedSegment === 'Going'">
     <event-card [events]="(eventProvider.events$ | async)"></event-card>
   </div>
-</ion-content>
 
-<button  class="profile-button" ion-button icon-only (click)="openEdit($event)" clear><ion-icon name= "create"></ion-icon></button>
-<button  class="profile-button" ion-button icon-only (click)="toEdit()" clear><ion-icon name= "create"></ion-icon></button>
 
-<ion-content padding>
-  <button ion-button icon-only (click)="toggleAppTheme()"clear>
-    <ion-icon name="bulb"></ion-icon>
-  </button>
-    <ion-fab bottom right>
-        <button ion-fab><ion-icon name="add"></ion-icon></button>
-    </ion-fab>
-</ion-content>
-
-<div *ngIf="hideMe" class="alert-content">
-  <ion-content padding>
+  <!-- <div *ngIf="hideMe" class="alert-content">
   <ion-list>
     <ion-item class="edit-option">
-      <p style= "font-size: 14px!important; border-bottom: 1px solid grey;">Choose profile picture <button class="cross" ion-button icon-only icon-right (click)="dismiss()" clear>
-        <ion-icon  name="close" clear></ion-icon>
-      </button></p>
+      <p style="font-size: 14px!important; border-bottom: 1px solid grey;">Choose profile picture <button class="cross"
+          ion-button icon-only icon-right (click)="dismiss()" clear>
+          <ion-icon name="close" clear></ion-icon>
+        </button></p>
       <br>
-      <button style="background-color: rgba(0,0,0,0); color: #000000; border: none rgb(0, 0, 238);font-size: x-small; width: 80%" ion-button (click)="chooseFile()" accept="image/*">Choose from gallery</button>
+      <button
+        style="background-color: rgba(0,0,0,0); color: #000000; border: none rgb(0, 0, 238);font-size: x-small; width: 80%"
+        ion-button (click)="chooseFile()" accept="image/*">Choose from gallery</button>
       <br>
-        <button ion-button (click)="takePhoto()" style="font-size: x-small; width:80%">Take a new photo</button>
+      <button ion-button (click)="takePhoto()" style="font-size: x-small; width:80%">Take a new photo</button>
       <br>
-      <!--<p (click)="takePhoto()">Take a new photo</p>-->
-
+      <p (click)="takePhoto()">Take a new photo</p>
     </ion-item>
   </ion-list>
-  </ion-content>
-</div>
+</div> -->
 
+  <ion-fab bottom right>
+    <button ion-fab>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
+</ion-content>
