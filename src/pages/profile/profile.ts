@@ -20,6 +20,7 @@ import { PageItem } from '../../interface/page';
 export class ProfilePage {
 
   editProfilePage: PageItem = { title: '', component: 'EditProfilePage' };
+  createEventPage: PageItem = { title: '', component: 'CreateEventPage' };
   subComponents = {
     profileContextMenu: 'ProfileContextMenuPage',
   };
@@ -33,6 +34,7 @@ export class ProfilePage {
     public eventProvider: EventProvider,
     public authProvider: AuthProvider,
     private popoverCtrl: PopoverController) {}
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
@@ -41,7 +43,6 @@ export class ProfilePage {
   ionViewCanEnter() {
     return this.authProvider.canEnterPage();
   }
-
 
   openPopover(ev: any, popoverComponet: any, onDismiss: any) {
     const popover = this.popoverCtrl.create(popoverComponet);
@@ -54,5 +55,6 @@ export class ProfilePage {
   openPage(page: PageItem) {
     this.navCtrl.push(page.component).catch(error => console.log(error));
   }
+
 }
 

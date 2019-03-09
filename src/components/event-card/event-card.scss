@@ -1,3 +1,43 @@
 event-card {
+    .event-title {
+        font-size: 1.8rem;
+        font-weight: 400;
+    }
 
+    .round {
+        border-radius: 10px;
+    }
+
+    .left{
+        text-align: left;
+        padding-bottom: 0;
+        padding-top: 15px;
+    }
+
+    .item-md ion-avatar img {  
+        max-width: 32px !important;
+        max-height: 32px !important;
+    }
+
+    @each $size, $size-value in $screen-breakpoints {
+        .pins {
+            column-gap: 0;
+            margin: 0 auto;
+            @media (min-width: $size-value) {
+                column-count: if($size-value < 500, 1, 2);
+                width: if($size-value < 500, 100%, 700px);
+            }
+        }
+
+        .pin {
+            display: if($size-value < 500, block, inline-block);
+        }
+
+        .card {
+            @media (min-width: $size-value) {
+                width: if($size-value < 500, auto, 330px);
+            }
+        }
+    }
+    
 }

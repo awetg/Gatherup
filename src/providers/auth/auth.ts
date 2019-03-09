@@ -35,13 +35,7 @@ export class AuthProvider {
   }
 
   async logIn(user: LogInForm): Promise<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-type': 'application/json',
-      },
-      ),
-    };
-    this.http.post<LoginResponse>(this.appConstant.API.API_ENDPOINT + '/login', user, httpOptions).subscribe(
+    this.http.post<LoginResponse>(this.appConstant.API.API_ENDPOINT + '/login', user).subscribe(
       response => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
@@ -107,15 +101,6 @@ export class AuthProvider {
   canEnterPage(): boolean {
     return this._authenticated.getValue();
   }
-  uploadMedia(data: any) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-          'x-access-token': localStorage.getItem('token'),
-        },
-      ),
-    };
-    return this.http.post<EventUploadResponse>(this.mediaAPI + 'media', data, httpOptions);
-  }
 
   async updateUserInfo(data: any): Promise<any> {
     const httpOptions = {
@@ -130,5 +115,9 @@ export class AuthProvider {
     };
     const uploadResponse = await this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions).toPromise();
     return this.eventProvider.tagMedia(uploadResponse.file_id, this.appConstant.APP.AVATAR_TAG);
+  }
+
+  getUser(): User {
+    return this._user.getValue();
   }
 }

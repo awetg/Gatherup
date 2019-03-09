@@ -20,7 +20,9 @@ export class AppConstantProvider {
   };
 
   CATEGORY = [
-    'SPORT'
+    'SPORT',
+    'Food',
+    'TECHNOLOGY'
   ];
 
   APP = {

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConstantProvider } from '../app-constant/app-constant';
-import { Event, EventUploadResponse } from '../../interface/event';
+import { Event, EventUploadResponse, PlaceAutocompleteResponse } from '../../interface/event';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
@@ -26,7 +26,9 @@ export class EventProvider {
     console.log('Loading Events');
     this.http.get<Event[]>(this.appConstant.API.API_ENDPOINT + '/tags/EVENT').subscribe(
       (events) => {
-        this._events.next(events);
+        if (this._events.getValue().length < events.length) {
+          this._events.next(events);
+        }
       }
     );
   }
@@ -66,6 +68,11 @@ export class EventProvider {
 
   fetchThumbnail(file_id: number) {
     return this.http.get<Event>(this.appConstant.API.API_ENDPOINT + '/media/' + file_id);
+  }
+
+  async getPlacePredictions(queryJson): Promise<PlaceAutocompleteResponse> {
+    const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + queryJson + '.json?access_token=pk.eyJ1Ijoia2FsYXkiLCJhIjoiY2p0MHAwamM2MDYwejQzcXU1anF6Z2lzMiJ9.fcb4riEtQstZaSzMxluPuA';
+    return this.http.get<PlaceAutocompleteResponse>(url).toPromise();
   }
 
 }

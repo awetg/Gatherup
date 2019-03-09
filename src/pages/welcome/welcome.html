@@ -5,14 +5,14 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar color="white">
-      <ion-title>GatherUp</ion-title>
-      <ion-buttons end>
-        <button class="acc-button" mode="ios" color="gray-light" ion-button clear item-end (click)="openPage(logInPage)">Log in</button>
-        <button class="acc-button" mode="ios" color="gray-light" ion-button clear item-end  (click)="openPage(signUpPage)"> Sing up</button>
-      </ion-buttons>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar color="white">
+    <ion-title>GatherUp</ion-title>
+    <ion-buttons end>
+      <button class="acc-button" mode="ios" color="gray-light" ion-button clear item-end (click)="openPage(logInPage)">Log in</button>
+      <button class="acc-button" mode="ios" color="gray-light" ion-button clear item-end  (click)="openPage(signUpPage)"> Sing up</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
 <ion-content padding>
   <event-card [events]="(eventProvider.events$ | async)"></event-card>
