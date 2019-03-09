@@ -1,0 +1,92 @@
+<!--
+  Generated template for the CreateEventPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Create an event</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+  <div class="container">
+    <div class="img-container">
+      <img [src]=" (fileData || 'http://via.placeholder.com/500X200/EEE/EEE?text=img') " alt="">
+      <form hidden>
+        <input type="file" accept="image/*" #file hidden (change)="addFile($event)" required>
+      </form>
+      <button class="overlay-btn" ion-button block small mode="ios" (click)="file.click()">Choose Photo</button>
+      <ion-item no-lines class="text-md-danger" *ngIf="fileError">
+          <small>Photo is required</small>
+        </ion-item>
+    </div>
+
+    <form #createEventFrom="ngForm" padding (submit)="CreateEvent($event)">
+      <ion-item>
+        <ion-label floating>Event name</ion-label>
+        <ion-input type="text" name="myTitle" [(ngModel)]="title" required minlength="2"  #myTitle="ngModel"></ion-input>
+      </ion-item>
+      <ion-item no-lines class="text-md-danger" *ngIf="myTitle.errors && (myTitle.dirty || myTitle.touched)">
+        <small *ngIf="myTitle.errors.required">Title is required</small>
+        <small *ngIf="myTitle.errors.minlength">Title must be at least 2 charachters</small>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Event description</ion-label>
+        <ion-textarea name="myDescription" [(ngModel)]="description.details"  required minlength="5" #myDescription="ngModel"></ion-textarea>
+      </ion-item>
+      <ion-item no-lines class="text-md-danger" *ngIf="myDescription.errors && (myDescription.dirty || myDescription.touched)">
+        <small *ngIf="myDescription.errors.required">Description is required</small>
+        <small *ngIf="myDescription.errors.minlength">Description must be at least 5 charachters</small>
+      </ion-item>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>Start date</ion-label>
+            <ion-datetime displayFormat="MMM DD, YYYY" name="sd" [(ngModel)]="startDate" required></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>start time</ion-label>
+            <ion-datetime displayFormat="h:mm A" name="st" [(ngModel)]="startTime" required></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>End date</ion-label>
+            <ion-datetime displayFormat="MMM DD, YYYY" name="ed" [(ngModel)]="endDate" required></ion-datetime>
+          </ion-item>
+        </ion-col> 
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>End time</ion-label>
+            <ion-datetime displayFormat="h:mm A" name="et" [(ngModel)]="endTime" required></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item>
+        <ion-label (tap)="openModal($event, subComponents.autocompleteComponenet, autoCompleteOnDismiss)" floating>Location</ion-label>
+        <ion-input #location="ngModel" (tap)="openModal($event, subComponents.autocompleteComponenet, autoCompleteOnDismiss)" name="eventLocation" [(ngModel)]="description.location"  type="text">
+        </ion-input>
+      </ion-item>
+      <ion-item no-lines class="text-md-danger" *ngIf="locationError">
+          <small>Location is required</small>
+        </ion-item>
+      <ion-item>
+          <ion-label>Category</ion-label>
+          <ion-select name="categories" multiple="true" [(ngModel)]="description.category" required>
+            <ion-option *ngFor="let c of appConstant.CATEGORY" [value]="c">{{ c }}</ion-option>
+          </ion-select>
+        </ion-item>
+      <ion-buttons>
+        <button class="upload-btn" ion-button block type="submit" [disabled]="!(createEventFrom.form.valid)">Upload</button>
+      </ion-buttons>
+    </form>
+  </div>
+
+
+</ion-content>

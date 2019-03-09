@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
+import { PageItem } from '../../interface/page';
 
 /**
  * Generated class for the ProfilePage page.
@@ -16,6 +17,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class ProfilePage {
 
+  createEventPage: PageItem = { title: '', component: 'CreateEventPage' };
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public authProvider: AuthProvider) {
   }
 
@@ -25,6 +28,10 @@ export class ProfilePage {
 
   ionViewCanEnter() {
     return this.authProvider.canEnterPage();
+  }
+
+  openPage(page: PageItem) {
+    this.navCtrl.push(page.component).catch(error => console.log(error));
   }
 
 }
