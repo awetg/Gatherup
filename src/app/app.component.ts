@@ -11,7 +11,6 @@ import { AuthProvider } from '../providers/auth/auth';
 })
 export class MyApp {
   rootPage: any = FirstRunPage;
-
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public authProvider: AuthProvider) {
     this.authProvider.isAuthecticated().subscribe(
       authenticated => {

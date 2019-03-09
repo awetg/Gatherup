@@ -12,6 +12,7 @@ import { EventProvider } from '../providers/event/event';
 import { AuthProvider } from '../providers/auth/auth';
 import { AppConstantProvider } from '../providers/app-constant/app-constant';
 import { PipesModule } from '../pipes/pipes.module';
+import { SettingsProvider } from '../providers/settings/settings';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { PipesModule } from '../pipes/pipes.module';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     EventProvider,
     AuthProvider,
-    AppConstantProvider
+    AppConstantProvider,
+    SettingsProvider
   ]
 })
 export class AppModule {}

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, PopoverController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
+import { User } from '../../interface/user';
+import { EventProvider } from '../../providers/event/event';
 import { PageItem } from '../../interface/page';
 
 /**
@@ -17,10 +19,22 @@ import { PageItem } from '../../interface/page';
 })
 export class ProfilePage {
 
+  editProfilePage: PageItem = { title: '', component: 'EditProfilePage' };
   createEventPage: PageItem = { title: '', component: 'CreateEventPage' };
+  subComponents = {
+    profileContextMenu: 'ProfileContextMenuPage',
+  };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authProvider: AuthProvider) {
-  }
+  selectedTheme: string;
+  user: User = { };
+  selectedSegment = 'Going';
+
+  constructor(
+    public navCtrl: NavController,
+    public eventProvider: EventProvider,
+    public authProvider: AuthProvider,
+    private popoverCtrl: PopoverController) {}
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
@@ -30,8 +44,17 @@ export class ProfilePage {
     return this.authProvider.canEnterPage();
   }
 
+  openPopover(ev: any, popoverComponet: any, onDismiss: any) {
+    const popover = this.popoverCtrl.create(popoverComponet);
+    if (onDismiss !== undefined) {
+      popover.onDidDismiss(onDismiss.bind(this));
+    }
+    popover.present({ ev }).catch(error => console.log(error));
+  }
+
   openPage(page: PageItem) {
     this.navCtrl.push(page.component).catch(error => console.log(error));
   }
 
 }
+

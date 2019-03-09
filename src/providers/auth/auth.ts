@@ -1,9 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LogInForm, LoginResponse, User } from '../../interface/user';
+import {
+  CheckUserResponse,
+  LogInForm,
+  LoginResponse, RegisterResponse,
+  SignUpForm,
+  User,
+} from '../../interface/user';
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Avatar, EventUploadResponse } from '../../interface/event';
+import { EventProvider } from '../event/event';
 
 /*
   Generated class for the AuthProvider provider.
@@ -14,21 +22,17 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthProvider {
 
+  mediaAPI = 'http://media.mw.metropolia.fi/wbma/';
+  loggedIn = false;
   private _authenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly authenticated: Observable<boolean> = this._authenticated.asObservable();
 
   private _user: BehaviorSubject<User> = new BehaviorSubject<User>({});
   readonly user: Observable<User> = this._user.asObservable();
 
-  constructor(public http: HttpClient, public appConstant: AppConstantProvider) {
+  constructor(public http: HttpClient, public appConstant: AppConstantProvider, public eventProvider: EventProvider) {
     console.log('Hello AuthProvider Provider');
   }
-
-
-
-  // signup(data: any) {
-
-  // }
 
   async logIn(user: LogInForm): Promise<any> {
     this.http.post<LoginResponse>(this.appConstant.API.API_ENDPOINT + '/login', user).subscribe(
@@ -46,7 +50,27 @@ export class AuthProvider {
   logOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('userData');
+    localStorage.clear();
     this._authenticated.next(false);
+  }
+
+  checkUser(username) {
+    return this.http.get<CheckUserResponse>(this.appConstant.API.API_ENDPOINT + '/users/username/' + username);
+  }
+
+  register(userData: SignUpForm) {
+    userData.confirmPassword = undefined;
+
+    return this.http.post<RegisterResponse>(this.appConstant.API.API_ENDPOINT + '/users', userData).subscribe(
+      response => {
+        const user: LogInForm = { username: userData.username, password: userData.password };
+        this.logIn(user).catch(error => console.log(error));
+      }
+    );
+  }
+
+  getAvatar() {
+    return this.http.get<Avatar[]>(this.appConstant.API.API_ENDPOINT + '/tags/profile');
   }
 
   isAuthecticated(): Observable<boolean> {
@@ -76,6 +100,21 @@ export class AuthProvider {
 
   canEnterPage(): boolean {
     return this._authenticated.getValue();
+  }
+
+  async updateUserInfo(data: any): Promise<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') })
+    };
+    return this.http.put(this.appConstant.API.API_ENDPOINT + '/users', data, httpOptions).toPromise();
+  }
+
+  async updateAvatar(data: any): Promise<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token'), })
+    };
+    const uploadResponse = await this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions).toPromise();
+    return this.eventProvider.tagMedia(uploadResponse.file_id, this.appConstant.APP.AVATAR_TAG);
   }
 
   getUser(): User {

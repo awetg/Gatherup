@@ -1,0 +1,18 @@
+page-home .events-container {
+  background-size: cover;
+  min-height: 200px; }
+page-home .events {
+  column-count: 2; }
+@media (min-width: 0px) {
+  page-home .events {
+    column-count: 2; } }
+@media (min-width: 620px) {
+  page-home .events {
+    column-count: 3; } }
+@media (min-width: 820px) {
+  page-home .events {
+    column-count: 4; } }
+page-home .one-event {
+  margin: 2px; }
+
+/*# sourceMappingURL=home.css.map */

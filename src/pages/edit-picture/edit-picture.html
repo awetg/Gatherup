@@ -1,0 +1,22 @@
+<!--
+  Generated template for the EditPicturePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<div class="alert-content">
+</div>
+
+<ion-list>
+  <ion-item>
+    Choose profile picture
+  </ion-item>
+  <ion-item>
+    <button (click)="closePopover()"><ion-icon icon-only name="close" slot="end" clear></ion-icon></button>
+  </ion-item>
+  <ion-item>
+    <button ion-button type="button" (click)="chooseFile()"  accept="image/*">Choose from gallery</button>
+    <button type="button" ion-button (click)="takePhoto()">Take a new photo</button>
+  </ion-item>
+</ion-list>
+

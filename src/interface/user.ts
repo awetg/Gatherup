@@ -3,6 +3,7 @@ export interface User {
     username?: string;
     email?: string;
     time_created?: Date;
+    avatar?: string;
 }
 
 export interface UserInfo {
@@ -10,7 +11,7 @@ export interface UserInfo {
     filename: string;
     filesize: number;
     title: string;
-    description: UserInfoDescribtion;
+    description: UserInfoDescription;
     user_id: number;
     media_type: string;
     mime_type: string;
@@ -36,11 +37,28 @@ export interface LoginResponse {
     user: User;
 }
 
-export interface UserInfoDescribtion {
+export interface RegisterResponse {
+  message: string;
+  user_id: number;
+
+}
+
+export interface CheckUserResponse {
+  username: string;
+  available: boolean;
+}
+
+export interface UserInfoDescription {
     fullname?: string;
+    email?: string;
     interest?: string [];
     avatar?: string;
     events?: number[];
     joinedEvents?: number[];
     favEvents?: number[];
+}
+
+export interface UploadResponse {
+  message: string;
+  file_id: number;
 }
