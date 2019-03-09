@@ -10,7 +10,7 @@ import {
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { Avatar, EventUploadResponse } from '../../interface/event';
+import { EventUploadResponse } from '../../interface/event';
 import { EventProvider } from '../event/event';
 
 /*
@@ -67,10 +67,6 @@ export class AuthProvider {
         this.logIn(user).catch(error => console.log(error));
       }
     );
-  }
-
-  getAvatar() {
-    return this.http.get<Avatar[]>(this.appConstant.API.API_ENDPOINT + '/tags/profile');
   }
 
   isAuthecticated(): Observable<boolean> {

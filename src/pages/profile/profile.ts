@@ -34,7 +34,6 @@ export class ProfilePage {
     public eventProvider: EventProvider,
     public authProvider: AuthProvider,
     private popoverCtrl: PopoverController) {}
-  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
