@@ -19,7 +19,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 export class WelcomePage {
 
   logInPage: PageItem = { title: 'LogIn', component: 'LoginPage' };
-  signUpPage: PageItem = { title: 'SignUp', component: 'LoginPage' };
+  RegisterPage: PageItem = { title: 'SignUp', component: 'RegisterPage' };
 
   constructor(public navCtrl: NavController, public eventProvider: EventProvider, public authProvider: AuthProvider) {
   }

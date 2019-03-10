@@ -8,9 +8,12 @@ import { FormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
 
+import { AppConstantProvider } from '../providers/app-constant/app-constant';
+import { MediaProvider } from '../providers/media/media';
+import { AppDbProvider } from '../providers/app-db/app-db';
 import { EventProvider } from '../providers/event/event';
 import { AuthProvider } from '../providers/auth/auth';
-import { AppConstantProvider } from '../providers/app-constant/app-constant';
+import { SettingsProvider } from '../providers/settings/settings';
 import { PipesModule } from '../pipes/pipes.module';
 
 
@@ -35,7 +38,10 @@ import { PipesModule } from '../pipes/pipes.module';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     EventProvider,
     AuthProvider,
-    AppConstantProvider
+    AppConstantProvider,
+    SettingsProvider,
+    MediaProvider,
+    AppDbProvider
   ]
 })
 export class AppModule {}

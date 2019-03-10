@@ -2,13 +2,21 @@ import { NgModule } from '@angular/core';
 import { ThumbnailPipe } from './thumbnail/thumbnail';
 import { OrganizerNamePipe } from './organizer-name/organizer-name';
 import { CommentsPipe } from './comments/comments';
+import { ExcerptPipe } from './excerpt/excerpt';
+
 @NgModule({
-  declarations: [ThumbnailPipe,
+  declarations: [
+    ThumbnailPipe,
+    ExcerptPipe,
     OrganizerNamePipe,
-    CommentsPipe],
+    CommentsPipe
+  ],
   imports: [],
-  exports: [ThumbnailPipe,
+  exports: [
+    ThumbnailPipe,
+    ExcerptPipe,
     OrganizerNamePipe,
-    CommentsPipe]
+    CommentsPipe
+  ]
 })
 export class PipesModule {}

@@ -1,3 +1,5 @@
+import { Thumbnail } from './media';
+
 export interface Event {
     file_id: number;
     filename: string;
@@ -12,23 +14,38 @@ export interface Event {
     thumbnails?: Thumbnail;
 }
 
-export interface EventUploadResponse {
-    message: string;
-    file_id: number;
-}
-
 export interface EventDescription {
     category?: string[];
     details?: string;
-    time?: Date;
+    start_time?: Date;
+    end_time?: Date;
     location?: string;
-    attends?: number[];
+    coordinates?: { lng?: number, lat?: number };
+    attendees?: number[];   // intereseted users will be saved as taging event media as favorite
+    organizer?: EventOrganizer;
 }
 
-export interface Thumbnail {
-    w160?: string;
-    w320?: string;
-    w640?: string;
+export interface EventOrganizer {
+    username?: string;
+    fullname?: string;
+    avatar_id?: number;
+}
+
+export interface PlaceAutocompleteResponse {
+    attribution: string;
+    features: PlaceItem[];
+    query: string[];
+    type: string;
+}
+
+export interface PlaceItem {
+    place_name: string;
+    geometry: { type: string; coordinates: number[] };
+}
+
+export interface CreateEvent {
+    title?: string;
+    description?: EventDescription;
 }
 
 export interface Organizer {

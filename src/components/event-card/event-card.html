@@ -1,55 +1,33 @@
 <!-- Generated template for the EventCardComponent component -->
-<div>
-  <!-- <ion-card>
-    <ion-card-header>
-      <ion-card-title>{{ event.title }}</ion-card-title>
-    </ion-card-header>
+<div class="pins">
+  <div class="pin" *ngFor="let event of events">
 
-    <ion-card-content>
-      Keep close to Nature's heart... and break clear away, once in awhile,
-      and climb a mountain or spend a week in the woods. Wash your spirit clean.
-    </ion-card-content>
-  </ion-card> -->
-  <ion-card *ngFor="let event of events">
+    <ion-card class="event-card-size round">
 
-      <ion-item (click)="openEvent(event)">
-        <ion-avatar item-left>
-          <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
-        </ion-avatar>
-        <h2>Josh Morony</h2>
-        <p>{{ event.time_added | date: 'longDate'}}</p>
-      </ion-item>
-
-    <ion-item  (click)="openEvent(event)">
-      <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + event.filename " />
-    </ion-item>
-
-    <ion-card-content>
-      <p>{{event.title}}</p>
-    </ion-card-content>
+      <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + (event.file_id | thumbnail: 'large' | async )" />
 
       <ion-row>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>12 Likes</div>
-          </button>
+        <ion-col col-3>
+          <ion-item>
+            <ion-avatar item-left>
+              <img
+                [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( event.description.organizer.avatar_id !== undefined ? (event.description.organizer.avatar_id | thumbnail: 'small') : 'ab6e8a71b39981a6422125f476d40005-tn160.png') " />
+            </ion-avatar>
+          </ion-item>
         </ion-col>
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>4 Comments</div>
-          </button>
+        <ion-col col-9 class="left">
+          <h2>{{ event.title }}</h2>
+          <ion-label no-margin color="gray-light">
+            by {{ event.description.organizer !== undefined ? event.description.organizer.username : 'unkown' }}
+          </ion-label>
         </ion-col>
-
-        <ion-col>
-          <button ion-button icon-left clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>5 going</div>
-          </button>
-        </ion-col>
-
       </ion-row>
 
+      <ion-card-content color="gray-light">
+        {{ (event.description.details || 'no details') | excerpt: 60 }}
+      </ion-card-content>
+
     </ion-card>
+
+  </div>
 </div>

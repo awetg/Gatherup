@@ -19,7 +19,8 @@ import { PageItem } from '../../interface/page';
 export class LoginPage {
 
   user: LogInForm = { };
-  signUpPage: PageItem = { title: 'SignUp', component: 'LoginPage' };
+  RegisterPage: PageItem = { title: 'SignUp', component: 'RegisterPage' };
+  loginError = false;
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +32,12 @@ export class LoginPage {
   }
 
   logIn() {
-    this.auth.logIn(this.user).catch(error => console.log(error));
+    this.auth.logIn(this.user).catch(error => {
+      console.log(error.error.message);
+      if (error.error.message === 'Authentication failed due bad password') {
+        this.loginError = true;
+      }
+    });
   }
 
   openPage(page: PageItem) {
