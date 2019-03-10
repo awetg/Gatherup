@@ -83,12 +83,12 @@
 
     <div *ngIf="selectedSegment === 'comments'">
 
-      <ion-item class ="comment">
+      <ion-item class ="comment" *ngFor="let comment of comments">
         <ion-avatar item-left>
           <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
         </ion-avatar>
         <h5>{{event.user_id | organizerName | async }}</h5>
-        <p> Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments </p>
+        <p> {{event.file_id | comments | async }} </p>
       </ion-item>
 
       <ion-item class ="comment">
@@ -98,8 +98,18 @@
         <h5>{{event.user_id | organizerName | async }}</h5>
         <p> Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments </p>
       </ion-item>
+
+      <div class="commentBox">
+
+        <ion-textarea [(ngModel)]="comment" type="text" placeholder="Comment .... "></ion-textarea>
+        <button ion-button small float-right round>Send</button>
+
+
+      </div>
 
     </div>
   </ion-content>
+
+
 
 </ion-content>

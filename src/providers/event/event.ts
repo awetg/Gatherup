@@ -5,6 +5,7 @@ import { Event, EventUploadResponse } from '../../interface/event';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../interface/user';
+import { Comments } from '../../interface/comments';
 
 /*
   Generated class for the EventProvider provider.
@@ -70,7 +71,17 @@ export class EventProvider {
   }
 
   fetchOrganizer(user_id: number){
-    return this.http.get<User>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id).toPromise();
+    const httpOptions = {
+      headers: new HttpHeaders({
+          'x-access-token': localStorage.getItem('token'),
+        },
+      ),
+    };
+    return this.http.get<User>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions).toPromise();
+  }
+
+  fetchComment(file_id: number){
+    return this.http.get<Comments>(this.appConstant.API.API_ENDPOINT + '/comments/file/' + file_id).toPromise();
   }
 
 }

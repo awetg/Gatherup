@@ -17,6 +17,8 @@ export class OrganizerNamePipe implements PipeTransform {
    * Takes a user_id and gives the name.
    */
   async transform(user_id: number, ...args) {
-    return this.eventProvider.fetchOrganizer(user_id).then(res => res.email).catch(err => console.log(err));
+    const username = await this.eventProvider.fetchOrganizer(user_id).then(res => res.username).catch(err => console.log(err));
+    console.log(username);
+    return username;
   }
 }
