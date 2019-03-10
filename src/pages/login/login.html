@@ -11,20 +11,25 @@
 </ion-header>
 
 <ion-content padding>
-  <form #loginForm="ngForm" class="my-form" (ngSubmit)="logIn()">
-    <ion-item>
-      <ion-label floating color="secondary">Username</ion-label>
-      <ion-input type="text" [(ngModel)]="user.username" name="username" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating color="secondary">Password</ion-label>
-      <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
-    </ion-item>
-    <button ion-button block class="my-btn" color="primary" type="submit"
-      [disabled]="!loginForm.form.valid">Login</button>
-  </form>
-  <ion-row>
-    <button ion-button block clear (click)="openPage(RegisterPage)">Don't have account?
-      Register.</button>
-  </ion-row>
+  <div class="form-container">
+    <form #loginForm="ngForm" class="my-form" (ngSubmit)="logIn()">
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" [(ngModel)]="user.username" name="username" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
+      </ion-item>
+      <ion-item no-lines class="text-md-danger" *ngIf="loginError">
+          <small>Password or username is incorrect</small>
+        </ion-item>
+      <button ion-button block class="my-btn" color="primary" type="submit"
+        [disabled]="!loginForm.form.valid">Login</button>
+    </form>
+    <ion-row>
+      <button ion-button block clear (click)="openPage(RegisterPage)">Don't have account?
+        Register.</button>
+    </ion-row>
+  </div>
 </ion-content>

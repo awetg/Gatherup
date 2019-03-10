@@ -1,10 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {
-  CheckUserResponse,
-  LogInForm, RegisterResponse,
-  SignUpForm,
-} from '../../interface/user';
+import { Component } from '@angular/core';
+import { IonicPage, NavController } from 'ionic-angular';
+import { CheckUserResponse, SignUpForm } from '../../interface/user';
+import { AppConstantProvider } from '../../providers/app-constant/app-constant';
 import { AuthProvider } from '../../providers/auth/auth';
 import { PageItem } from '../../interface/page';
 
@@ -23,41 +20,52 @@ import { PageItem } from '../../interface/page';
 export class RegisterPage {
 
   user: SignUpForm = { };
-  @ViewChild('registerForm') registerForm: any;
   passwordConfirmed = false;
   usernameAvailable = false;
   LoginPage: PageItem = { title: 'SignUp', component: 'LoginPage' };
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authProvider: AuthProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public authProvider: AuthProvider,
+    public appConstant: AppConstantProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
-  register() {
-    if (this.usernameAvailable && this.confirmPasswordFunction) {
-      this.authProvider.register(this.user);
+
+  register($event) {
+    $event.preventDefault();
+    if (this.confirmPasswordFunc()) {
+      this.authProvider.register(this.user).catch(error => console.log(error));
     }
+    return false;
   }
-  checkUser() {
+
+  checkUsername() {
     if (this.user.username !== undefined && this.user.username.length >= 3) {
-      this.authProvider.checkUser(this.user.username).subscribe(
+      this.authProvider.checkUsername(this.user.username).subscribe(
         (response: CheckUserResponse) => {
-          if (response.available) {
-            this.usernameAvailable = true;
-          }
+          response.available ? this.usernameAvailable = true : this.usernameAvailable = false;
+        },
+        error => {
+          console.log(error);
+          this.usernameAvailable = false;
         }
       );
     }
   }
 
-  confirmPasswordFunction() {
+  confirmPasswordFunc(): boolean {
     if (this.user.password !== undefined) {
       if (this.user.password === this.user.confirmPassword) {
         this.passwordConfirmed = true;
+        return true;
       }
     }
+    this.passwordConfirmed = false;
+    return false;
   }
 
   openPage(page: PageItem) {

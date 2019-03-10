@@ -21,14 +21,14 @@
     <ion-item no-lines>
       <ion-avatar>
         <img class="profile-image"
-          [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( user.avatar || 'ab6e8a71b39981a6422125f476d40005-tn160.png' )"
+          [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( (authProvider.userDB | async)?.description?.avatar_id ? ((authProvider.userDB | async)?.description?.avatar_id | thumbnail: 'small' | async) : 'ab6e8a71b39981a6422125f476d40005-tn160.png' )"
           alt="profile image">
       </ion-avatar>
     </ion-item>
     <div class="profile-details">
-      <ion-label>{{ (user.username || 'Full Name') }}</ion-label>
-      <ion-label>Helsinki</ion-label>
-      <ion-label>joined: 12/12/2019</ion-label>
+      <ion-label class="username">{{ (authProvider.user | async)?.username  }}</ion-label>
+      <ion-label color="gray-light">{{ (authProvider.user | async)?.email  }}</ion-label>
+      <ion-label color="gray-light">joined: {{ (authProvider.user | async)?.time_created | date: 'MMMM d, y' }}</ion-label>
     </div>
     <ion-buttons>
         <button ion-button outline (click)="openPage(editProfilePage)">Edit Profile</button>
@@ -51,26 +51,6 @@
   <div *ngIf="selectedSegment === 'Going'">
     <event-card [events]="(eventProvider.events$ | async)"></event-card>
   </div>
-
-
-  <!-- <div *ngIf="hideMe" class="alert-content">
-  <ion-list>
-    <ion-item class="edit-option">
-      <p style="font-size: 14px!important; border-bottom: 1px solid grey;">Choose profile picture <button class="cross"
-          ion-button icon-only icon-right (click)="dismiss()" clear>
-          <ion-icon name="close" clear></ion-icon>
-        </button></p>
-      <br>
-      <button
-        style="background-color: rgba(0,0,0,0); color: #000000; border: none rgb(0, 0, 238);font-size: x-small; width: 80%"
-        ion-button (click)="chooseFile()" accept="image/*">Choose from gallery</button>
-      <br>
-      <button ion-button (click)="takePhoto()" style="font-size: x-small; width:80%">Take a new photo</button>
-      <br>
-      <p (click)="takePhoto()">Take a new photo</p>
-    </ion-item>
-  </ion-list>
-</div> -->
 
 <ion-fab bottom right>
   <button ion-fab (click)="openPage(createEventPage)"><ion-icon name="add"></ion-icon></button>

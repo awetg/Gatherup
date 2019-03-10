@@ -14,3 +14,18 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.form-container {
+    margin: 10px auto;
+    border-radius: 10px;
+    padding: 10px 16px;
+}
+
+@each $size, $size-value in $screen-breakpoints {
+    .form-container {
+        @media (min-width: $size-value) {
+            width: if($size-value < 500, 100%, 700px);
+            border: if($size-value < 500, none, 1px solid map-get($colors, primary));
+        }
+    }
+}

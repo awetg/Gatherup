@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, LoadingController, ModalController, NavController, PopoverController } from 'ionic-angular';
 import { EventDescription, PlaceItem } from '../../interface/event';
 import { AppConstantProvider } from '../../providers/app-constant/app-constant';
-import { AuthProvider } from '../../providers/auth/auth';
 import { EventProvider } from '../../providers/event/event';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the CreateEventPage page.
@@ -48,7 +48,7 @@ export class CreateEventPage {
 
   loading = this.loadingCtrl.create({
     spinner: 'ios',
-    content: 'Your file is uploading...',
+    content: 'Your event is uploading...',
   });
 
   ionViewDidLoad() {
@@ -67,7 +67,8 @@ export class CreateEventPage {
       this.description.start_time = new Date(this.startDate + ' ' + this.startTime);
       this.description.end_time = new Date(this.endDate + ' ' + this.endTime);
       const user = this.authProvider.getUser();
-      this.description.organizer = { username: user.username, avatar: 'ab6e8a71b39981a6422125f476d40005-tn160.png' };
+      const userDB = this.authProvider.getUserDB();
+      this.description.organizer = { username: user.username, avatar_id: userDB.avatar_id };
       this.loading.present().catch(error => console.log(error));
       const fd = new FormData();
       fd.append('file', this.file);
@@ -76,8 +77,8 @@ export class CreateEventPage {
       this.eventProvider.addEvent(fd).then(
         res => {
           setTimeout(() => {
-            this.loading.dismiss().catch(e => console.log(e));
-            this.navCtrl.pop().catch(e => console.log(e));
+            this.loading.dismiss().catch(error => console.log(error));
+            this.navCtrl.pop().catch(error => console.log(error));
           },
           2000,
         );
@@ -88,13 +89,17 @@ export class CreateEventPage {
 
   openPopover(ev: any, popoverComponet: any, onDismiss: any) {
     const popover = this.popoverCtrl.create(popoverComponet);
-    popover.onDidDismiss(onDismiss.bind(this));
+    if (onDismiss !== undefined) {
+      popover.onDidDismiss(onDismiss.bind(this));
+    }
     popover.present({ ev }).catch(error => console.log(error));
   }
 
   openModal(ev: any, popoverComponet: any, onDismiss: any) {
     const modal = this.modalCtrl.create(popoverComponet);
-    modal.onDidDismiss(onDismiss.bind(this));
+    if (onDismiss !== undefined) {
+      modal.onDidDismiss(onDismiss.bind(this));
+    }
     modal.present().catch(error => console.log(error));
   }
 

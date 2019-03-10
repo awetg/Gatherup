@@ -7,15 +7,22 @@ export interface User {
 }
 
 export interface UserInfo {
-    file_id: number;
-    filename: string;
-    filesize: number;
-    title: string;
-    description: UserInfoDescription;
-    user_id: number;
-    media_type: string;
-    mime_type: string;
-    time_added: string;
+  user_id?: number;
+  username?: string;
+  email?: string;
+  full_name?: string;
+}
+
+export interface UserDBMedia {
+    file_id?: number;
+    filename?: string;
+    filesize?: number;
+    title?: string;
+    description?: UserDBDescription;
+    user_id?: number;
+    media_type?: string;
+    mime_type?: string;
+    time_added?: string;
 }
 
 export interface LogInForm {
@@ -29,6 +36,7 @@ export interface SignUpForm {
     password?: string;
     confirmPassword?: string;
     email?: string;
+    intereset?: string[];
 }
 
 export interface LoginResponse {
@@ -48,11 +56,10 @@ export interface CheckUserResponse {
   available: boolean;
 }
 
-export interface UserInfoDescription {
-    fullname?: string;
-    email?: string;
+export interface UserDBDescription {
+    full_name?: string;
     interest?: string [];
-    avatar?: string;
+    avatar_id?: number;
     events?: number[];
     joinedEvents?: number[];
     favEvents?: number[];
