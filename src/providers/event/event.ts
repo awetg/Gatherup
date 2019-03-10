@@ -4,6 +4,8 @@ import { AppConstantProvider } from '../app-constant/app-constant';
 import { Event, PlaceAutocompleteResponse } from '../../interface/event';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { User } from '../../interface/user';
+import { Comments } from '../../interface/comments';
 import { MediaProvider } from '../media/media';
 
 /*
@@ -60,6 +62,20 @@ export class EventProvider {
   async getPlacePredictions(queryJson): Promise<PlaceAutocompleteResponse> {
     const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + queryJson + '.json?access_token=pk.eyJ1Ijoia2FsYXkiLCJhIjoiY2p0MHAwamM2MDYwejQzcXU1anF6Z2lzMiJ9.fcb4riEtQstZaSzMxluPuA';
     return this.http.get<PlaceAutocompleteResponse>(url).toPromise();
+  }
+
+  fetchOrganizer(user_id: number){
+    const httpOptions = {
+      headers: new HttpHeaders({
+          'x-access-token': localStorage.getItem('token'),
+        },
+      ),
+    };
+    return this.http.get<User>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions).toPromise();
+  }
+
+  fetchComment(file_id: number){
+    return this.http.get<Comments>(this.appConstant.API.API_ENDPOINT + '/comments/file/' + file_id).toPromise();
   }
 
 }

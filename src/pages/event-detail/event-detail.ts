@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { EventProvider } from '../../providers/event/event';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the EventDetailPage page.
@@ -17,8 +18,9 @@ import { EventProvider } from '../../providers/event/event';
 })
 export class EventDetailPage {
   event: any;
+  selectedSegment = 'details';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: EventProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: EventProvider, authProvider: AuthProvider) {
     this.event = navParams.get('event');
   }
 

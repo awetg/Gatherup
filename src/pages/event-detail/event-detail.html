@@ -12,24 +12,104 @@
 
 <ion-content padding>
 
-  <ion-card>
-    <ion-item>
-      <ion-avatar item-left>
-        <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
-      </ion-avatar>
-      <h4>{{event.user_id}}</h4>
-    </ion-item>
 
-    <ion-item>
-      <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + event.filename " />
-    </ion-item>
+  <ion-item>
+    <ion-avatar item-left>
+      <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
+    </ion-avatar>
+    <h4>{{event.user_id | organizerName | async }}</h4>
+  </ion-item>
 
-    <ion-item>
-      <h1>{{event.title}}</h1>
-      <p>{{ event.time_added | date: 'longDate'}}</p>
-      <p>{{event.description}}</p>
-    </ion-item>
+  <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + event.filename " />
 
-  </ion-card>
+  <h2>{{event.title}}</h2>
+  <ion-row>
+
+    <ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="checkmark"></ion-icon>
+        <div>Join Event</div>
+      </button>
+    </ion-col>
+
+    <ion-col>
+      <button ion-button icon-left clear small>
+        <ion-icon name="star-outline"></ion-icon>
+        <div>Interested</div>
+      </button>
+    </ion-col>
+
+  </ion-row>
+
+  <ion-row>
+    <button ion-button icon-left clear small color="grey-light">
+      <ion-icon name="calendar"></ion-icon>
+      <div>{{ event.time_added | date: 'longDate'}}</div>
+    </button>
+  </ion-row>
+
+  <ion-row>
+    <button ion-button icon-left clear small color="grey-light">
+      <ion-icon name="pin"></ion-icon>
+      <div>{{ event.location}}</div>
+    </button>
+  </ion-row>
+
+  <ion-segment mode="md" [(ngModel)]="selectedSegment">
+    <ion-segment-button value="details">
+      Details
+    </ion-segment-button>
+    <ion-segment-button value="comments">
+      Comments
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-content padding>
+    <div *ngIf="selectedSegment === 'details'">
+      <ion-row>
+        <button ion-button icon-left clear small color="grey-light">
+          <ion-icon name="calendar"></ion-icon>
+          <div>{{ event.time_added | date: 'longDate'}}</div>
+        </button>
+      </ion-row>
+
+      <ion-row>
+        <button ion-button icon-left clear small color="grey-light">
+          <ion-icon name="pin"></ion-icon>
+          <div>{{ event.location}}</div>
+        </button>
+      </ion-row>
+    </div>
+
+    <div *ngIf="selectedSegment === 'comments'">
+
+      <ion-item class ="comment" *ngFor="let comment of comments">
+        <ion-avatar item-left>
+          <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
+        </ion-avatar>
+        <h5>{{event.user_id | organizerName | async }}</h5>
+        <p> {{event.file_id | comments | async }} </p>
+      </ion-item>
+
+      <ion-item class ="comment">
+        <ion-avatar item-left>
+          <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
+        </ion-avatar>
+        <h5>{{event.user_id | organizerName | async }}</h5>
+        <p> Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments </p>
+      </ion-item>
+
+      <div class="commentBox">
+
+        <ion-textarea [(ngModel)]="comment" type="text" placeholder="Comment .... "></ion-textarea>
+        <button ion-button small float-right round>Send</button>
+
+
+      </div>
+
+    </div>
+  </ion-content>
+
+
 
 </ion-content>

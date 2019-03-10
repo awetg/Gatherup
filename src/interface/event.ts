@@ -47,3 +47,10 @@ export interface CreateEvent {
     title?: string;
     description?: EventDescription;
 }
+
+export interface Organizer {
+  user_id: number;
+  username: string;
+  email: string;
+  full_name: string;
+}
