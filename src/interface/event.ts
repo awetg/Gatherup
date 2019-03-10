@@ -12,11 +12,6 @@ export interface Event {
     thumbnails?: Thumbnail;
 }
 
-export interface EventUploadResponse {
-    message: string;
-    file_id: number;
-}
-
 export interface EventDescription {
     category?: string[];
     details?: string;

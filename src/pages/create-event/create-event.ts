@@ -88,13 +88,17 @@ export class CreateEventPage {
 
   openPopover(ev: any, popoverComponet: any, onDismiss: any) {
     const popover = this.popoverCtrl.create(popoverComponet);
-    popover.onDidDismiss(onDismiss.bind(this));
+    if (onDismiss !== undefined) {
+      popover.onDidDismiss(onDismiss.bind(this));
+    }
     popover.present({ ev }).catch(error => console.log(error));
   }
 
   openModal(ev: any, popoverComponet: any, onDismiss: any) {
     const modal = this.modalCtrl.create(popoverComponet);
-    modal.onDidDismiss(onDismiss.bind(this));
+    if (onDismiss !== undefined) {
+      modal.onDidDismiss(onDismiss.bind(this));
+    }
     modal.present().catch(error => console.log(error));
   }
 

@@ -12,7 +12,7 @@ import {
 import { AuthProvider } from '../../providers/auth/auth';
 // import { Camera, CameraOptions } from '@ionic-native/camera';
 // import { Chooser } from '@ionic-native/chooser/ngx';
-import { EventUploadResponse } from '../../interface/event';
+// import { EventUploadResponse } from '../../interface/event';
 import { PageItem } from '../../interface/page';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 
@@ -22,8 +22,6 @@ import { EditProfilePage } from '../edit-profile/edit-profile';
   templateUrl: 'edit-picture.html',
 })
 export class EditPicturePage implements OnInit {
-
-  
 
   passedId = null;
   file: any;
@@ -52,21 +50,21 @@ export class EditPicturePage implements OnInit {
     this.passedId = this.navParams.get('custom_id');
   }
 
-  closePopover() {
-    this.popover.dismiss();
-  }
+  // closePopover() {
+  //   this.popover.dismiss();
+  // }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditPicturePage');
   }
 
-  loading = this.loadingCtrl.create({
-    spinner: 'ios',
-    content: 'Your file is uploading...',
-  });
+  // loading = this.loadingCtrl.create({
+  //   spinner: 'ios',
+  //   content: 'Your file is uploading...',
+  // });
 
-  handleChange($event) {
-    this.file = $event.target.files[0];
-  }
+  // handleChange($event) {
+  //   this.file = $event.target.files[0];
+  // }
 
   // upload() {
 

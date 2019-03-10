@@ -16,7 +16,7 @@ export class AppConstantProvider {
 
   API = {
     API_ENDPOINT: 'http://media.mw.metropolia.fi/wbma',
-    MEDIA_ENDPOINT: 'http://media.mw.metropolia.fi/wbma/upload',
+    MEDIA_ENDPOINT: 'http://media.mw.metropolia.fi/wbma/uploads',
   };
 
   CATEGORY = [
@@ -28,7 +28,9 @@ export class AppConstantProvider {
   APP = {
     EVENT_TAG: 'EVENT',
     AVATAR_TAG: 'GATHERUP_AVATAR',
-    AVATAR_TITLE: 'GATHERUP_AVATAR_TITLE'
+    AVATAR_TITLE: 'GATHERUP_AVATAR_TITLE',
+    APP_INFO_TAG: 'GATHERUP_APP_INFO',
+    USER_INFO_TITLE: 'GATHERUP_USER_INFO_FILE'
   };
 
 }

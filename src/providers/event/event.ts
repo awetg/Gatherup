@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConstantProvider } from '../app-constant/app-constant';
-import { Event, EventUploadResponse, PlaceAutocompleteResponse } from '../../interface/event';
+import { Event, PlaceAutocompleteResponse } from '../../interface/event';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { MediaProvider } from '../media/media';
 
 /*
   Generated class for the EventProvider provider.
@@ -17,7 +18,10 @@ export class EventProvider {
   private _events: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>([]);
   readonly events$: Observable<Event[]> = this._events.asObservable();
 
-  constructor(public http: HttpClient, public appConstant: AppConstantProvider) {
+  constructor(
+    public http: HttpClient,
+    public appConstant: AppConstantProvider,
+    public mediaProvider: MediaProvider) {
     console.log('Hello EventProvider Provider');
     this.loadEvents();
   }
@@ -34,14 +38,8 @@ export class EventProvider {
   }
 
   async addEvent(data: any): Promise<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'x-access-token': localStorage.getItem('token'),
-      },
-      ),
-    };
-    const uploadResponse = await this.http.post<EventUploadResponse>(this.appConstant.API.API_ENDPOINT + '/media', data, httpOptions).toPromise();
-    return this.tagMedia(uploadResponse.file_id, this.appConstant.APP.EVENT_TAG);
+    const uploadResponse = await this.mediaProvider.uploadMedia(data);
+    return this.mediaProvider.tagMedia(uploadResponse.file_id, this.appConstant.APP.EVENT_TAG);
 
   }
 
@@ -53,17 +51,6 @@ export class EventProvider {
       },
       error => console.log(error)
     );
-  }
-
-  async tagMedia(file_id: number, tag: string): Promise<any> {
-    const httpParams = { file_id, tag };
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'x-access-token': localStorage.getItem('token'),
-      },
-      ),
-    };
-    return this.http.post(this.appConstant.API.API_ENDPOINT + '/tags', httpParams, httpOptions).toPromise();
   }
 
   fetchThumbnail(file_id: number) {

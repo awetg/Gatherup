@@ -29,6 +29,7 @@ export interface SignUpForm {
     password?: string;
     confirmPassword?: string;
     email?: string;
+    intereset?: string[];
 }
 
 export interface LoginResponse {
@@ -49,7 +50,7 @@ export interface CheckUserResponse {
 }
 
 export interface UserInfoDescription {
-    fullname?: string;
+    full_name?: string;
     email?: string;
     interest?: string [];
     avatar?: string;

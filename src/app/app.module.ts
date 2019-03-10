@@ -13,6 +13,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { AppConstantProvider } from '../providers/app-constant/app-constant';
 import { PipesModule } from '../pipes/pipes.module';
 import { SettingsProvider } from '../providers/settings/settings';
+import { MediaProvider } from '../providers/media/media';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { SettingsProvider } from '../providers/settings/settings';
     EventProvider,
     AuthProvider,
     AppConstantProvider,
-    SettingsProvider
+    SettingsProvider,
+    MediaProvider
   ]
 })
 export class AppModule {}
