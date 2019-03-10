@@ -82,7 +82,23 @@
     </div>
 
     <div *ngIf="selectedSegment === 'comments'">
-      <h1>Comments</h1>
+
+      <ion-item class ="comment">
+        <ion-avatar item-left>
+          <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
+        </ion-avatar>
+        <h5>{{event.user_id | organizerName | async }}</h5>
+        <p> Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments </p>
+      </ion-item>
+
+      <ion-item class ="comment">
+        <ion-avatar item-left>
+          <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" />
+        </ion-avatar>
+        <h5>{{event.user_id | organizerName | async }}</h5>
+        <p> Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments Comments </p>
+      </ion-item>
+
     </div>
   </ion-content>
 
