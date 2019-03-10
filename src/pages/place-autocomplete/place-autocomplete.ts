@@ -39,7 +39,7 @@ export class PlaceAutocompletePage {
     }
     await this.eventProvider.getPlacePredictions(this.autocompleteInput)
     .then(predictions => {
-      this.zone.run(() => this.autocompleteItems = predictions.features)
+      this.zone.run(() => this.autocompleteItems = predictions.features);
     })
     .catch(error => console.log(error));
   }
@@ -49,7 +49,7 @@ export class PlaceAutocompletePage {
   }
 
   closeView() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss().catch(error => console.log(error));
   }
 
 }

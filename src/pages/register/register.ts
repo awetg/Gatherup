@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { CheckUserResponse, SignUpForm } from '../../interface/user';
+import { AppConstantProvider } from '../../providers/app-constant/app-constant';
 import { AuthProvider } from '../../providers/auth/auth';
 import { PageItem } from '../../interface/page';
-import { AppConstantProvider } from '../../providers/app-constant/app-constant';
 
 /**
  * Generated class for the RegisterPage page.

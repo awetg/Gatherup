@@ -20,14 +20,18 @@ export class EventCardComponent {
     console.log('Hello EventCardComponent Component');
   }
 
+  parse(data: string) {
+    return JSON.parse(data);
+  }
+
   /**
    * Navigate to the detail page for this event.
    */
-  openEvent(event){
+  openEvent(event) {
     console.log('Event Card clicked');
     this.navCtrl.push('EventDetailPage', {
-      event: event
-    });
+      event
+    }).catch(error => console.log(error));
   }
 
 }

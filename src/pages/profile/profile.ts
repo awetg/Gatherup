@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, PopoverController } from 'ionic-angular';
-import { AuthProvider } from '../../providers/auth/auth';
-import { User } from '../../interface/user';
 import { EventProvider } from '../../providers/event/event';
+import { AuthProvider } from '../../providers/auth/auth';
 import { PageItem } from '../../interface/page';
 
 /**
@@ -26,7 +25,6 @@ export class ProfilePage {
   };
 
   selectedTheme: string;
-  user: User = { };
   selectedSegment = 'Going';
 
   constructor(

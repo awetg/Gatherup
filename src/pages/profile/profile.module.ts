@@ -4,6 +4,7 @@ import { ProfilePage } from './profile';
 import { ComponentsModule } from '../../components/components.module';
 import { EditProfilePageModule } from '../edit-profile/edit-profile.module';
 import { ProfileContextMenuPageModule } from '../profile-context-menu/profile-context-menu.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ProfileContextMenuPageModule } from '../profile-context-menu/profile-co
     IonicPageModule.forChild(ProfilePage),
     ComponentsModule,
     EditProfilePageModule,
-    ProfileContextMenuPageModule
+    ProfileContextMenuPageModule,
+    PipesModule
   ],
 })
 export class ProfilePageModule {}

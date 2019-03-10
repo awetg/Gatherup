@@ -11,20 +11,20 @@
           <ion-item>
             <ion-avatar item-left>
               <img
-                [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( event.description.organizer ? event.description.organizer.avatar : 'ab6e8a71b39981a6422125f476d40005-tn160.png') " />
+                [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( event.description.organizer.avatar_id !== undefined ? (event.description.organizer.avatar_id | thumbnail: 'small') : 'ab6e8a71b39981a6422125f476d40005-tn160.png') " />
             </ion-avatar>
           </ion-item>
         </ion-col>
         <ion-col col-9 class="left">
           <h2>{{ event.title }}</h2>
-          <ion-label no-margin color="gray-light">by
-            {{ event.description.organizer !== undefined ? event.description.organizer.username : 'unkown' }}
+          <ion-label no-margin color="gray-light">
+            by {{ event.description.organizer !== undefined ? event.description.organizer.username : 'unkown' }}
           </ion-label>
         </ion-col>
       </ion-row>
 
       <ion-card-content color="gray-light">
-        {{ 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been' | excerpt: 60 }}
+        {{ (event.description.details || 'no details') | excerpt: 60 }}
       </ion-card-content>
 
     </ion-card>

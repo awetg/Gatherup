@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { AppConstantProvider } from '../../providers/app-constant/app-constant';
-import { UserInfoDescription } from '../../interface/user';
+import { UserDBDescription } from '../../interface/user';
 import { AuthProvider } from '../../providers/auth/auth';
 
 /**
@@ -18,7 +18,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class EditProfilePage {
 
-  user: UserInfoDescription = { fullname: '', email: '', interest: [] };
+  user: UserDBDescription = { full_name: '', interest: [] };
+  email = '';
   file: File;
   fileData;
 
@@ -26,8 +27,14 @@ export class EditProfilePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public appConstant: AppConstantProvider,
-    public authProvider: AuthProvider) {
+    public authProvider: AuthProvider,
+    public loadingCtrl: LoadingController) {
   }
+
+  loading = this.loadingCtrl.create({
+    spinner: 'ios',
+    content: 'Your profile is updating...',
+  });
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditProfilePage');
@@ -35,22 +42,37 @@ export class EditProfilePage {
 
   updateProfile($event) {
     $event.preventDefault();
-    Object.keys(this.user).forEach(key => {
-      if (this.user[key] === undefined || this.user[key].lenth < 0) {
-        delete this.user[key];
-      }
-    });
-    console.log(this.user);
-    if (Object.keys(this.user).length > 0) {
-      this.authProvider.updateUserInfo(this.user).catch(error => console.log(error));
+    const promiseArr = [];
+    if (this.email.length > 0) {
+      const data = { 'email': this.email };
+      promiseArr.push(this.authProvider.updateUserInfo(data));
     }
     if (this.file !== undefined) {
       const fd = new FormData();
       fd.append('title', this.appConstant.APP.AVATAR_TITLE);
       fd.append('file', this.file);
-      this.authProvider.updateAvatar(fd)
-        .then(res => console.log(res))
-        .catch(error => console.log(error));
+      promiseArr.push(this.authProvider.updateAvatar(fd));
+    }
+    if (this.user.full_name.length > 0 || this.user.interest.length > 0) {
+      promiseArr.push(this.authProvider.updateUserDBMedia(this.user));
+    }
+
+    if (promiseArr.length > 0) {
+      this.loading.present().catch(error => console.log(error));
+      Promise.all(promiseArr)
+      .then(
+        res => {
+          setTimeout(() => {
+              this.loading.dismiss().catch(e => console.log(e));
+              this.navCtrl.pop().catch(error => console.log(error));
+            },
+          2000,
+          );
+        }
+      )
+      .catch(error => console.log(error));
+    } else {
+      this.navCtrl.pop().catch(error => console.log(error));
     }
   }
 

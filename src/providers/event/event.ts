@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { Event, PlaceAutocompleteResponse } from '../../interface/event';
@@ -28,10 +28,14 @@ export class EventProvider {
 
   loadEvents() {
     console.log('Loading Events');
-    this.http.get<Event[]>(this.appConstant.API.API_ENDPOINT + '/tags/EVENT').subscribe(
-      (events) => {
+    this.mediaProvider.getEventMedias().subscribe(
+      (events: Event[]) => {
         if (this._events.getValue().length < events.length) {
-          this._events.next(events);
+          this._events.next(events.map(e => {
+            const desc = JSON.parse(e.description as string);
+            e.description = desc;
+            return e;
+          }));
         }
       }
     );
@@ -44,17 +48,13 @@ export class EventProvider {
   }
 
   loadSingleEvent(file_id: number) {
-    this.http.get<Event>(this.appConstant.API.API_ENDPOINT + '/media/' + file_id).subscribe(
+    this.mediaProvider.getEventMedia(file_id).subscribe(
       (event) => {
         this._events.next(this._events.getValue().push.apply(this._events.getValue(), event));
         return event;
       },
       error => console.log(error)
     );
-  }
-
-  fetchThumbnail(file_id: number) {
-    return this.http.get<Event>(this.appConstant.API.API_ENDPOINT + '/media/' + file_id);
   }
 
   async getPlacePredictions(queryJson): Promise<PlaceAutocompleteResponse> {

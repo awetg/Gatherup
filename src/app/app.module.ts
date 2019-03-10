@@ -8,12 +8,13 @@ import { FormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
 
+import { AppConstantProvider } from '../providers/app-constant/app-constant';
+import { MediaProvider } from '../providers/media/media';
+import { AppDbProvider } from '../providers/app-db/app-db';
 import { EventProvider } from '../providers/event/event';
 import { AuthProvider } from '../providers/auth/auth';
-import { AppConstantProvider } from '../providers/app-constant/app-constant';
-import { PipesModule } from '../pipes/pipes.module';
 import { SettingsProvider } from '../providers/settings/settings';
-import { MediaProvider } from '../providers/media/media';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { MediaProvider } from '../providers/media/media';
     AuthProvider,
     AppConstantProvider,
     SettingsProvider,
-    MediaProvider
+    MediaProvider,
+    AppDbProvider
   ]
 })
 export class AppModule {}

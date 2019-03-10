@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { EventProvider } from '../../providers/event/event';
-import { Event } from '../../interface/event';
+import { MediaProvider } from '../../providers/media/media';
+import { Media } from '../../interface/media';
 
 /**
  * Generated class for the ThumbnailPipe pipe.
@@ -12,33 +12,39 @@ import { Event } from '../../interface/event';
 })
 export class ThumbnailPipe implements PipeTransform {
 
-  constructor(public eventProvider: EventProvider) {}
+  constructor(public mediaProvider: MediaProvider) {}
 
   /**
    * Takes a value and makes it lowercase.
    */
   async transform(file_id: number, ...args) {
     return new Promise((resolve, reject) => {
-      this.eventProvider.fetchThumbnail(file_id).subscribe(
-        (event: Event) => {
+      if (file_id === undefined) resolve(undefined);
+      this.mediaProvider.fetchThumbnail(file_id).subscribe(
+        (media: Media) => {
           switch (args[0]) {
             case 'large': {
-              resolve(event.thumbnails['w640']);
+              resolve(media.thumbnails['w640']);
               break;
             }
 
             case 'medium': {
-              resolve(event.thumbnails['w320']);
+              resolve(media.thumbnails['w320']);
               break;
             }
 
             case 'small': {
-              resolve(event.thumbnails['w160']);
+              resolve(media.thumbnails['w160']);
+              break;
+            }
+
+            case 'original': {
+              resolve(media.filename);
               break;
             }
 
             default: {
-              resolve(event.thumbnails['w160']);
+              resolve(media.thumbnails['w160']);
               break;
             }
           }
