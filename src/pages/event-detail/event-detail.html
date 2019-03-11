@@ -125,7 +125,7 @@
                 [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( comment.user_id !== undefined ? ( comment.user_id | thumbnail: 'small' | async ) : 'ab6e8a71b39981a6422125f476d40005-tn160.png' )"
                 alt="profile image" />
             </ion-avatar>
-            <h5>{{ comment.user_id }}</h5>
+            <h5>{{ comment.user_id | userInfo | async }}</h5>
             <h5>{{ comment.comment }}</h5>
           </ion-item>
         </ion-list>
