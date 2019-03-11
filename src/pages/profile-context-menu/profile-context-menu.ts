@@ -19,6 +19,7 @@ import { PageItem } from '../../interface/page';
 export class ProfileContextMenuPage {
 
   editProfilePage: PageItem = { title: '', component: 'EditProfilePage' };
+  createEventPage: PageItem = { title: '', component: 'CreateEventPage' };
 
   selectedTheme: string;
 

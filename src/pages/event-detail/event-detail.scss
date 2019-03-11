@@ -1,21 +1,23 @@
 page-event-detail {
+  .event-container {
+    margin: 0 auto;
 
-  button {
-    color: map-get($colors, secondary);
+    ion-icon {
+      margin-right: 8px;
+    }
+  }
+  .event-title {
+    font-weight: 401;
+    font-size: 1.6rem;
+    margin: 0 auto;
+    text-align: center;
   }
 
-  ion-avatar {
-    color:black;
-
-    min-width: 30px !important;
-    min-height: 30px !important;
-    max-width: 35px !important;
-    max-height: 35px !important;
-    margin: 8px 8px 8px 0;
-
-  }
-
-  .comment {
-    padding-left:0;
+  @each $size, $size-value in $screen-breakpoints {
+    .event-container {
+        @media (min-width: $size-value) {
+            width: if($size-value < 500, 100%, 700px);
+        }
+    }
   }
 }
