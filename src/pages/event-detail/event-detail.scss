@@ -21,8 +21,12 @@ page-event-detail {
     }
   }
 
-  [col-3] {
+  [col-2] {
     text-align: center;
+  }
+
+  [col-10] {
+    padding: 0;
   }
 
   textarea.text-input {
@@ -34,9 +38,15 @@ page-event-detail {
     padding: 0;
   }
 
-  .comment-btn {
-    margin: 15px auto;
-    border-radius: 5px;
+  .action-btn {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+  }
+
+  .join-btn {
+    width: 100px;
   }
 
 }
