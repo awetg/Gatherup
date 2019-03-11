@@ -279,4 +279,5 @@ export class AuthProvider {
     };
     return this.http.get<UserInfo>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions).toPromise();
   }
+
 }

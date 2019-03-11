@@ -12,7 +12,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class UserInfoPipe implements PipeTransform {
 
-  constructor(public authProvider: AuthProvider ) {}
+  constructor(public authProvider: AuthProvider) {}
 
   /**
    * Takes user_id and gives the user Info
