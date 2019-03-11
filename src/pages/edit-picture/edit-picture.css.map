@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,iBAAkB;EAOd,UAAU,EAAE,kBAAkB;EANhC,iDAAkD;IAChD,8BAAa;MACX,UAAU,EAAE,OAAO;EAMvB,gCAAc;IACZ,QAAQ,EAAE,QAAQ;IAClB,GAAG,EAAE,GAAG;IACR,IAAI,EAAE,GAAG;IACT,OAAO,EAAE,KAAK;IACd,KAAK,EAAE,GAAG;IACV,MAAM,EAAE,GAAG",
+"sources": ["edit-picture.scss"],
+"names": [],
+"file": "edit-picture.css"
+}
