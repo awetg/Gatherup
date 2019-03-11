@@ -4,6 +4,7 @@ import { EventDescription, PlaceItem } from '../../interface/event';
 import { AppConstantProvider } from '../../providers/app-constant/app-constant';
 import { EventProvider } from '../../providers/event/event';
 import { AuthProvider } from '../../providers/auth/auth';
+import { UserDBDescription } from '../../interface/user';
 
 /**
  * Generated class for the CreateEventPage page.
@@ -88,7 +89,14 @@ export class CreateEventPage {
       fd.append('title', this.title);
       fd.append('description', JSON.stringify(this.description));
       this.eventProvider.addEvent(fd).then(
-        res => {
+        (res) => {
+
+          /* update user database for list own events */
+          const newUserDB: UserDBDescription = {};
+          newUserDB.events = [res.file_id];
+          this.authProvider.updateUserDBMedia(newUserDB).catch(error => console.log(error));
+
+          /* dimiss loading progress indicator */
           setTimeout(() => {
             this.loading.dismiss().catch(error => console.log(error));
             this.navCtrl.pop().catch(error => console.log(error));

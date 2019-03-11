@@ -118,21 +118,26 @@
       <!-- if selected segment is comments -->
       <div *ngIf="selectedSegment === 'comments'">
 
-        <ion-list>
-          <ion-item no-lines class="comments" *ngFor="let comment of (event.file_id | comments | async)">
+        <ion-list *ngFor="let comment of commentArr">
+          <ion-item no-lines class="comments">
             <ion-avatar item-left>
-              <img
-                [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( event.description.organizer.avatar_id !== undefined ? ( event.description.organizer.avatar_id | thumbnail: 'small' | async ) : 'ab6e8a71b39981a6422125f476d40005-tn160.png' )"
+              <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + 'ab6e8a71b39981a6422125f476d40005-tn160.png'" 
                 alt="profile image" />
             </ion-avatar>
-            <h5>{{ comment.user_id | userInfo | async }}</h5>
+            <ion-note color="gray-light">{{ (comment.user_id | userInfo | async)?.username || 'unkown' }}</ion-note>
             <h5>{{ comment.comment }}</h5>
           </ion-item>
         </ion-list>
 
-        <div class="commentBox">
-          <ion-textarea [(ngModel)]="comment" type="text" placeholder="Comment .... "></ion-textarea>
-          <button ion-button small float-right round>Send</button>
+        <div>
+          <ion-row>
+            <ion-col col-9>
+              <ion-textarea [(ngModel)]="newComment" type="text" placeholder="Comment .... "></ion-textarea>
+            </ion-col>
+            <ion-col col-3>
+              <button class="comment-btn" ion-button small (click)="addComment()">Send</button>
+            </ion-col>
+          </ion-row>
         </div>
 
       </div>

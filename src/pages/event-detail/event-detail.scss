@@ -7,8 +7,8 @@ page-event-detail {
     }
   }
   .event-title {
-    font-weight: 401;
-    font-size: 1.6rem;
+    font-weight: 501;
+    font-size: 2rem;
     margin: 0 auto;
     text-align: center;
   }
@@ -21,8 +21,22 @@ page-event-detail {
     }
   }
 
-  .comment {
-    padding-left: 0;
+  [col-3] {
+    text-align: center;
+  }
+
+  textarea.text-input {
+    border: .5px solid #dadada;
+    border-radius: 5px;
+  }
+
+  .platform-mobile textarea.text-input {
+    padding: 0;
+  }
+
+  .comment-btn {
+    margin: 15px auto;
+    border-radius: 5px;
   }
 
 }

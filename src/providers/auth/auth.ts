@@ -16,7 +16,6 @@ import { AppDbProvider } from '../app-db/app-db';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MediaUploadResponse } from '../../interface/media';
-import { Comments } from '../../interface/comments';
 
 /*
   Generated class for the AuthProvider provider.
@@ -169,8 +168,20 @@ export class AuthProvider {
   /* update user DB media of current user */
   async updateUserDBMedia(data: UserDBDescription): Promise<any> {
     const currentDB = this._userDB.getValue().description;
-    currentDB.full_name = data.full_name.length > 0 ? data.full_name : currentDB.full_name;
-    currentDB.interest = data.interest.length > 0 ? data.interest : currentDB.interest;
+
+    /* get all none null entry and update current user database accordingly */
+    Object.entries(data).forEach((entry) => {
+      const [ key, value ] = [ entry[0], entry[1] ];
+      if (value !== undefined && value !== null && value.length > 0) {
+        if (Array.isArray(value)) {
+          value.forEach(v => {
+            if (currentDB[key].indexOf(v) === -1) currentDB[key].push(v);
+          });
+        } else {
+          currentDB[key] = value;
+        }
+      }
+    });
     const payload = { 'description': JSON.stringify(currentDB) };
     await this.mediaProvider.updateMedia(this._userDB.getValue().file_id, payload).catch(error => console.log(error));
     const db = await this.getUserDBMedia(this._userDB.getValue().file_id);
@@ -270,14 +281,11 @@ export class AuthProvider {
     this._userDB.next(db);
   }
 
-  async userInfo(user_id: number) {
+  getuserInfo(user_id: number) {
     const httpOptions = {
-      headers: new HttpHeaders({
-          'x-access-token': localStorage.getItem('token'),
-        },
-      ),
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') })
     };
-    return this.http.get<UserInfo>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions).toPromise();
+    return this.http.get<UserInfo>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions);
   }
 
 }

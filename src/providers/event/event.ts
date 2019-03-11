@@ -5,6 +5,7 @@ import { Event, PlaceAutocompleteResponse } from '../../interface/event';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MediaProvider } from '../media/media';
+import { MediaUploadResponse } from '../../interface/media';
 
 /*
   Generated class for the EventProvider provider.
@@ -41,10 +42,14 @@ export class EventProvider {
     );
   }
 
-  async addEvent(data: any): Promise<any> {
-    const uploadResponse = await this.mediaProvider.uploadMedia(data);
-    return this.mediaProvider.tagMedia(uploadResponse.file_id, this.appConstant.APP.EVENT_TAG);
-
+  async addEvent(data: any): Promise<MediaUploadResponse> {
+    try {
+      const uploadResponse = await this.mediaProvider.uploadMedia(data);
+      this.mediaProvider.tagMedia(uploadResponse.file_id, this.appConstant.APP.EVENT_TAG).catch(error => console.log(error));
+      return uploadResponse;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   loadSingleEvent(file_id: number) {

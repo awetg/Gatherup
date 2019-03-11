@@ -17,9 +17,12 @@ export class UserInfoPipe implements PipeTransform {
   /**
    * Takes user_id and gives the user Info
    */
-  async transform(user_id: number, ...args) {
-    const username = await this.authProvider.userInfo(user_id).then(res => res.username).catch(err => console.log(err));
-    console.log(username);
-    return username;
+  async transform(user_id: number) {
+    return new Promise((resolve, reject) => {
+      this.authProvider.getuserInfo(user_id).subscribe(res => {
+        console.log(res);
+        resolve(res);
+      });
+    });
   }
 }

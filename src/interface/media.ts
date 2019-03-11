@@ -41,3 +41,11 @@ export interface AppDBDescription {
     categories?: string[];
     users?: { user_id: number, file_id: number }[];
 }
+
+export interface Comment {
+    comment_id?: number;
+    file_id?: number;
+    user_id?: number;
+    comment?: string;
+    time_added?: string;
+  }
