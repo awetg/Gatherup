@@ -16,6 +16,7 @@ import { AppDbProvider } from '../app-db/app-db';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MediaUploadResponse } from '../../interface/media';
+import { Comments } from '../../interface/comments';
 
 /*
   Generated class for the AuthProvider provider.
@@ -200,12 +201,12 @@ export class AuthProvider {
     }
   }
 
-  /* get user object. this function only returns current value to be notified when updated use observalble */
+  /* get user object. this function only returns current value to be notified when updated use observable */
   getUser(): User {
     return this._user.getValue();
   }
 
-  /* get userDB object. this function only returns current value to be notified when updated use observalble */
+  /* get userDB object. this function only returns current value to be notified when updated use observable */
   getUserDB(): UserDBDescription {
     return this._userDB.getValue().description;
   }
@@ -268,4 +269,15 @@ export class AuthProvider {
     const db = await this.getUserDBMedia(file_id);
     this._userDB.next(db);
   }
+
+  async userInfo(user_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+          'x-access-token': localStorage.getItem('token'),
+        },
+      ),
+    };
+    return this.http.get<UserInfo>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions).toPromise();
+  }
+
 }
