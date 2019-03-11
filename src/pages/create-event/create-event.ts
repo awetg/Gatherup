@@ -31,8 +31,11 @@ export class CreateEventPage {
   startDate: string;
   endTime: string;
   endDate: string;
+  minDate = new Date(Date.now()).toISOString();
+
   locationError = false;
   fileError = false;
+  endTimeError = false;
 
   selectedCategory: string[];
 
@@ -57,6 +60,8 @@ export class CreateEventPage {
 
   CreateEvent(event) {
     event.preventDefault();
+
+    /* If location or photo for event is not added show error and return */
     if (this.description.location === undefined || this.description.location.length < 0) {
       this.locationError = true;
     } else {
@@ -64,8 +69,16 @@ export class CreateEventPage {
         this.fileError = true;
         return;
       }
+
+      /* Get time inserted time and show error if difference between start date and end date is less than 30 in minutes */
       this.description.start_time = new Date(this.startDate + ' ' + this.startTime);
       this.description.end_time = new Date(this.endDate + ' ' + this.endTime);
+      const minDiff = Math.floor((this.description.start_time.getTime() - this.description.end_time.getTime()) / 60000);
+      if (minDiff < 30) {
+        this.endTimeError = true;
+      }
+
+      /* Prepare event upload data like file, title and event description and upload */
       const user = this.authProvider.getUser();
       const userDB = this.authProvider.getUserDB();
       this.description.organizer = { username: user.username, avatar_id: userDB.avatar_id };
