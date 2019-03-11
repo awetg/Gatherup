@@ -5,6 +5,7 @@ import { AppConstantProvider } from '../app-constant/app-constant';
 import { UserDBMedia } from '../../interface/user';
 import { Event } from '../../interface/event';
 import { Observable } from 'rxjs';
+import { Comments } from '../../interface/comments';
 
 /*
   Generated class for the MediaProvider provider.
@@ -64,6 +65,10 @@ export class MediaProvider {
 
   fetchThumbnail(file_id: number) {
     return this.http.get<Media>(this.appConstant.API.API_ENDPOINT + '/media/' + file_id);
+  }
+
+  getMediaComment(file_id: number) {
+    return this.http.get<Comments[]>(this.appConstant.API.API_ENDPOINT + '/comments/file/' + file_id);
   }
 
 }

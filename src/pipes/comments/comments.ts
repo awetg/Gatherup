@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { EventProvider } from '../../providers/event/event';
+import { MediaProvider } from '../../providers/media/media';
 
 /**
  * Generated class for the CommentsPipe pipe.
@@ -11,14 +11,14 @@ import { EventProvider } from '../../providers/event/event';
 })
 export class CommentsPipe implements PipeTransform {
 
-  constructor(public eventProvider: EventProvider) {}
+  constructor(public mediaProvider: MediaProvider) {}
 
   /**
    * Takes a file_id and returns comments.
    */
   async transform(file_id: number, ...args) {
-    const comment = await this.eventProvider.fetchComment(file_id).then(res => res.comment).catch(err => console.log(err));
-    console.log(comment);
-    return comment;
+    return new Promise((resolve, reject) => {
+      this.mediaProvider.getMediaComment(file_id).subscribe(comments => resolve(comments));
+    });
   }
 }

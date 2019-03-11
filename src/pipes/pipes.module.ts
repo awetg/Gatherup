@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ThumbnailPipe } from './thumbnail/thumbnail';
-import { OrganizerNamePipe } from './organizer-name/organizer-name';
 import { CommentsPipe } from './comments/comments';
 import { ExcerptPipe } from './excerpt/excerpt';
 
@@ -8,14 +7,12 @@ import { ExcerptPipe } from './excerpt/excerpt';
   declarations: [
     ThumbnailPipe,
     ExcerptPipe,
-    OrganizerNamePipe,
     CommentsPipe
   ],
   imports: [],
   exports: [
     ThumbnailPipe,
     ExcerptPipe,
-    OrganizerNamePipe,
     CommentsPipe
   ]
 })

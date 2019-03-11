@@ -2,7 +2,7 @@
 <div class="pins">
   <div class="pin" *ngFor="let event of events">
 
-    <ion-card class="event-card-size round">
+    <ion-card class="event-card-size round" (click)="openEvent(event)">
 
       <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + (event.file_id | thumbnail: 'large' | async )" />
 

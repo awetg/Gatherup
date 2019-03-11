@@ -142,7 +142,7 @@ export class AuthProvider {
             userResponse => {
               this._user.next(userResponse);
               this._authenticated.next(true);
-              this.refreshUserDBMedia();
+              this.refreshUserDBMedia().catch(error => console.log(error));
             },
             error => console.log(error)
           );

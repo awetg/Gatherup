@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { EventProvider } from '../../providers/event/event';
 import { NavController } from 'ionic-angular';
+import { Event } from '../../interface/event';
 
 /**
  * Generated class for the EventCardComponent component.
@@ -20,18 +21,11 @@ export class EventCardComponent {
     console.log('Hello EventCardComponent Component');
   }
 
-  parse(data: string) {
-    return JSON.parse(data);
-  }
-
   /**
    * Navigate to the detail page for this event.
    */
-  openEvent(event) {
-    console.log('Event Card clicked');
-    this.navCtrl.push('EventDetailPage', {
-      event
-    }).catch(error => console.log(error));
+  openEvent(event: Event) {
+    this.navCtrl.push('EventDetailPage', { event }).catch(error => console.log(error));
   }
 
 }
