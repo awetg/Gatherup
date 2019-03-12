@@ -4,6 +4,8 @@ import { CommentsPipe } from './comments/comments';
 import { ExcerptPipe } from './excerpt/excerpt';
 import { UserInfoPipe } from './user-info/user-info';
 import { UserDbPipe } from './user-db/user-db';
+import { EventFilterPipe } from './event-filter/event-filter';
+import { ItemFilterPipe } from './item-filter/item-filter';
 
 @NgModule({
   declarations: [
@@ -11,7 +13,9 @@ import { UserDbPipe } from './user-db/user-db';
     ExcerptPipe,
     CommentsPipe,
     UserInfoPipe,
-    UserDbPipe
+    UserDbPipe,
+    EventFilterPipe,
+    ItemFilterPipe
   ],
   imports: [],
   exports: [
@@ -19,7 +23,9 @@ import { UserDbPipe } from './user-db/user-db';
     ExcerptPipe,
     CommentsPipe,
     UserInfoPipe,
-    UserDbPipe
+    UserDbPipe,
+    EventFilterPipe,
+    ItemFilterPipe
   ]
 })
 export class PipesModule {}
