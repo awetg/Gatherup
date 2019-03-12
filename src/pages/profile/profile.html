@@ -28,11 +28,12 @@
     <div class="profile-details">
       <ion-label class="username">{{ (authProvider.user | async)?.username  }}</ion-label>
       <ion-label color="gray-light">{{ (authProvider.user | async)?.email  }}</ion-label>
-      <ion-label color="gray-light">joined: {{ (authProvider.user | async)?.time_created | date: 'MMMM d, y' }}</ion-label>
+      <ion-label color="gray-light">joined: {{ (authProvider.user | async)?.time_created | date: 'MMMM d, y' }}
+      </ion-label>
     </div>
     <ion-buttons>
-        <button ion-button outline (click)="openPage(editProfilePage)">Edit Profile</button>
-      </ion-buttons>
+      <button ion-button outline (click)="openPage(editProfilePage)">Edit Profile</button>
+    </ion-buttons>
   </div>
 
 
@@ -49,11 +50,18 @@
   </ion-segment>
 
   <div *ngIf="selectedSegment === 'Going'">
-    <event-card [events]="(eventProvider.events$ | async)"></event-card>
+    <div class="pins">
+      <div class="pin" *ngFor="let event of (eventProvider.events$ | async)">
+        <event-card [event]="event"></event-card>
+      </div>
+    </div>
+  </div>
   </div>
 
-<ion-fab bottom right>
-  <button ion-fab (click)="openPage(createEventPage)"><ion-icon name="add"></ion-icon></button>
-</ion-fab>
+  <ion-fab bottom right>
+    <button ion-fab (click)="openPage(createEventPage)">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>

@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { EventProvider } from '../../providers/event/event';
 import { NavController } from 'ionic-angular';
 import { Event } from '../../interface/event';
 
@@ -15,9 +14,9 @@ import { Event } from '../../interface/event';
 })
 export class EventCardComponent {
 
-  @Input() events: Event[];
+  @Input() event: Event;
 
-  constructor(public navCtrl: NavController, public event: EventProvider) {
+  constructor(public navCtrl: NavController) {
     console.log('Hello EventCardComponent Component');
   }
 
