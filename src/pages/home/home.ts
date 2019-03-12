@@ -58,7 +58,7 @@ export class HomePage {
     if (this.userInterestSet) {
           this.eventProvider.events$.subscribe(
             events => {
-              if (this.userDB.description !== undefined) {
+              if (this.userDB !== undefined && this.userDB.description !== undefined) {
                   const filtered = events.filter(e => e.description.category.some(c => this.userDB.description.interest.includes(c)));
                   this.eventsByInterestCategory.push.apply(this.eventsByInterestCategory, filtered.reverse());
               }
