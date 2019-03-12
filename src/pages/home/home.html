@@ -26,9 +26,9 @@
     <!-- If selected segment is recommended -->
     <div *ngIf="selectedSegment === 'recommended'">
       <ion-label>Based on your intereset</ion-label>
-      <ion-scroll class="scroll-container" scrollX="true">
+      <ion-scroll *ngIf="userInterestSet" class="scroll-container" scrollX="true">
         <ion-row nowrap>
-          <div *ngFor="let event of (eventProvider.events$ | async)">
+          <div *ngFor="let event of eventsByInterestCategory">
             <event-card [event]="event"></event-card>
           </div>
         </ion-row>
@@ -47,7 +47,7 @@
     <!-- If selected segment is explore -->
     <div *ngIf="selectedSegment === 'explore'">
         <div class="pins">
-          <div class="pin" *ngFor="let myevent of (eventProvider.events$ | async)">
+          <div class="pin" *ngFor="let myevent of (eventProvider.events$ | async).reverse()">
             <event-card [event]="myevent"></event-card>
           </div>
         </div>

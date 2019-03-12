@@ -4,7 +4,6 @@ import { EventDescription, PlaceItem } from '../../interface/event';
 import { AppConstantProvider } from '../../providers/app-constant/app-constant';
 import { EventProvider } from '../../providers/event/event';
 import { AuthProvider } from '../../providers/auth/auth';
-import { UserDBDescription } from '../../interface/user';
 
 /**
  * Generated class for the CreateEventPage page.
@@ -59,7 +58,7 @@ export class CreateEventPage {
     console.log('ionViewDidLoad CreateEventPage');
   }
 
-  CreateEvent(event) {
+  async CreateEvent(event) {
     event.preventDefault();
 
     /* If location or photo for event is not added show error and return */
@@ -80,8 +79,8 @@ export class CreateEventPage {
       }
 
       /* Prepare event upload data like file, title and event description and upload */
-      const user = this.authProvider.getUser();
-      const userDB = this.authProvider.getUserDB();
+      const user = await this.authProvider.user.toPromise();
+      const userDB = await this.authProvider.userDB.toPromise().then(db => db.description);
       this.description.organizer = { username: user.username, avatar_id: userDB.avatar_id };
       this.loading.present().catch(error => console.log(error));
       const fd = new FormData();
@@ -90,11 +89,6 @@ export class CreateEventPage {
       fd.append('description', JSON.stringify(this.description));
       this.eventProvider.addEvent(fd).then(
         (res) => {
-
-          /* update user database for list own events */
-          const newUserDB: UserDBDescription = {};
-          newUserDB.events = [res.file_id];
-          this.authProvider.updateUserDBMedia(newUserDB).catch(error => console.log(error));
 
           /* dimiss loading progress indicator */
           setTimeout(() => {

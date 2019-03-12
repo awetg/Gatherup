@@ -33,7 +33,7 @@ export class EventDetailPage {
     public eventProvider: EventProvider,
     public authProvider: AuthProvider) {
     this.event = navParams.get('event');
-    this.setStatus();
+    this.setStatus().catch(error => console.log(error));
     this.getComments();
   }
 
@@ -54,36 +54,41 @@ export class EventDetailPage {
     this.mediaProvider.getMediaComment(this.event['file_id']).subscribe(comments => this.commentArr = comments);
   }
 
-  joinEvent() {
+  async joinEvent() {
+    const file_id = this.event['file_id'];
+    const user_id = await this.authProvider.user.toPromise().then(user => user.user_id);
     if (this.joined) {
-      this.eventProvider.deleteJoin(this.event['file_id'], this.authProvider.getUser().user_id)
+      this.eventProvider.deleteJoin(file_id, user_id)
       .then(res => this.joined = false)
       .catch(error => console.log(error));
     } else {
-      this.eventProvider.joinEvent(this.event['file_id'], this.authProvider.getUser().user_id)
+      this.eventProvider.joinEvent(file_id, user_id)
       .then(res => this.joined = true)
       .catch(error => console.log(error));
     }
   }
 
-  addInterested() {
+  async addInterested() {
+    const file_id = this.event['file_id'];
+    const user_id = await this.authProvider.user.toPromise().then(user => user.user_id);
     if (this.interested) {
-      this.eventProvider.deleteInterested(this.event['file_id'], this.authProvider.getUser().user_id)
+      this.eventProvider.deleteInterested(file_id, user_id)
       .then(res => this.interested = false)
       .catch(error => console.log(error));
     } else {
-      this.eventProvider.addInterested(this.event['file_id'], this.authProvider.getUser().user_id)
+      this.eventProvider.addInterested(file_id, user_id)
       .then(res => this.interested = true)
       .catch(error => console.log(error));
     }
   }
 
-  setStatus() {
+  async setStatus() {
+    const user_id = await this.authProvider.user.toPromise().then(user => user.user_id);
     if (this.event['description']['attendees'] !== undefined) {
-      this.joined = this.event['description']['attendees'].includes(this.authProvider.getUser().user_id);
+      this.joined = this.event['description']['attendees'].includes(user_id);
     }
     if (this.event['description']['interested'] !== undefined) {
-      this.interested = this.event['description']['interested'].includes(this.authProvider.getUser().user_id);
+      this.interested = this.event['description']['interested'].includes(user_id);
     }
   }
 

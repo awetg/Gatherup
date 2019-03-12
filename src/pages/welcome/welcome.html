@@ -18,7 +18,7 @@
 
 <ion-content padding>
   <div class="pins">
-    <div class="pin" *ngFor="let event of (eventProvider.events$ | async)">
+    <div class="pin" *ngFor="let event of (eventProvider.events$ | async).reverse()">
       <event-card [event]="event"></event-card>
     </div>
   </div>
