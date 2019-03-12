@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer, ViewChild } from '@angular/core';
 import {
   IonicPage,
   LoadingController,
@@ -24,6 +24,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class EditProfilePage {
 
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   user: UserDBDescription = { full_name: '', interest: [] };
   email = '';
   file: any;
@@ -37,7 +39,8 @@ export class EditProfilePage {
     public authProvider: AuthProvider,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    private camera: Camera) {
+    private camera: Camera,
+    private renderer: Renderer) {
   }
 
   loading = this.loadingCtrl.create({
@@ -50,13 +53,12 @@ export class EditProfilePage {
   }
 
 
-  takePicture(sourceType: number) {
+  takePicture() {
     const options: CameraOptions = {
       quality: 70,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType,
     };
 
     this.camera.getPicture(options).then(
@@ -85,11 +87,9 @@ export class EditProfilePage {
   }
   onDismissEditMenu(item: string) {
     if (item === 'gallery') {
-      this.takePicture(0);
-      console.log('gallery');
+      this.triggerClick();
     } else if (item === 'camera') {
-      this.takePicture(1);
-      console.log('camera');
+      this.takePicture();
     }
   }
   updateProfile($event) {
@@ -139,5 +139,11 @@ export class EditProfilePage {
       this.fileData = reader.result;
     };
     reader.readAsDataURL(this.file);
+  }
+
+  triggerClick() {
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+    event.stopPropagation();
+    this.renderer.invokeElementMethod(this.fileInput.nativeElement, 'dispatchEvent', [event]);
   }
 }
