@@ -14,7 +14,7 @@ import { Event } from '../../interface/event';
 })
 export class EventCardComponent {
 
-  @Input() event: Event;
+  @Input('event') event: Event;
 
   constructor(public navCtrl: NavController) {
     console.log('Hello EventCardComponent Component');

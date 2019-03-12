@@ -12,10 +12,11 @@
 
 <ion-content no-padding>
   <ion-searchbar (ionInput)="query($event)" placeholder="search"></ion-searchbar>
-  <div class="pins">
-    <div class="pin" *ngFor="let event of currentEvents">
-      <event-card [event]="event"></event-card>
+  <div padding>
+    <div class="pins">
+      <div class="pin" *ngFor="let event of currentEvents">
+        <event-card [event]="event"></event-card>
+      </div>
     </div>
-  </div>
   </div>
 </ion-content>
