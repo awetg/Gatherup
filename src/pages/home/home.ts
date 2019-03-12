@@ -3,6 +3,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { EventProvider } from '../../providers/event/event';
 import { AuthProvider } from '../../providers/auth/auth';
 import { Event } from '../../interface/event';
+import { UserDBMedia } from '../../interface/user';
 
 /**
  * Generated class for the HomePage page.
@@ -21,9 +22,11 @@ export class HomePage {
   selectedSegment = 'explore';
 
   userInterestSet = false;
-  eventsByInterestCategory: Event[] = [];
 
+  eventsByInterestCategory: Event[] = [];
   topEvents: Event[] = [];
+
+  userDB: UserDBMedia = {};
 
   constructor(
     public navCtrl: NavController,
@@ -35,6 +38,7 @@ export class HomePage {
     this.authProvider.userDB.subscribe(
       userdb => {
         if (userdb.description !== undefined) {
+          this.userDB = userdb;
           this.userInterestSet = userdb.description.interest !== undefined ? userdb.description.interest.length > 0 : false;
           this.filterEventsByInterest();
         }
@@ -52,17 +56,13 @@ export class HomePage {
 
   filterEventsByInterest() {
     if (this.userInterestSet) {
-      this.authProvider.userDB.subscribe(
-        userDb => {
           this.eventProvider.events$.subscribe(
             events => {
-              if (userDb.description !== undefined) {
-                  const filtered = events.filter(e => e.description.category.some(c => userDb.description.interest.includes(c)));
+              if (this.userDB.description !== undefined) {
+                  const filtered = events.filter(e => e.description.category.some(c => this.userDB.description.interest.includes(c)));
                   this.eventsByInterestCategory.push.apply(this.eventsByInterestCategory, filtered.reverse());
               }
             }
-          );
-        }
       );
     }
   }

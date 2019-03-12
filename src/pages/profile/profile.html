@@ -26,32 +26,52 @@
       </ion-avatar>
     </ion-item>
     <div class="profile-details">
-      <ion-label class="username">{{ (authProvider.user | async)?.username  }}</ion-label>
-      <ion-label color="gray-light">{{ (authProvider.user | async)?.email  }}</ion-label>
-      <ion-label color="gray-light">joined: {{ (authProvider.user | async)?.time_created | date: 'MMMM d, y' }}
-      </ion-label>
+      <div *ngIf="(authProvider.user | async) as user">
+        <ion-label class="username">{{ user.username  }}</ion-label>
+        <ion-label color="gray-light">{{ user.email  }}</ion-label>
+        <ion-label color="gray-light">joined: {{ user.time_created | date: 'MMMM d, y' }}</ion-label>
+      </div>
     </div>
     <ion-buttons>
       <button ion-button outline (click)="openPage(editProfilePage)">Edit Profile</button>
     </ion-buttons>
   </div>
 
-
+<!-- segmens -->
   <ion-segment mode="md" [(ngModel)]="selectedSegment">
     <ion-segment-button value="OwnEvents">
       Own Events
     </ion-segment-button>
-    <ion-segment-button value="Going">
+    <ion-segment-button value="going">
       Going
     </ion-segment-button>
-    <ion-segment-button value="Interested">
+    <ion-segment-button value="interested">
       Interested
     </ion-segment-button>
   </ion-segment>
 
-  <div *ngIf="selectedSegment === 'Going'">
+  <!-- if selected segment is going -->
+  <div *ngIf="selectedSegment === 'going'">
     <div class="pins">
-      <div class="pin" *ngFor="let event of (eventProvider.events$ | async)">
+      <div class="pin" *ngFor="let event of ((eventProvider.events$ | async) | itemFilter: joinedEventsFilter)">
+        <event-card [event]="event"></event-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- if selected segment is user own events -->
+  <div *ngIf="selectedSegment === 'OwnEvents'">
+    <div class="pins">
+      <div class="pin" *ngFor="let event of ((eventProvider.events$ | async) | itemFilter: ownEventsFilter)">
+        <event-card [event]="event"></event-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- if selected segment is intrested -->
+  <div *ngIf="selectedSegment === 'interested'">
+    <div class="pins">
+      <div class="pin" *ngFor="let event of ((eventProvider.events$ | async) | itemFilter: interstedEventsFilter)">
         <event-card [event]="event"></event-card>
       </div>
     </div>
