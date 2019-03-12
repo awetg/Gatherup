@@ -1,21 +1,21 @@
 /*
 Error: $alpha: Expected 0.6px to have no units or "%" for `rgba'
-        on line 21 of login.scss
+        on line 20 of login.scss
 
-16:     }
-17:     ion-card{
-18:       position: center;
-19:     }
-20:     ion-card.card{
-21:         background: rgba(232, 230, 230, 0.6px);
-22:         border-radius: 10px;
-23:         z-index: 100;
-24: 
-25:     }
-26:     .item {
+15:     }
+16:     ion-card{
+17:       position: center;
+18:     }
+19:     ion-card.card{
+20:         background: rgba(232, 230, 230, 0.6px);
+21:         border-radius: 10px;
+22:         z-index: 100;
+23: 
+24:     }
+25:     .item {
 
 Backtrace:
-login.scss:21
+login.scss:20
 /Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/script/tree/funcall.rb:311:in `reformat_argument_error'
 /Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/script/tree/funcall.rb:158:in `rescue in _perform'
 /Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/script/tree/funcall.rb:127:in `_perform'
@@ -80,4 +80,4 @@ login.scss:21
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: $alpha: Expected 0.6px to have no units or \"%\" for `rgba'\A         on line 21 of login.scss\A \A 16:     }\A 17:     ion-card{\A 18:       position: center;\A 19:     }\A 20:     ion-card.card{\A 21:         background: rgba(232, 230, 230, 0.6px);\A 22:         border-radius: 10px;\A 23:         z-index: 100;\A 24: \A 25:     }\A 26:     .item {"; }
+  content: "Error: $alpha: Expected 0.6px to have no units or \"%\" for `rgba'\A         on line 20 of login.scss\A \A 15:     }\A 16:     ion-card{\A 17:       position: center;\A 18:     }\A 19:     ion-card.card{\A 20:         background: rgba(232, 230, 230, 0.6px);\A 21:         border-radius: 10px;\A 22:         z-index: 100;\A 23: \A 24:     }\A 25:     .item {"; }

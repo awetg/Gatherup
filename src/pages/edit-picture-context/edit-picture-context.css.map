@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAGA,aAAa;EACX,GAAG,EAAE,GAAG",
+"sources": ["edit-picture-context.scss"],
+"names": [],
+"file": "edit-picture-context.css"
+}

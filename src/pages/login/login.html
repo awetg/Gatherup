@@ -6,11 +6,12 @@
 -->
 
 <ion-content class="background" padding>
-  <h1><span style="color: #5B3AB4; font-weight: bolder">G</span>ather <br><span style="color: green; font-weight: bolder">U</span><span style="color: red; font-weight: bolder">p</span></h1>
+<ion-header>
+  <ion-navbar color= #5B3AB4>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
   <ion-card>
-    <ion-card-header>
-      LOGIN
-    </ion-card-header>
     <ion-card-content>
   <div class="form-container">
     <form #loginForm="ngForm" class="my-form" (ngSubmit)="logIn()">
