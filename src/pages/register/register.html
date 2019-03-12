@@ -38,7 +38,7 @@
       <ion-item>
         <ion-label floating>confirm password</ion-label>
         <ion-input type="password" [(ngModel)]="user.confirmPassword" name="confirmPassword"
-                   (ionChanged)="confirmPasswordFunc()" required minlength="5" #confirmPassword="ngModel">
+                   (ionChanged)="confirmPasswordFunc($event)" required minlength="5" #confirmPassword="ngModel">
         </ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger"
