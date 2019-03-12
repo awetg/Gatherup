@@ -1,13 +1,11 @@
-<ion-header>
 
-  <ion-navbar>
-    <ion-title>Register</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
+<ion-content class="background" padding>
+  <h1>Gather Up</h1>
+  <ion-card>
+    <ion-card-header>
+      REGISTER
+    </ion-card-header>
+    <ion-card-content>
   <div class="form-container">
 
     <form novalidate #registerForm="ngForm" class="register-form" (ngSubmit)="register($event)">
@@ -84,5 +82,6 @@
     </ion-row>
 
   </div>
-
+    </ion-card-content>
+  </ion-card>
 </ion-content>
