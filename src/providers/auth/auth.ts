@@ -168,8 +168,20 @@ export class AuthProvider {
   /* update user DB media of current user */
   async updateUserDBMedia(data: UserDBDescription): Promise<any> {
     const currentDB = this._userDB.getValue().description;
-    currentDB.full_name = data.full_name.length > 0 ? data.full_name : currentDB.full_name;
-    currentDB.interest = data.interest.length > 0 ? data.interest : currentDB.interest;
+
+    /* get all none null entry and update current user database accordingly */
+    Object.entries(data).forEach((entry) => {
+      const [ key, value ] = [ entry[0], entry[1] ];
+      if (value !== undefined && value !== null && value.length > 0) {
+        if (Array.isArray(value)) {
+          value.forEach(v => {
+            if (currentDB[key].indexOf(v) === -1) currentDB[key].push(v);
+          });
+        } else {
+          currentDB[key] = value;
+        }
+      }
+    });
     const payload = { 'description': JSON.stringify(currentDB) };
     await this.mediaProvider.updateMedia(this._userDB.getValue().file_id, payload).catch(error => console.log(error));
     const db = await this.getUserDBMedia(this._userDB.getValue().file_id);
@@ -200,12 +212,12 @@ export class AuthProvider {
     }
   }
 
-  /* get user object. this function only returns current value to be notified when updated use observalble */
+  /* get user object. this function only returns current value to be notified when updated use observable */
   getUser(): User {
     return this._user.getValue();
   }
 
-  /* get userDB object. this function only returns current value to be notified when updated use observalble */
+  /* get userDB object. this function only returns current value to be notified when updated use observable */
   getUserDB(): UserDBDescription {
     return this._userDB.getValue().description;
   }
@@ -268,4 +280,12 @@ export class AuthProvider {
     const db = await this.getUserDBMedia(file_id);
     this._userDB.next(db);
   }
+
+  getuserInfo(user_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') })
+    };
+    return this.http.get<UserInfo>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions);
+  }
+
 }

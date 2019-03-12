@@ -5,6 +5,7 @@ import { Event, PlaceAutocompleteResponse } from '../../interface/event';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MediaProvider } from '../media/media';
+import { MediaUploadResponse } from '../../interface/media';
 
 /*
   Generated class for the EventProvider provider.
@@ -41,10 +42,88 @@ export class EventProvider {
     );
   }
 
-  async addEvent(data: any): Promise<any> {
-    const uploadResponse = await this.mediaProvider.uploadMedia(data);
-    return this.mediaProvider.tagMedia(uploadResponse.file_id, this.appConstant.APP.EVENT_TAG);
+  async addEvent(data: any): Promise<MediaUploadResponse> {
+    try {
+      const uploadResponse = await this.mediaProvider.uploadMedia(data);
+      this.mediaProvider.tagMedia(uploadResponse.file_id, this.appConstant.APP.EVENT_TAG).catch(error => console.log(error));
+      return uploadResponse;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  async joinEvent(file_id: number, user_id: number) {
+    try {
+
+      const event = this._events.getValue().find(e => e.file_id === file_id);
+      const currentDB = event.description;
+      const userExits = currentDB.attendees !== undefined ? currentDB.attendees.includes(user_id) : false;
+      if (!userExits) {
+        currentDB.attendees !== undefined ? currentDB.attendees.push(user_id) : currentDB.attendees = [user_id] ;
+        const payload = { 'description': JSON.stringify(currentDB) };
+        const message = await this.mediaProvider.updateMedia(file_id, payload).catch(error => console.log(error));
+        this.loadEvents();
+        return message;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteJoin(file_id: number, user_id: number) {
+    try {
+
+      const event = this._events.getValue().find(e => e.file_id === file_id);
+      const currentDB = event.description;
+      const index = currentDB.attendees !== undefined ? currentDB.attendees.indexOf(user_id) : -1;
+      if (index >= 0) {
+        currentDB.attendees.splice(index, 1);
+        const payload = { 'description': JSON.stringify(currentDB) };
+        const message = await this.mediaProvider.updateMedia(file_id, payload).catch(error => console.log(error));
+        this.loadEvents();
+        return message;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  async addInterested(file_id: number, user_id: number) {
+    try {
+
+      const event = this._events.getValue().find(e => e.file_id === file_id);
+      const currentDB = event.description;
+      const userExits = currentDB.interested !== undefined ? currentDB.interested.includes(user_id) : false;
+      if (!userExits) {
+        currentDB.interested !== undefined ? currentDB.interested.push(user_id) : currentDB.interested = [user_id] ;
+        const payload = { 'description': JSON.stringify(currentDB) };
+        const message = await this.mediaProvider.updateMedia(file_id, payload).catch(error => console.log(error));
+        this.loadEvents();
+        return message;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  async deleteInterested(file_id: number, user_id: number) {
+    try {
+
+      const event = this._events.getValue().find(e => e.file_id === file_id);
+      const currentDB = event.description;
+      const index = currentDB.interested !== undefined ? currentDB.attendees.indexOf(user_id) : -1;
+      if (index >= 0) {
+        currentDB.interested.splice(index, 1);
+        const payload = { 'description': JSON.stringify(currentDB) };
+        const message = await this.mediaProvider.updateMedia(file_id, payload).catch(error => console.log(error));
+        this.loadEvents();
+        return message;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   loadSingleEvent(file_id: number) {
@@ -64,7 +143,7 @@ export class EventProvider {
 
   query(queryTerm: string) {
     return this.events$.map(events => events.filter(e => {
-      const fields = e.title + ' ' + e.description.category.toString() + ' ' + e.description.location;
+      const fields = e.title + ',' + e.description.category.toString() + ',' + e.description.location;
       return fields.toLowerCase().includes(queryTerm.toLowerCase());
     }));
   }

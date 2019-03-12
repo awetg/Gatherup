@@ -1,11 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppDBMedia, Media, MediaUploadResponse } from '../../interface/media';
+import { AppDBMedia, Comment, Media, MediaUploadResponse } from '../../interface/media';
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { UserDBMedia } from '../../interface/user';
 import { Event } from '../../interface/event';
 import { Observable } from 'rxjs';
-import { Comments } from '../../interface/comments';
 
 /*
   Generated class for the MediaProvider provider.
@@ -68,7 +67,15 @@ export class MediaProvider {
   }
 
   getMediaComment(file_id: number) {
-    return this.http.get<Comments[]>(this.appConstant.API.API_ENDPOINT + '/comments/file/' + file_id);
+    return this.http.get<Comment[]>(this.appConstant.API.API_ENDPOINT + '/comments/file/' + file_id);
+  }
+
+  addMediaComment(file_id: number, comment: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') }),
+    };
+    const params = { file_id, comment };
+    return this.http.post<{ message: string, comment_id: number }>(this.appConstant.API.API_ENDPOINT + '/comments', params, httpOptions);
   }
 
 }
