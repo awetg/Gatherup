@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConstantProvider } from '../app-constant/app-constant';
-import { Event, PlaceAutocompleteResponse } from '../../interface/event';
+import { Event } from '../../interface/event';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MediaProvider } from '../media/media';
@@ -134,11 +134,6 @@ export class EventProvider {
       },
       error => console.log(error)
     );
-  }
-
-  async getPlacePredictions(queryJson): Promise<PlaceAutocompleteResponse> {
-    const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + queryJson + '.json?access_token=pk.eyJ1Ijoia2FsYXkiLCJhIjoiY2p0MHAwamM2MDYwejQzcXU1anF6Z2lzMiJ9.fcb4riEtQstZaSzMxluPuA';
-    return this.http.get<PlaceAutocompleteResponse>(url).toPromise();
   }
 
   query(queryTerm: string) {

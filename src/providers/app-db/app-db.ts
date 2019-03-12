@@ -5,6 +5,7 @@ import { AppDBDescription } from '../../interface/media';
 import { Observable } from 'rxjs';
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { MediaProvider } from '../media/media';
+import { PlaceAutocompleteResponse } from '../../interface/event';
 
 /*
   Generated class for the AppDbProvider provider.
@@ -46,6 +47,11 @@ export class AppDbProvider {
   getUserFileId(user_id: number): number {
     const user = this._appDB.getValue().users.filter(u => u.user_id === user_id);
     return user.length > 0 ? user[0].file_id : -1 ;
+  }
+
+  async getPlacePredictions(queryJson): Promise<PlaceAutocompleteResponse> {
+    const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + queryJson + '.json?access_token=pk.eyJ1Ijoia2FsYXkiLCJhIjoiY2p0MHAwamM2MDYwejQzcXU1anF6Z2lzMiJ9.fcb4riEtQstZaSzMxluPuA';
+    return this.http.get<PlaceAutocompleteResponse>(url).toPromise();
   }
 
 }
