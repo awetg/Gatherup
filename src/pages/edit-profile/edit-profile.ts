@@ -1,8 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
+import {
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+  PopoverController,
+} from 'ionic-angular';
 import { AppConstantProvider } from '../../providers/app-constant/app-constant';
 import { UserDBDescription } from '../../interface/user';
 import { AuthProvider } from '../../providers/auth/auth';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 /**
  * Generated class for the EditProfilePage page.
@@ -22,15 +29,39 @@ export class EditProfilePage {
   email = '';
   file: File;
   fileData;
+  subComponents = { editPictureContext: 'EditPictureContextPage'};
+
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public appConstant: AppConstantProvider,
     public authProvider: AuthProvider,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public popoverCtrl: PopoverController,
+    private camera: Camera,
+    ) {
   }
+  takePicture(sourceType:number) {
+    const options: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType,
+    };
 
+    this.camera.getPicture(options).then(
+      imageData => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        const base64Image = 'data:image/jpeg;base64,' + imageData;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
   loading = this.loadingCtrl.create({
     spinner: 'ios',
     content: 'Your profile is updating...',
@@ -40,6 +71,23 @@ export class EditProfilePage {
     console.log('ionViewDidLoad EditProfilePage');
   }
 
+  // open edit popover
+  openPopover(ev: any, popoverComponet: any, onDismiss: any) {
+    const popover = this.popoverCtrl.create(popoverComponet);
+    if (onDismiss !== undefined) {
+      popover.onDidDismiss(onDismiss.bind(this));
+    }
+    popover.present({ ev }).catch(error => console.log(error));
+  }
+  onDismissEditMenu(item: string){
+    if (item === 'gallery'){
+      this.takePicture(0);
+      console.log('gallery');
+    } else if (item === 'camera') {
+      this.takePicture(1);
+      console.log('camera');
+    }
+  }
   updateProfile($event) {
     $event.preventDefault();
     const promiseArr = [];

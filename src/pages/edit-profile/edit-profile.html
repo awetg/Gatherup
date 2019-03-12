@@ -19,10 +19,7 @@
             [src]=" ( fileData || user.avatar || 'http://media.mw.metropolia.fi/wbma/uploads/ab6e8a71b39981a6422125f476d40005-tn160.png' )"
             alt="profile image">
         </ion-avatar>
-        <form hidden>
-          <input type="file" accept="image/*" #file hidden (change)="addFile($event)" required>
-        </form>
-        <button class="overlay-btn" ion-button icon-only clear large (click)="file.click()">
+        <button class="overlay-btn" ion-button icon-only clear large (click)="openPopover($event, subComponents.editPictureContext, onDismissEditMenu)">
           <ion-icon name="create"></ion-icon>
         </button>
       </ion-item>
