@@ -1,12 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  IonicPage,
-  LoadingController,
-  NavController,
-  NavParams, ViewController,
-} from 'ionic-angular';
-import { AuthProvider } from '../../providers/auth/auth';
-import { AppConstantProvider } from '../../providers/app-constant/app-constant';
+import { IonicPage, Platform, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the EditPictureContextPage page.
@@ -21,8 +14,10 @@ import { AppConstantProvider } from '../../providers/app-constant/app-constant';
   templateUrl: 'edit-picture-context.html',
 })
 export class EditPictureContextPage {
-  constructor(
-    public viewCtrl: ViewController) {
+
+  isApp = false;
+  constructor(public viewCtrl: ViewController, public platform: Platform) {
+      this.isApp = this.platform.is('core') || this.platform.is('mobileweb') ? false : true;
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditPictureContextPage');

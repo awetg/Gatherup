@@ -3,13 +3,12 @@ import {
   IonicPage,
   LoadingController,
   NavController,
-  NavParams,
   PopoverController,
 } from 'ionic-angular';
 import { AppConstantProvider } from '../../providers/app-constant/app-constant';
 import { UserDBDescription } from '../../interface/user';
 import { AuthProvider } from '../../providers/auth/auth';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the EditProfilePage page.
@@ -27,22 +26,31 @@ export class EditProfilePage {
 
   user: UserDBDescription = { full_name: '', interest: [] };
   email = '';
-  file: File;
+  file: any;
   fileData;
-  subComponents = { editPictureContext: 'EditPictureContextPage'};
+  subComponents = { editPictureContext: 'EditPictureContextPage' };
 
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public appConstant: AppConstantProvider,
     public authProvider: AuthProvider,
     public loadingCtrl: LoadingController,
     public popoverCtrl: PopoverController,
-    private camera: Camera,
-    ) {
+    private camera: Camera) {
   }
-  takePicture(sourceType:number) {
+
+  loading = this.loadingCtrl.create({
+    spinner: 'ios',
+    content: 'Your profile is updating...',
+  });
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad EditProfilePage');
+  }
+
+
+  takePicture(sourceType: number) {
     const options: CameraOptions = {
       quality: 70,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -53,22 +61,18 @@ export class EditProfilePage {
 
     this.camera.getPicture(options).then(
       imageData => {
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
-        const base64Image = 'data:image/jpeg;base64,' + imageData;
+        const byteString = atob(imageData);
+        const dataArray = new Uint8Array(byteString.length);
+        for (let i = 0; i < byteString.length; i++) {
+          dataArray[i] = byteString.charCodeAt(i);
+        }
+        this.file = new Blob([dataArray], { type: 'image/jpeg' });
+        this.fileData = 'data:image/jpeg;base64,' + imageData;
       },
       err => {
         console.log(err);
       },
     );
-  }
-  loading = this.loadingCtrl.create({
-    spinner: 'ios',
-    content: 'Your profile is updating...',
-  });
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EditProfilePage');
   }
 
   // open edit popover
@@ -79,8 +83,8 @@ export class EditProfilePage {
     }
     popover.present({ ev }).catch(error => console.log(error));
   }
-  onDismissEditMenu(item: string){
-    if (item === 'gallery'){
+  onDismissEditMenu(item: string) {
+    if (item === 'gallery') {
       this.takePicture(0);
       console.log('gallery');
     } else if (item === 'camera') {
@@ -108,17 +112,17 @@ export class EditProfilePage {
     if (promiseArr.length > 0) {
       this.loading.present().catch(error => console.log(error));
       Promise.all(promiseArr)
-      .then(
-        res => {
-          setTimeout(() => {
+        .then(
+          res => {
+            setTimeout(() => {
               this.loading.dismiss().catch(e => console.log(e));
               this.navCtrl.pop().catch(error => console.log(error));
             },
-          2000,
-          );
-        }
-      )
-      .catch(error => console.log(error));
+              2000,
+            );
+          }
+        )
+        .catch(error => console.log(error));
     } else {
       this.navCtrl.pop().catch(error => console.log(error));
     }
