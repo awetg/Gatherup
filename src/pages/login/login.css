@@ -1,83 +1,43 @@
-/*
-Error: $alpha: Expected 0.6px to have no units or "%" for `rgba'
-        on line 20 of login.scss
+page-login .my-form {
+  margin: 0 auto; }
+page-login .my-btn {
+  margin: 30px auto; }
+@media (min-width: 767px) {
+  page-login .my-btn {
+    max-width: 240px; }
+  page-login .my-form {
+    max-width: 320px; } }
+page-login .form-container {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  z-index: 15;
+  top: 65%;
+  left: 50%;
+  margin: -100px 0 0 -150px; }
+page-login .splash-bg {
+  position: relative;
+  background: url(../../assets/imgs/achievement-agreement-arms-1068523.jpg) no-repeat transparent;
+  background-size: cover;
+  height: 50%;
+  z-index: 1;
+  background-repeat: repeat-x;
+  -webkit-animation: animatedBackground 40s linear infinite;
+  animation: animatedBackground 40s ease-out infinite;
+  animation-name: animatedBackground;
+  animation-duration: 40s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running; }
+@keyframes animatedBackground {
+  0% {
+    background-position: 0% 99%; }
+  50% {
+    background-position: 100% 1%; }
+  100% {
+    background-position: 10% 90%; } }
 
-15:     }
-16:     ion-card{
-17:       position: center;
-18:     }
-19:     ion-card.card{
-20:         background: rgba(232, 230, 230, 0.6px);
-21:         border-radius: 10px;
-22:         z-index: 100;
-23: 
-24:     }
-25:     .item {
-
-Backtrace:
-login.scss:20
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/script/tree/funcall.rb:311:in `reformat_argument_error'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/script/tree/funcall.rb:158:in `rescue in _perform'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/script/tree/funcall.rb:127:in `_perform'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/script/tree/node.rb:50:in `perform'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:398:in `visit_prop'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:135:in `with_frame'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:440:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:440:in `map'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:440:in `block in visit_rule'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:438:in `visit_rule'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:135:in `with_frame'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:440:in `block (2 levels) in visit_rule'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:440:in `map'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:440:in `block in visit_rule'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:438:in `visit_rule'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:135:in `with_frame'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/base.rb:52:in `map'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:157:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/visitors/perform.rb:10:in `visit'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/root_node.rb:36:in `css_tree'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/engine.rb:389:in `_render_with_sourcemap'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/engine.rb:307:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/plugin/compiler.rb:462:in `update_stylesheet'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/plugin/compiler.rb:209:in `each'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/plugin.rb:82:in `update_stylesheets'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/exec/sass_scss.rb:338:in `watch_or_update'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/exec/sass_scss.rb:51:in `process_result'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/exec/base.rb:50:in `parse'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/lib/sass/exec/base.rb:18:in `parse!'
-/Library/Ruby/Gems/2.3.0/gems/sass-3.7.3/bin/scss:13:in `<top (required)>'
-/usr/local/bin/scss:22:in `load'
-/usr/local/bin/scss:22:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: $alpha: Expected 0.6px to have no units or \"%\" for `rgba'\A         on line 20 of login.scss\A \A 15:     }\A 16:     ion-card{\A 17:       position: center;\A 18:     }\A 19:     ion-card.card{\A 20:         background: rgba(232, 230, 230, 0.6px);\A 21:         border-radius: 10px;\A 22:         z-index: 100;\A 23: \A 24:     }\A 25:     .item {"; }
+/*# sourceMappingURL=login.css.map */
