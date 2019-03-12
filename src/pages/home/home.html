@@ -1,14 +1,57 @@
+<!--
+  Generated template for the HomePage page.
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+  <!-- <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar> -->
+  <ion-segment [(ngModel)]="selectedSegment">
+
+    <!-- segment -->
+    <ion-segment-button value="recommended">
+      Recommended
+    </ion-segment-button>
+    <ion-segment-button value="explore">
+      Explore
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+  <!-- <div class="gatherup-container"> -->
+
+    <!-- If selected segment is recommended -->
+    <div *ngIf="selectedSegment === 'recommended'">
+      <ion-label>Based on your intereset</ion-label>
+      <ion-scroll *ngIf="userInterestSet" class="scroll-container" scrollX="true">
+        <ion-row nowrap>
+          <div *ngFor="let event of eventsByInterestCategory">
+            <event-card [event]="event"></event-card>
+          </div>
+        </ion-row>
+      </ion-scroll>
+  
+  
+      <div class="pins">
+        <div class="pin" *ngFor="let myevent of (eventProvider.events$ | async)">
+          <event-card [event]="myevent"></event-card>
+        </div>
+      </div>
+  
+    </div>
+  
+  
+    <!-- If selected segment is explore -->
+    <div *ngIf="selectedSegment === 'explore'">
+        <div class="pins">
+          <div class="pin" *ngFor="let myevent of (eventProvider.events$ | async).reverse()">
+            <event-card [event]="myevent"></event-card>
+          </div>
+        </div>
+    </div>
+
+
 </ion-content>

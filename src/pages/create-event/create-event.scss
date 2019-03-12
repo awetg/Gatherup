@@ -1,0 +1,44 @@
+page-create-event {
+    .container {
+        margin: 0 auto;
+
+        .datetime-md {
+            color: map-get($colors, secondary);
+        }
+
+        .item-label-floating {
+            margin: 0;
+        }
+    }
+    .img-container {
+        position: relative;
+        & img {
+            width: 100%;
+        }
+    }
+
+    .overlay-btn {
+        position: absolute;
+        top: calc(50% - 20px);
+        left: calc(50% - 50px);
+        text-align: center;
+        display: inline-block;
+        width: 100px;
+    }
+
+    .upload-btn {
+        width: 100px;
+        margin: 10px auto;
+    }
+
+    // ::-webkit-scrollbar,
+    // *::-webkit-scrollbar {
+    //     display: none;
+    // }
+
+    @media (min-width: 767px) {
+        .container {
+            width: 60%;
+        }
+    }
+}

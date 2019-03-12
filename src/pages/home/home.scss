@@ -1,3 +1,31 @@
 page-home {
+      .events-container{
+        background-size: cover;
+        min-height: 200px;
+      }
 
+      .events{
+      column-count: 2;
+      }
+
+      @media(min-width:0px) {
+        .events{
+          column-count: 2;
+        }
+  }
+
+      @media(min-width:620px) {
+        .events{
+          column-count: 3;
+        }
+  }
+
+      @media(min-width:820px) {
+        .events{
+          column-count: 4;
+        }
+  }
+      .one-event{
+        margin: 2px;
+      }
 }
