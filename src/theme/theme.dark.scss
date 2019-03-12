@@ -1,0 +1,14 @@
+.dark-theme{
+  ion-content{
+    background-color: map-get($colors, dark-theme);
+    color: white;
+  }
+
+  .toolbar-title{
+    color: #fff;
+  }
+  .header .toolbar-background{
+    background-color: map-get($colors, dark-theme);
+    border-color: #f53d3d;
+  }
+}
