@@ -54,37 +54,46 @@ export class EventDetailPage {
     this.mediaProvider.getMediaComment(this.event['file_id']).subscribe(comments => this.commentArr = comments);
   }
 
-  joinEvent() {
-    if (this.joined) {
-      this.eventProvider.deleteJoin(this.event['file_id'], this.authProvider.getUser().user_id)
-      .then(res => this.joined = false)
-      .catch(error => console.log(error));
-    } else {
-      this.eventProvider.joinEvent(this.event['file_id'], this.authProvider.getUser().user_id)
-      .then(res => this.joined = true)
-      .catch(error => console.log(error));
-    }
+  async joinEvent() {
+    const file_id = this.event['file_id'];
+    this.authProvider.user.subscribe(user => {
+      if (this.joined) {
+        this.eventProvider.deleteJoin(file_id, user.user_id)
+        .then(res => this.joined = false)
+        .catch(error => console.log(error));
+      } else {
+        this.eventProvider.joinEvent(file_id, user.user_id)
+        .then(res => this.joined = true)
+        .catch(error => console.log(error));
+      }
+    });
   }
 
-  addInterested() {
-    if (this.interested) {
-      this.eventProvider.deleteInterested(this.event['file_id'], this.authProvider.getUser().user_id)
-      .then(res => this.interested = false)
-      .catch(error => console.log(error));
-    } else {
-      this.eventProvider.addInterested(this.event['file_id'], this.authProvider.getUser().user_id)
-      .then(res => this.interested = true)
-      .catch(error => console.log(error));
-    }
+  async addInterested() {
+    const file_id = this.event['file_id'];
+    this.authProvider.user.subscribe(user => {
+      if (this.interested) {
+        this.eventProvider.deleteInterested(file_id, user.user_id)
+        .then(res => this.interested = false)
+        .catch(error => console.log(error));
+      } else {
+        this.eventProvider.addInterested(file_id, user.user_id)
+        .then(res => this.interested = true)
+        .catch(error => console.log(error));
+      }
+    });
   }
 
   setStatus() {
-    if (this.event['description']['attendees'] !== undefined) {
-      this.joined = this.event['description']['attendees'].includes(this.authProvider.getUser().user_id);
-    }
-    if (this.event['description']['interested'] !== undefined) {
-      this.interested = this.event['description']['interested'].includes(this.authProvider.getUser().user_id);
-    }
+    // const user_id = await this.authProvider.user.toPromise().then(user => user.user_id);
+    this.authProvider.user.subscribe(user => {
+      if (this.event['description']['attendees'] !== undefined) {
+        this.joined = this.event['description']['attendees'].includes(user.user_id);
+      }
+      if (this.event['description']['interested'] !== undefined) {
+        this.interested = this.event['description']['interested'].includes(user.user_id);
+      }
+    });
   }
 
 }

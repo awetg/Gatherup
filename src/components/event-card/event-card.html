@@ -1,33 +1,30 @@
 <!-- Generated template for the EventCardComponent component -->
-<div class="pins">
-  <div class="pin" *ngFor="let event of events">
 
-    <ion-card class="event-card-size round" (click)="openEvent(event)">
+<ion-card class="event-card round" (click)="openEvent(event)">
 
-      <img [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + (event.file_id | thumbnail: 'large' | async )" />
+  <img class="event-card-img" [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + (event.file_id | thumbnail: 'large' | async )" />
 
-      <ion-row>
-        <ion-col col-3>
-          <ion-item>
-            <ion-avatar item-left>
-              <img
-                [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( event.description.organizer.avatar_id !== undefined ? (event.description.organizer.avatar_id | thumbnail: 'small') : 'ab6e8a71b39981a6422125f476d40005-tn160.png') " />
-            </ion-avatar>
-          </ion-item>
-        </ion-col>
-        <ion-col col-9 class="left">
-          <h2>{{ event.title }}</h2>
-          <ion-label no-margin color="gray-light">
-            by {{ event.description.organizer !== undefined ? event.description.organizer.username : 'unkown' }}
-          </ion-label>
-        </ion-col>
-      </ion-row>
-
-      <ion-card-content color="gray-light">
-        {{ (event.description.details || 'no details') | excerpt: 60 }}
-      </ion-card-content>
-
-    </ion-card>
-
+  <div class="event-card-details">
+    <ion-row>
+      <ion-col col-3>
+        <ion-item>
+          <ion-avatar item-left>
+            <img
+              [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( event.description.organizer.avatar_id !== undefined ? (event.description.organizer.avatar_id | thumbnail: 'small') : 'ab6e8a71b39981a6422125f476d40005-tn160.png') " />
+          </ion-avatar>
+        </ion-item>
+      </ion-col>
+      <ion-col col-9 class="left">
+        <h2>{{ event.title }}</h2>
+        <ion-label no-margin color="gray-light">
+          by {{ event.description.organizer !== undefined ? event.description.organizer.username : 'unkown' }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-card-content color="gray-light">
+      {{ (event.description.details || 'no details') | excerpt: 30 }}
+    </ion-card-content>
   </div>
-</div>
+
+</ion-card>

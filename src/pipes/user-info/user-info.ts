@@ -20,7 +20,6 @@ export class UserInfoPipe implements PipeTransform {
   async transform(user_id: number) {
     return new Promise((resolve, reject) => {
       this.authProvider.getuserInfo(user_id).subscribe(res => {
-        console.log(res);
         resolve(res);
       });
     });
