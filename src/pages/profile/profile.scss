@@ -1,0 +1,19 @@
+page-profile {
+  .user-info {
+    text-align: center;
+    margin: 0 0 10px 0;
+    padding: 10px 5px;
+    .item-md ion-avatar img {
+      border: 2px solid map-get($colors, primary);
+      padding: 3px;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto;
+    }
+    .username {
+      font-size: 1.6rem;
+      font-weight: 501;
+    }
+  }
+}
+
