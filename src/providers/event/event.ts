@@ -62,4 +62,11 @@ export class EventProvider {
     return this.http.get<PlaceAutocompleteResponse>(url).toPromise();
   }
 
+  query(queryTerm: string) {
+    return this.events$.map(events => events.filter(e => {
+      const fields = e.title + ' ' + e.description.category.toString() + ' ' + e.description.location;
+      return fields.toLowerCase().includes(queryTerm.toLowerCase());
+    }));
+  }
+
 }

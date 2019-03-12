@@ -10,6 +10,7 @@
   </ion-navbar>
 </ion-header> -->
 
-<ion-content padding>
-    <ion-searchbar placeholder="search"></ion-searchbar>
+<ion-content no-padding>
+    <ion-searchbar (ionInput)="query($event)" placeholder="search"></ion-searchbar>
+    <event-card [events]="currentEvents"></event-card>
 </ion-content>

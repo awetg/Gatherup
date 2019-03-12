@@ -19,14 +19,14 @@
       </form>
       <button class="overlay-btn" ion-button block small mode="ios" (click)="file.click()">Choose Photo</button>
       <ion-item no-lines class="text-md-danger" *ngIf="fileError">
-          <small>Photo is required</small>
-        </ion-item>
+        <small>Photo is required</small>
+      </ion-item>
     </div>
 
     <form #createEventFrom="ngForm" padding (submit)="CreateEvent($event)">
       <ion-item>
         <ion-label floating>Event name</ion-label>
-        <ion-input type="text" name="myTitle" [(ngModel)]="title" required minlength="2"  #myTitle="ngModel"></ion-input>
+        <ion-input type="text" name="myTitle" [(ngModel)]="title" required minlength="2" #myTitle="ngModel"></ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger" *ngIf="myTitle.errors && (myTitle.dirty || myTitle.touched)">
         <small *ngIf="myTitle.errors.required">Title is required</small>
@@ -34,9 +34,11 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Event description</ion-label>
-        <ion-textarea name="myDescription" [(ngModel)]="description.details"  required minlength="5" #myDescription="ngModel"></ion-textarea>
+        <ion-textarea name="myDescription" [(ngModel)]="description.details" required minlength="5"
+          #myDescription="ngModel"></ion-textarea>
       </ion-item>
-      <ion-item no-lines class="text-md-danger" *ngIf="myDescription.errors && (myDescription.dirty || myDescription.touched)">
+      <ion-item no-lines class="text-md-danger"
+        *ngIf="myDescription.errors && (myDescription.dirty || myDescription.touched)">
         <small *ngIf="myDescription.errors.required">Description is required</small>
         <small *ngIf="myDescription.errors.minlength">Description must be at least 5 charachters</small>
       </ion-item>
@@ -44,7 +46,8 @@
         <ion-col col-6>
           <ion-item>
             <ion-label floating>Start date</ion-label>
-            <ion-datetime displayFormat="MMM DD, YYYY" name="sd" [(ngModel)]="startDate" required></ion-datetime>
+            <ion-datetime displayFormat="MMM DD, YYYY" name="sd" [min]="minDate" max="2022" [(ngModel)]="startDate"
+              required></ion-datetime>
           </ion-item>
         </ion-col>
         <ion-col col-6>
@@ -58,32 +61,40 @@
         <ion-col col-6>
           <ion-item>
             <ion-label floating>End date</ion-label>
-            <ion-datetime displayFormat="MMM DD, YYYY" name="ed" [(ngModel)]="endDate" required></ion-datetime>
+            <ion-datetime displayFormat="MMM DD, YYYY" name="ed" [(ngModel)]="endDate" required [min]="minDate"
+              max="2022"></ion-datetime>
           </ion-item>
-        </ion-col> 
+        </ion-col>
         <ion-col col-6>
           <ion-item>
             <ion-label floating>End time</ion-label>
             <ion-datetime displayFormat="h:mm A" name="et" [(ngModel)]="endTime" required></ion-datetime>
           </ion-item>
         </ion-col>
+        <ion-item no-lines class="text-md-danger" *ngIf="endTimeError">
+          <small>End time shoul be at least 30 minutes after start time</small>
+        </ion-item>
       </ion-row>
       <ion-item>
-        <ion-label (tap)="openModal($event, subComponents.autocompleteComponenet, autoCompleteOnDismiss)" floating>Location</ion-label>
-        <ion-input #location="ngModel" (tap)="openModal($event, subComponents.autocompleteComponenet, autoCompleteOnDismiss)" name="eventLocation" [(ngModel)]="description.location"  type="text">
+        <ion-label (tap)="openModal($event, subComponents.autocompleteComponenet, autoCompleteOnDismiss)" floating>
+          Location</ion-label>
+        <ion-input #location="ngModel"
+          (tap)="openModal($event, subComponents.autocompleteComponenet, autoCompleteOnDismiss)" name="eventLocation"
+          [(ngModel)]="description.location" type="text">
         </ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger" *ngIf="locationError">
-          <small>Location is required</small>
-        </ion-item>
+        <small>Location is required</small>
+      </ion-item>
       <ion-item>
-          <ion-label>Category</ion-label>
-          <ion-select name="categories" multiple="true" [(ngModel)]="description.category" required>
-            <ion-option *ngFor="let c of appConstant.CATEGORY" [value]="c">{{ c }}</ion-option>
-          </ion-select>
-        </ion-item>
+        <ion-label>Category</ion-label>
+        <ion-select name="categories" multiple="true" [(ngModel)]="description.category" required>
+          <ion-option *ngFor="let c of appConstant.CATEGORY" [value]="c">{{ c }}</ion-option>
+        </ion-select>
+      </ion-item>
       <ion-buttons>
-        <button class="upload-btn" ion-button block type="submit" [disabled]="!(createEventFrom.form.valid)">Upload</button>
+        <button class="upload-btn" ion-button block type="submit"
+          [disabled]="!(createEventFrom.form.valid)">Upload</button>
       </ion-buttons>
     </form>
   </div>
