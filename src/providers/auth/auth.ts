@@ -165,19 +165,32 @@ export class AuthProvider {
     return this.http.put(this.appConstant.API.API_ENDPOINT + '/users', data, httpOptions).toPromise();
   }
 
-  /* update user DB media of current user */
+  /* update user DB media of current user (logged in user ) */
   async updateUserDBMedia(data: UserDBDescription): Promise<any> {
     const currentDB = this._userDB.getValue().description;
 
     /* get all none null entry and update current user database accordingly */
     Object.entries(data).forEach((entry) => {
       const [ key, value ] = [ entry[0], entry[1] ];
+      // check the value is not undefined , null or if it is string or array length must be > 0
       if (value !== undefined && value !== null && value.length > 0) {
+        // if it is array push each new value if is does not exist except when the array is user interests ( list of category )
         if (Array.isArray(value)) {
-          value.forEach(v => {
-            if (currentDB[key].indexOf(v) === -1) currentDB[key].push(v);
-          });
+
+          // if array is interest assing new array instead of adding new values
+          if (key === 'interest') {
+
+            currentDB[key] = value;
+
+          } else {
+
+            value.forEach(v => {
+              if (currentDB[key].indexOf(v) === -1) currentDB[key].push(v);
+            });
+          }
+
         } else {
+          // when the values is not array assign the new value
           currentDB[key] = value;
         }
       }
@@ -210,16 +223,6 @@ export class AuthProvider {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  /* get user object. this function only returns current value to be notified when updated use observable */
-  getUser(): User {
-    return this._user.getValue();
-  }
-
-  /* get userDB object. this function only returns current value to be notified when updated use observable */
-  getUserDB(): UserDBDescription {
-    return this._userDB.getValue().description;
   }
 
   /* uploads a new media file for user info storage */

@@ -8,6 +8,8 @@
     <ion-title>Home</ion-title>
   </ion-navbar> -->
   <ion-segment [(ngModel)]="selectedSegment">
+
+    <!-- segment -->
     <ion-segment-button value="recommended">
       Recommended
     </ion-segment-button>
@@ -18,11 +20,38 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="selectedSegment === 'recommended'">
-    <event-card [events]="(eventProvider.events$ | async)"></event-card>
-  </div>
 
-  <div *ngIf="selectedSegment === 'explore'">
-    <event-card [events]="(eventProvider.events$ | async)"></event-card>
-  </div>
+  <!-- <div class="gatherup-container"> -->
+
+    <!-- If selected segment is recommended -->
+    <div *ngIf="selectedSegment === 'recommended'">
+      <ion-label>Based on your intereset</ion-label>
+      <ion-scroll *ngIf="userInterestSet" class="scroll-container" scrollX="true">
+        <ion-row nowrap>
+          <div *ngFor="let event of eventsByInterestCategory">
+            <event-card [event]="event"></event-card>
+          </div>
+        </ion-row>
+      </ion-scroll>
+  
+  
+      <div class="pins">
+        <div class="pin" *ngFor="let myevent of (eventProvider.events$ | async)">
+          <event-card [event]="myevent"></event-card>
+        </div>
+      </div>
+  
+    </div>
+  
+  
+    <!-- If selected segment is explore -->
+    <div *ngIf="selectedSegment === 'explore'">
+        <div class="pins">
+          <div class="pin" *ngFor="let myevent of (eventProvider.events$ | async).reverse()">
+            <event-card [event]="myevent"></event-card>
+          </div>
+        </div>
+    </div>
+
+
 </ion-content>
