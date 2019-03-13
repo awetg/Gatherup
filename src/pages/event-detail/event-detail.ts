@@ -36,9 +36,13 @@ export class EventDetailPage {
     public authProvider: AuthProvider) {
     this.event = navParams.get('event');
     this.authProvider.user.subscribe(user => {
-      this.user = user;
-      this.setStatus();
-      this.getComments();
+      if(user !== undefined) {
+        this.user = user;
+        this.setStatus();
+        this.getComments();
+      } else {
+        this.navCtrl.push('LoginPage').catch(error => console.log(error));
+      }
     });
   }
 

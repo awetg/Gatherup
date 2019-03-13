@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppDBMedia, Comment, Media, MediaUploadResponse, Favourite } from '../../interface/media';
+import { AppDBMedia, Comment, Favourite, Media, MediaUploadResponse } from '../../interface/media';
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { UserDBMedia } from '../../interface/user';
 import { Event } from '../../interface/event';
