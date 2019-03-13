@@ -95,7 +95,9 @@ export class EditProfilePage {
   async updateProfile($event) {
     $event.preventDefault();
 
-    if (this.user.full_name.length > 0) {
+    this.loading.present().catch(error => console.log(error));
+
+    if (this.user.full_name.length > 0 || this.user.interest.length > 0) {
       await this.authProvider.updateUserDBMedia(this.user);
     }
 
@@ -114,12 +116,11 @@ export class EditProfilePage {
 
 
     if (promiseArr.length > 0) {
-      this.loading.present().catch(error => console.log(error));
       Promise.all(promiseArr)
         .then(res => this.dismissLoading())
         .catch(error => console.log(error));
     } else {
-      this.navCtrl.pop().catch(error => console.log(error));
+      this.dismissLoading();
     }
   }
 
