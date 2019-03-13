@@ -41,7 +41,7 @@ export class AppDbProvider {
     const db = this._appDB.getValue();
     db.users.push({ user_id, file_id });
     const data = { 'description': JSON.stringify(db) };
-    this.mediaProvider.updateMedia(this.appConstant.APP.APP_INFO_MEDIA_ID, data).catch(error => console.log(error));
+    this.mediaProvider.updateAppDB(this.appConstant.APP.APP_INFO_MEDIA_ID, data).catch(error => console.log(error));
   }
 
   getUserFileId(user_id: number): number {

@@ -16,6 +16,7 @@ import { AppDbProvider } from '../app-db/app-db';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MediaUploadResponse } from '../../interface/media';
+import { EventProvider } from '../event/event';
 
 /*
   Generated class for the AuthProvider provider.
@@ -39,7 +40,8 @@ export class AuthProvider {
     public http: HttpClient,
     public appConstant: AppConstantProvider,
     public mediaProvider: MediaProvider,
-    public appDB: AppDbProvider) {
+    public appDB: AppDbProvider,
+    public eventProvider: EventProvider) {
     console.log('Hello AuthProvider Provider');
   }
 
@@ -101,21 +103,22 @@ export class AuthProvider {
   }
 
   async register(userData: SignUpForm): Promise<any> {
-    userData.confirmPassword = undefined;
+    const tmpData = { username: userData.username, password: userData.password, email: userData.email, full_name: userData.full_name };
     try {
-      /* first upload a media file to store user info on description of that file it act as userdata DB */
-      const userDescription: UserDBDescription = { full_name: userData.full_name, interest: userData.intereset };
-      const mediaUploadRes = await this.uploadUserInfoMedia(userDescription);
+      console.log(userData);
 
       /* register user get user_id */
-      const registerRes = await this.http.post<RegisterResponse>(this.appConstant.API.API_ENDPOINT + '/users', userData).toPromise();
+      const registerRes = await this.http.post<RegisterResponse>(this.appConstant.API.API_ENDPOINT + '/users', tmpData).toPromise();
 
-      /* Add user to App database */
-      this.appDB.addUser(registerRes.user_id, mediaUploadRes.file_id);
-
-      /* finally login user instead of redirecting to login page */
+      /* login user instead of redirecting to login page */
       const userCreds: LogInForm = { username: userData.username, password: userData.password };
-      return this.logIn(userCreds);
+      const loginRes = await this.logIn(userCreds);
+
+      /* update media database that was created by login function, login function created media db for users of api not signed up with this app*/
+      const userDescription: UserDBDescription = { full_name: userData.full_name, interest: userData.intereset };
+      const mediaUploadRes = await this.updateUserDBMedia(userDescription);
+
+      return registerRes;
 
     } catch (error) {
       console.log(error);
@@ -171,7 +174,7 @@ export class AuthProvider {
 
     /* get all none null entry and update current user database accordingly */
     Object.entries(data).forEach((entry) => {
-      const [ key, value ] = [ entry[0], entry[1] ];
+      const [key, value] = [entry[0], entry[1]];
       // check the value is not undefined , null or if it is string or array length must be > 0
       if (value !== undefined && value !== null && value.length > 0) {
         // if it is array push each new value if is does not exist except when the array is user interests ( list of category )
@@ -289,6 +292,37 @@ export class AuthProvider {
       headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') })
     };
     return this.http.get<UserInfo>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions);
+  }
+
+  async joinEvent(file_id: number) {
+    try {
+      const currentDB = this._userDB.getValue();
+      currentDB.description.joinedEvents ? currentDB.description.joinedEvents.push(file_id) : currentDB.description.joinedEvents = [file_id];
+      const payload = { 'description': JSON.stringify(currentDB) };
+      const message = await this.mediaProvider.updateMedia(currentDB.file_id, payload).catch(error => console.log(error));
+      this.eventProvider.loadEvents();
+      return message;
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteJoinEvent(file_id: number) {
+    try {
+      const currentDB = this._userDB.getValue();
+      const index = currentDB.description.joinedEvents !== undefined ? currentDB.description.joinedEvents.indexOf(file_id) : -1;
+      if (file_id >= 0) {
+        currentDB.description.joinedEvents.splice(index, 1);
+        const payload = { 'description': JSON.stringify(currentDB) };
+        const message = await this.mediaProvider.updateMedia(currentDB.file_id, payload).catch(error => console.log(error));
+        this.eventProvider.loadEvents();
+        return message;
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }
