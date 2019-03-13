@@ -21,8 +21,6 @@ export interface EventDescription {
     end_time?: Date;
     location?: string;
     coordinates?: { lng?: number, lat?: number };
-    attendees?: number[];
-    interested?: number[];  // intereseted users will not be saved as media favorite
     organizer?: EventOrganizer;
 }
 

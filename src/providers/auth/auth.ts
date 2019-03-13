@@ -16,6 +16,7 @@ import { AppDbProvider } from '../app-db/app-db';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MediaUploadResponse } from '../../interface/media';
+import { EventProvider } from '../event/event';
 
 /*
   Generated class for the AuthProvider provider.
@@ -39,7 +40,8 @@ export class AuthProvider {
     public http: HttpClient,
     public appConstant: AppConstantProvider,
     public mediaProvider: MediaProvider,
-    public appDB: AppDbProvider) {
+    public appDB: AppDbProvider,
+    public eventProvider: EventProvider) {
     console.log('Hello AuthProvider Provider');
   }
 
@@ -290,6 +292,37 @@ export class AuthProvider {
       headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') })
     };
     return this.http.get<UserInfo>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions);
+  }
+
+  async joinEvent(file_id: number) {
+    try {
+      const currentDB = this._userDB.getValue();
+      currentDB.description.joinedEvents ? currentDB.description.joinedEvents.push(file_id) : currentDB.description.joinedEvents = [file_id];
+      const payload = { 'description': JSON.stringify(currentDB) };
+      const message = await this.mediaProvider.updateMedia(currentDB.file_id, payload).catch(error => console.log(error));
+      this.eventProvider.loadEvents();
+      return message;
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteJoinEvent(file_id: number) {
+    try {
+      const currentDB = this._userDB.getValue();
+      const index = currentDB.description.joinedEvents !== undefined ? currentDB.description.joinedEvents.indexOf(file_id) : -1;
+      if (file_id >= 0) {
+        currentDB.description.joinedEvents.splice(index, 1);
+        const payload = { 'description': JSON.stringify(currentDB) };
+        const message = await this.mediaProvider.updateMedia(currentDB.file_id, payload).catch(error => console.log(error));
+        this.eventProvider.loadEvents();
+        return message;
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

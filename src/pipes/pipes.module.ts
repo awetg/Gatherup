@@ -5,6 +5,7 @@ import { ExcerptPipe } from './excerpt/excerpt';
 import { UserInfoPipe } from './user-info/user-info';
 import { UserDbPipe } from './user-db/user-db';
 import { ItemFilterPipe } from './item-filter/item-filter';
+import { FavoriteFilterPipe } from './favorite-filter/favorite-filter';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { ItemFilterPipe } from './item-filter/item-filter';
     CommentsPipe,
     UserInfoPipe,
     UserDbPipe,
-    ItemFilterPipe
+    ItemFilterPipe,
+    FavoriteFilterPipe
   ],
   imports: [],
   exports: [
@@ -22,7 +24,8 @@ import { ItemFilterPipe } from './item-filter/item-filter';
     CommentsPipe,
     UserInfoPipe,
     UserDbPipe,
-    ItemFilterPipe
+    ItemFilterPipe,
+    FavoriteFilterPipe
   ]
 })
 export class PipesModule {}

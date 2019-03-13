@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppDBMedia, Comment, Media, MediaUploadResponse } from '../../interface/media';
+import { AppDBMedia, Comment, Media, MediaUploadResponse, Favourite } from '../../interface/media';
 import { AppConstantProvider } from '../app-constant/app-constant';
 import { UserDBMedia } from '../../interface/user';
 import { Event } from '../../interface/event';
@@ -85,6 +85,33 @@ export class MediaProvider {
       headers: new HttpHeaders({ 'x-access-token': token }),
     };
     return this.http.put<{ message: string }>(this.appConstant.API.API_ENDPOINT + '/media/' + file_id, data, httpOptions).toPromise();
+  }
+
+  createFavourite(file_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') }),
+    };
+    const params = { file_id };
+    return this.http.post<{ message: string, favourite_id: number }>(this.appConstant.API.API_ENDPOINT + '/favourites', params, httpOptions);
+  }
+
+
+  deleteFavourite(file_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') }),
+    };
+    return this.http.delete<{ message: string, favourite_id: number }>(this.appConstant.API.API_ENDPOINT + '/favourites/file/' + file_id, httpOptions);
+  }
+
+  getFavouriteById(file_id: number) {
+    return this.http.get<Favourite[]>(this.appConstant.API.API_ENDPOINT + '/favourites/file/' + file_id);
+  }
+
+  getAllFavourite() {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') }),
+    };
+    return this.http.get<Favourite[]>(this.appConstant.API.API_ENDPOINT + '/favourites', httpOptions);
   }
 
 }

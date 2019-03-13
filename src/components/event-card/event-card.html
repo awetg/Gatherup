@@ -10,7 +10,7 @@
         <ion-item>
           <ion-avatar item-left>
             <img
-              [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( event.description.organizer.avatar_id !== undefined ? (event.description.organizer.avatar_id | thumbnail: 'small') : 'ab6e8a71b39981a6422125f476d40005-tn160.png') " />
+              [src]=" 'http://media.mw.metropolia.fi/wbma/uploads/' + ( event.description.organizer.avatar_id !== undefined ? (event.description.organizer.avatar_id | thumbnail: 'small' | async) : 'ab6e8a71b39981a6422125f476d40005-tn160.png') " />
           </ion-avatar>
         </ion-item>
       </ion-col>
