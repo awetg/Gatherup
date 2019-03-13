@@ -4,10 +4,7 @@ import { EventProvider } from '../../providers/event/event';
 import { Event } from '../../interface/event';
 
 /**
- * Generated class for the SearchPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()

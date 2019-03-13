@@ -6,10 +6,7 @@ import { PageItem } from '../../interface/page';
 import { User, UserDBMedia } from '../../interface/user';
 
 /**
- * Generated class for the ProfilePage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()
@@ -39,6 +36,8 @@ export class ProfilePage {
     public eventProvider: EventProvider,
     public authProvider: AuthProvider,
     private popoverCtrl: PopoverController) {
+
+      /* get user data to filter event for own, joined and interested events. the filter is done with item filter pipe */
     this.authProvider.userDB.subscribe(user => {
       if (user.description !== undefined) {
         this.user = user;

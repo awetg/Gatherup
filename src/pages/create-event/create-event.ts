@@ -7,10 +7,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { User, UserDBMedia } from '../../interface/user';
 
 /**
- * Generated class for the CreateEventPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()
@@ -51,14 +48,16 @@ export class CreateEventPage {
     public authProvider: AuthProvider,
     public eventProvider: EventProvider,
     public loadingCtrl: LoadingController) {
-      this.authProvider.user.subscribe(user => {
-        if (user !== undefined) this.user = user;
-      });
-      this.authProvider.userDB.subscribe(db => {
-        if (db.description !== undefined) {
-          this.userDB = db;
-        }
-      });
+
+    /* Get logged in user account information to upload with newly created event */
+    this.authProvider.user.subscribe(user => {
+      if (user !== undefined) this.user = user;
+    });
+    this.authProvider.userDB.subscribe(db => {
+      if (db.description !== undefined) {
+        this.userDB = db;
+      }
+    });
   }
 
   loading = this.loadingCtrl.create({
@@ -113,19 +112,10 @@ export class CreateEventPage {
     fd.append('title', this.title);
     fd.append('description', JSON.stringify(this.description));
 
-
-    this.eventProvider.addEvent(fd).then(
-      (res) => {
-
-        /* dimiss loading progress indicator */
-        setTimeout(() => {
-          this.loading.dismiss().catch(error => console.log(error));
-          this.navCtrl.pop().catch(error => console.log(error));
-        },
-          2000,
-        );
-      }
-    ).catch(error => console.log(error));
+    /* Upload data and dismiss loading */
+    this.eventProvider.addEvent(fd)
+    .then((res) => this.dismissLoading())
+    .catch(error => console.log(error));
   }
 
   openPopover(ev: any, popoverComponet: any, onDismiss: any) {
@@ -144,6 +134,7 @@ export class CreateEventPage {
     modal.present().catch(error => console.log(error));
   }
 
+  /* Ondimss function for place or location auto complate modal. get selcted item and add it to event file */
   autoCompleteOnDismiss(item: PlaceItem) {
     this.description.location = item.place_name;
     this.description.coordinates.lng = item.geometry.coordinates[0];
@@ -161,6 +152,16 @@ export class CreateEventPage {
       this.fileData = reader.result;
     };
     reader.readAsDataURL(this.file);
+  }
+
+  dismissLoading() {
+    /* dimiss loading progress indicator */
+    setTimeout(() => {
+      this.loading.dismiss().catch(error => console.log(error));
+      this.navCtrl.pop().catch(error => console.log(error));
+    },
+      2000,
+    );
   }
 
 }

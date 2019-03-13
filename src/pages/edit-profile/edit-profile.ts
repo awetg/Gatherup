@@ -5,10 +5,7 @@ import { UserDBDescription } from '../../interface/user';
 import { AuthProvider } from '../../providers/auth/auth';
 
 /**
- * Generated class for the EditProfilePage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()
@@ -45,11 +42,16 @@ export class EditProfilePage {
 
     this.loading.present().catch(error => console.log(error));
 
+    /* create promise array to get response after all promise are resolved */
+    const promiseArr = [];
+
+    /* if fullname or/and interest are given update user database file first before uploading avatar
+    if each promis
+     */
     if (this.user.full_name.length > 0 || this.user.interest.length > 0) {
-      await this.authProvider.updateUserDBMedia(this.user);
+      promiseArr.push(this.authProvider.updateUserDBMedia(this.user));
     }
 
-    const promiseArr = [];
 
     if (this.email.length > 0) {
       const data = { 'email': this.email };

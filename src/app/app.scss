@@ -33,6 +33,10 @@
     margin: 0 auto;
 }
 
+.pin {
+    margin: 0 auto;
+}
+
 @each $size, $size-value in $screen-breakpoints {
     .form-container {
         @media (min-width: $size-value) {
@@ -45,8 +49,8 @@
         @media (min-width: $size-value) {
             @if $size-value < 1000 {
 
-                column-count: if($size-value < 576, 1, 2);
-                width: if($size-value < 576, 100%, 680px);
+                column-count: if($size-value < 700, auto, 2);
+                width: if($size-value < 400, 100%, 680px);
             } @else {
                 column-count: 3;
                 width: 1050px;
@@ -55,7 +59,8 @@
     }
 
     .pin {
-        display: if($size-value < 500, block, inline-block);
+        max-width: if($size-value < 400, 100%, 400px);
+
     }
 
     .scroll-container {

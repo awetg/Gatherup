@@ -7,10 +7,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { User } from '../../interface/user';
 
 /**
- * Generated class for the EventDetailPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()
@@ -34,22 +31,30 @@ export class EventDetailPage {
     public mediaProvider: MediaProvider,
     public eventProvider: EventProvider,
     public authProvider: AuthProvider) {
-    this.event = navParams.get('event');
-    this.authProvider.user.subscribe(user => {
-      if(user !== undefined) {
-        this.user = user;
-        this.setStatus();
-        this.getComments();
-      } else {
-        this.navCtrl.push('LoginPage').catch(error => console.log(error));
-      }
-    });
+
+      /* get passed param single event to show details of the event */
+      this.event = navParams.get('event');
+
+      /* get logged in user to check whether user alread joined/interested on the event and further action depending on that */
+      this.authProvider.user.subscribe(user => {
+        if (user !== undefined) {
+          this.user = user;
+          this.setStatus(); // set UI as interestd/not interested and joined/not joined for current user
+          this.getComments(); // get all comments belonging to current event
+        } else {
+          /* if none logged in user try to see event details redirect to login */
+          this.navCtrl.push('LoginPage').catch(error => console.log(error));
+        }
+      });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventDetailPage');
   }
 
+  /**
+   * Add the comment on the media (event)
+   */
   addComment() {
     if (this.newComment.length > 0) {
       this.mediaProvider.addMediaComment(this.event['file_id'], this.newComment).subscribe(res => {
@@ -59,10 +64,16 @@ export class EventDetailPage {
     }
   }
 
+  /**
+   * Fetch the comments on the event
+   */
   getComments() {
     this.mediaProvider.getMediaComment(this.event['file_id']).subscribe(comments => this.commentArr = comments);
   }
 
+  /**
+   * Join the event
+   */
   async joinEvent() {
     const file_id = this.event['file_id'];
     if (this.joined) {
@@ -76,6 +87,9 @@ export class EventDetailPage {
     }
   }
 
+  /**
+   * Add event in the interested list
+   */
   async addInterested() {
     const file_id = this.event['file_id'];
     if (this.interested) {
@@ -91,6 +105,9 @@ export class EventDetailPage {
     }
   }
 
+  /**
+   * Checks if the user already joined or interested in the event
+   */
   setStatus() {
     this.authProvider.userDB.subscribe(userdb => {
       if (userdb.description.joinedEvents !== undefined) {
