@@ -73,8 +73,9 @@ export class HomePage {
         this.topEvents = events.sort((event1, event2) => {
           const [ e1, e2 ] = [ event1.description, event2.description];
           const timeDiff = new Date(e1.start_time).getTime() - new Date(e2.start_time).getTime();
-          if (timeDiff !== 0) return -timeDiff;
-          return -((e1.attendees ? e1.attendees.length : 0) - (e2.attendees ? e2.attendees.length : 0));
+          return -timeDiff;
+          // if (timeDiff !== 0) return -timeDiff;
+          // return -((e1.attendees ? e1.attendees.length : 0) - (e2.attendees ? e2.attendees.length : 0));
         });
       }
     );

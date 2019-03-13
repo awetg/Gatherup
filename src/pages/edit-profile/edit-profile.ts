@@ -40,11 +40,14 @@ export class EditProfilePage {
     console.log('ionViewDidLoad EditProfilePage');
   }
 
-  updateProfile($event) {
+  async updateProfile($event) {
     $event.preventDefault();
 
+    if (this.user.full_name.length > 0) {
+      await this.authProvider.updateUserDBMedia(this.user);
+    }
+
     const promiseArr = [];
-    promiseArr.push(this.authProvider.updateUserDBMedia(this.user));
 
     if (this.email.length > 0) {
       const data = { 'email': this.email };
@@ -57,20 +60,12 @@ export class EditProfilePage {
       promiseArr.push(this.authProvider.updateAvatar(fd));
     }
 
+
     if (promiseArr.length > 0) {
       this.loading.present().catch(error => console.log(error));
       Promise.all(promiseArr)
-      .then(
-        res => {
-          setTimeout(() => {
-              this.loading.dismiss().catch(e => console.log(e));
-              this.navCtrl.pop().catch(error => console.log(error));
-            },
-          2000,
-          );
-        }
-      )
-      .catch(error => console.log(error));
+        .then(res => this.dismissLoading())
+        .catch(error => console.log(error));
     } else {
       this.navCtrl.pop().catch(error => console.log(error));
     }
@@ -87,5 +82,14 @@ export class EditProfilePage {
       this.fileData = reader.result;
     };
     reader.readAsDataURL(this.file);
+  }
+
+  dismissLoading() {
+    setTimeout(() => {
+      this.loading.dismiss().catch(e => console.log(e));
+      this.navCtrl.pop().catch(error => console.log(error));
+    },
+      2000,
+    );
   }
 }
