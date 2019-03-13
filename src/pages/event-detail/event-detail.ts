@@ -50,6 +50,9 @@ export class EventDetailPage {
     console.log('ionViewDidLoad EventDetailPage');
   }
 
+  /**
+   * Add the comment on the media (event)
+   */
   addComment() {
     if (this.newComment.length > 0) {
       this.mediaProvider.addMediaComment(this.event['file_id'], this.newComment).subscribe(res => {
@@ -59,10 +62,16 @@ export class EventDetailPage {
     }
   }
 
+  /**
+   * Fetch the comments on the event
+   */
   getComments() {
     this.mediaProvider.getMediaComment(this.event['file_id']).subscribe(comments => this.commentArr = comments);
   }
 
+  /**
+   * Join the event
+   */
   async joinEvent() {
     const file_id = this.event['file_id'];
     if (this.joined) {
@@ -76,6 +85,9 @@ export class EventDetailPage {
     }
   }
 
+  /**
+   * Add event in the interested list
+   */
   async addInterested() {
     const file_id = this.event['file_id'];
     if (this.interested) {
@@ -91,6 +103,9 @@ export class EventDetailPage {
     }
   }
 
+  /**
+   * Checks if the user already joined or interested in the event
+   */
   setStatus() {
     this.authProvider.userDB.subscribe(userdb => {
       if (userdb.description.joinedEvents !== undefined) {
