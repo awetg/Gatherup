@@ -59,13 +59,16 @@ export class RegisterPage {
 
   confirmPasswordFunc(): boolean {
     if (this.user.password !== undefined) {
+      console.log('pass ', this.user.password);
+      console.log('confrm pass ', this.user.confirmPassword);
       if (this.user.password === this.user.confirmPassword) {
         this.passwordConfirmed = true;
         return true;
       }
+    } else {
+      this.passwordConfirmed = false;
+      return false;
     }
-    this.passwordConfirmed = false;
-    return false;
   }
 
   openPage(page: PageItem) {

@@ -26,11 +26,10 @@ page-login {
   }
   .splash-bg {
     position: relative;
-    background: url(../../assets/imgs/achievement-agreement-arms-1068523.jpg) no-repeat transparent;
+    background: url(../../assets/imgs/login-pic.png) no-repeat transparent;
     background-size: cover;
     height: 50%;
     z-index: 1;
-    background-repeat: repeat-x;
     -webkit-animation: animatedBackground 40s linear infinite;
     animation: animatedBackground 40s ease-out infinite;
     animation-name: animatedBackground;

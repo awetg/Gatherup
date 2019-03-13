@@ -14,13 +14,13 @@
       <ion-item>
         <ion-label floating>Username</ion-label>
         <ion-input type="text" [(ngModel)]="user.username" name="username" (ionChange)="checkUsername()" required
-                   minlength="3" #username="ngModel">
+          minlength="3" #username="ngModel">
         </ion-input>
       </ion-item>
 
       <ion-item no-lines class="text-md-danger" *ngIf='username.errors && (username.dirty || username.touched)'>
         <small *ngIf="username.errors.required">Username is required</small>
-        <small *ngIf="username.errors.minlength">Username must be at least 3 characters</small>
+        <small *ngIf="username.errors.minlength">Username must be at least 3 charachters</small>
       </ion-item>
       <ion-item no-lines *ngIf="!username.errors">
         <small style="color:red" *ngIf="!usernameAvailable">Username not available</small>
@@ -28,8 +28,8 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password" name="password" required minlength="5"
-                   #password="ngModel"></ion-input>
+        <ion-input type="password" [(ngModel)]="user.password" name="mypassword" required minlength="5"
+          #password="ngModel"></ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger" *ngIf='password.errors && (password.dirty || password.touched)'>
         <small *ngIf="password.errors.required">Password is required</small>
@@ -37,12 +37,12 @@
       </ion-item>
       <ion-item>
         <ion-label floating>confirm password</ion-label>
-        <ion-input type="password" [(ngModel)]="user.confirmPassword" name="confirmPassword"
-                   (ionChanged)="confirmPasswordFunc($event)" required minlength="5" #confirmPassword="ngModel">
+        <ion-input type="password" [(ngModel)]="user.confirmPassword" name="myconfirmPassword"
+          (ionChange)="confirmPasswordFunc($event)" required minlength="5" #confirmPassword="ngModel">
         </ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger"
-                *ngIf='confirmPassword.errors && (confirmPassword.dirty || confirmPassword.touched)'>
+        *ngIf='confirmPassword.errors && (confirmPassword.dirty || confirmPassword.touched)'>
         <small *ngIf="confirmPassword.errors.required">Password confirmation is required</small>
         <small *ngIf="confirmPassword.errors.minlength">Password must be at least 5 characters</small>
       </ion-item>
@@ -52,7 +52,7 @@
       <ion-item>
         <ion-label floating>Email</ion-label>
         <ion-input type="email" [(ngModel)]="user.email" name="email" required #email="ngModel"
-                   pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
         </ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger" *ngIf="email.errors && (email.dirty || email.touched)">
@@ -62,7 +62,7 @@
       <ion-item>
         <ion-label floating>Fullname</ion-label>
         <ion-input type="text" [(ngModel)]="user.full_name" name="fullname" pattern="^([A-Za-z']+(-| )?)+$"
-                   #fullname="ngModel" required></ion-input>
+          #fullname="ngModel" required></ion-input>
       </ion-item>
       <ion-item class="text-md-danger" *ngIf="fullname.errors && (fullname.dirty || fullname.touched)">
         <small *ngIf="fullname.errors.required">Full Name is required</small>
@@ -75,7 +75,7 @@
         </ion-select>
       </ion-item>
       <button ion-button block class="register-btn" color="primary" type="submit"
-              [disabled]="!registerForm.form.valid">Register</button>
+        [disabled]="!registerForm.form.valid">Register</button>
     </form>
 
     <ion-row>
