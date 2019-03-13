@@ -91,7 +91,7 @@ export class EditProfilePage {
       this.takePicture();
     }
   }
-    
+
   async updateProfile($event) {
     $event.preventDefault();
 
@@ -117,8 +117,8 @@ export class EditProfilePage {
 
     if (promiseArr.length > 0) {
       Promise.all(promiseArr)
-        .then(res => this.dismissLoading())
-        .catch(error => console.log(error));
+      .then(res => this.dismissLoading())
+      .catch(error => console.log(error));
     } else {
       this.dismissLoading();
     }
@@ -140,13 +140,13 @@ export class EditProfilePage {
 
   dismissLoading() {
     setTimeout(() => {
-      this.loading.dismiss().catch(e => console.log(e));
-      this.navCtrl.pop().catch(error => console.log(error));
-    },
+        this.loading.dismiss().catch(e => console.log(e));
+        this.navCtrl.pop().catch(error => console.log(error));
+      },
       2000,
     );
   }
-    
+
   triggerClick() {
     const event = new MouseEvent('click', { bubbles: true, cancelable: true });
     event.stopPropagation();
