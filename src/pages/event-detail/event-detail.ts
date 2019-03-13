@@ -4,6 +4,7 @@ import { MediaProvider } from '../../providers/media/media';
 import { Comment } from '../../interface/media';
 import { EventProvider } from '../../providers/event/event';
 import { AuthProvider } from '../../providers/auth/auth';
+import { User } from '../../interface/user';
 
 /**
  * Generated class for the EventDetailPage page.
@@ -25,6 +26,7 @@ export class EventDetailPage {
   commentArr: Comment[];
   joined = false;
   interested = false;
+  user: User = {};
 
   constructor(
     public navCtrl: NavController,
@@ -33,8 +35,15 @@ export class EventDetailPage {
     public eventProvider: EventProvider,
     public authProvider: AuthProvider) {
     this.event = navParams.get('event');
-    this.setStatus();
-    this.getComments();
+    this.authProvider.user.subscribe(user => {
+      if(user !== undefined) {
+        this.user = user;
+        this.setStatus();
+        this.getComments();
+      } else {
+        this.navCtrl.push('LoginPage').catch(error => console.log(error));
+      }
+    });
   }
 
   ionViewDidLoad() {
@@ -56,43 +65,42 @@ export class EventDetailPage {
 
   async joinEvent() {
     const file_id = this.event['file_id'];
-    this.authProvider.user.subscribe(user => {
-      if (this.joined) {
-        this.eventProvider.deleteJoin(file_id, user.user_id)
+    if (this.joined) {
+      this.authProvider.deleteJoinEvent(file_id)
         .then(res => this.joined = false)
         .catch(error => console.log(error));
-      } else {
-        this.eventProvider.joinEvent(file_id, user.user_id)
+    } else {
+      this.authProvider.joinEvent(file_id)
         .then(res => this.joined = true)
         .catch(error => console.log(error));
-      }
-    });
+    }
   }
 
   async addInterested() {
     const file_id = this.event['file_id'];
-    this.authProvider.user.subscribe(user => {
-      if (this.interested) {
-        this.eventProvider.deleteInterested(file_id, user.user_id)
+    if (this.interested) {
+      console.log('delete interest ', this.joined);
+      this.mediaProvider.deleteFavourite(file_id).toPromise()
         .then(res => this.interested = false)
         .catch(error => console.log(error));
-      } else {
-        this.eventProvider.addInterested(file_id, user.user_id)
+    } else {
+      console.log('add interest ', this.joined);
+      this.mediaProvider.createFavourite(file_id).toPromise()
         .then(res => this.interested = true)
         .catch(error => console.log(error));
-      }
-    });
+    }
   }
 
   setStatus() {
-    // const user_id = await this.authProvider.user.toPromise().then(user => user.user_id);
-    this.authProvider.user.subscribe(user => {
-      if (this.event['description']['attendees'] !== undefined) {
-        this.joined = this.event['description']['attendees'].includes(user.user_id);
+    this.authProvider.userDB.subscribe(userdb => {
+      if (userdb.description.joinedEvents !== undefined) {
+        this.joined = userdb.description.joinedEvents.some(id => id === this.event['file_id']);
       }
-      if (this.event['description']['interested'] !== undefined) {
-        this.interested = this.event['description']['interested'].includes(user.user_id);
-      }
+    });
+
+    this.mediaProvider.getFavouriteById(this.event['file_id']).subscribe(favorites => {
+      this.interested = favorites.some(f => f.user_id === this.user.user_id);
+      console.log(this.interested);
     });
   }
 

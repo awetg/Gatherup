@@ -48,4 +48,11 @@ export interface Comment {
     user_id?: number;
     comment?: string;
     time_added?: string;
-  }
+}
+
+export interface Favourite {
+    favourite_id?: number;
+    file_id?: number;
+    user_id?: number;
+}
+

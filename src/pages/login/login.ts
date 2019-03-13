@@ -31,6 +31,7 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
+  // login function
   logIn() {
     this.auth.logIn(this.user).catch(error => {
       console.log(error.error.message);
@@ -39,7 +40,7 @@ export class LoginPage {
       }
     });
   }
-
+  // switching to another page
   openPage(page: PageItem) {
     this.navCtrl.setRoot(page.component).catch(error => console.log(error));
   }
