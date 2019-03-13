@@ -60,9 +60,6 @@ export interface UserDBDescription {
     full_name?: string;
     interest?: string [];
     avatar_id?: number;
-    events?: number[];
-    joinedEvents?: number[];
-    favEvents?: number[];
 }
 
 export interface UploadResponse {

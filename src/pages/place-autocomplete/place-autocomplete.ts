@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { EventProvider } from '../../providers/event/event';
 import { PlaceItem } from '../../interface/event';
+import { AppDbProvider } from '../../providers/app-db/app-db';
 
 /**
  * Generated class for the PlaceAutocompletePage page.
@@ -24,7 +24,7 @@ export class PlaceAutocompletePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public zone: NgZone,
-    public eventProvider: EventProvider,
+    public appProvider: AppDbProvider,
     public viewCtrl: ViewController) {
   }
 
@@ -37,7 +37,7 @@ export class PlaceAutocompletePage {
       this.autocompleteItems = [];
       return;
     }
-    await this.eventProvider.getPlacePredictions(this.autocompleteInput)
+    await this.appProvider.getPlacePredictions(this.autocompleteInput)
     .then(predictions => {
       this.zone.run(() => this.autocompleteItems = predictions.features);
     })

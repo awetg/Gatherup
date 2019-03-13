@@ -101,21 +101,22 @@ export class AuthProvider {
   }
 
   async register(userData: SignUpForm): Promise<any> {
-    userData.confirmPassword = undefined;
+    const tmpData = { username: userData.username, password: userData.password, email: userData.email, full_name: userData.full_name };
     try {
-      /* first upload a media file to store user info on description of that file it act as userdata DB */
-      const userDescription: UserDBDescription = { full_name: userData.full_name, interest: userData.intereset };
-      const mediaUploadRes = await this.uploadUserInfoMedia(userDescription);
+      console.log(userData);
 
       /* register user get user_id */
-      const registerRes = await this.http.post<RegisterResponse>(this.appConstant.API.API_ENDPOINT + '/users', userData).toPromise();
+      const registerRes = await this.http.post<RegisterResponse>(this.appConstant.API.API_ENDPOINT + '/users', tmpData).toPromise();
 
-      /* Add user to App database */
-      this.appDB.addUser(registerRes.user_id, mediaUploadRes.file_id);
-
-      /* finally login user instead of redirecting to login page */
+      /* login user instead of redirecting to login page */
       const userCreds: LogInForm = { username: userData.username, password: userData.password };
-      return this.logIn(userCreds);
+      const loginRes = await this.logIn(userCreds);
+
+      /* update media database that was created by login function, login function created media db for users of api not signed up with this app*/
+      const userDescription: UserDBDescription = { full_name: userData.full_name, interest: userData.intereset };
+      const mediaUploadRes = await this.updateUserDBMedia(userDescription);
+
+      return registerRes;
 
     } catch (error) {
       console.log(error);
@@ -165,11 +166,36 @@ export class AuthProvider {
     return this.http.put(this.appConstant.API.API_ENDPOINT + '/users', data, httpOptions).toPromise();
   }
 
-  /* update user DB media of current user */
+  /* update user DB media of current user (logged in user ) */
   async updateUserDBMedia(data: UserDBDescription): Promise<any> {
     const currentDB = this._userDB.getValue().description;
-    currentDB.full_name = data.full_name.length > 0 ? data.full_name : currentDB.full_name;
-    currentDB.interest = data.interest.length > 0 ? data.interest : currentDB.interest;
+
+    /* get all none null entry and update current user database accordingly */
+    Object.entries(data).forEach((entry) => {
+      const [key, value] = [entry[0], entry[1]];
+      // check the value is not undefined , null or if it is string or array length must be > 0
+      if (value !== undefined && value !== null && value.length > 0) {
+        // if it is array push each new value if is does not exist except when the array is user interests ( list of category )
+        if (Array.isArray(value)) {
+
+          // if array is interest assing new array instead of adding new values
+          if (key === 'interest') {
+
+            currentDB[key] = value;
+
+          } else {
+
+            value.forEach(v => {
+              if (currentDB[key].indexOf(v) === -1) currentDB[key].push(v);
+            });
+          }
+
+        } else {
+          // when the values is not array assign the new value
+          currentDB[key] = value;
+        }
+      }
+    });
     const payload = { 'description': JSON.stringify(currentDB) };
     await this.mediaProvider.updateMedia(this._userDB.getValue().file_id, payload).catch(error => console.log(error));
     const db = await this.getUserDBMedia(this._userDB.getValue().file_id);
@@ -198,16 +224,6 @@ export class AuthProvider {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  /* get user object. this function only returns current value to be notified when updated use observalble */
-  getUser(): User {
-    return this._user.getValue();
-  }
-
-  /* get userDB object. this function only returns current value to be notified when updated use observalble */
-  getUserDB(): UserDBDescription {
-    return this._userDB.getValue().description;
   }
 
   /* uploads a new media file for user info storage */
@@ -268,4 +284,12 @@ export class AuthProvider {
     const db = await this.getUserDBMedia(file_id);
     this._userDB.next(db);
   }
+
+  getuserInfo(user_id: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'x-access-token': localStorage.getItem('token') })
+    };
+    return this.http.get<UserInfo>(this.appConstant.API.API_ENDPOINT + '/users/' + user_id, httpOptions);
+  }
+
 }

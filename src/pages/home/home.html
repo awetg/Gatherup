@@ -4,10 +4,12 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <!-- <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar> -->
+  <ion-navbar>
+    <ion-title>GatherUp</ion-title>
+  </ion-navbar>
   <ion-segment [(ngModel)]="selectedSegment">
+
+    <!-- segment -->
     <ion-segment-button value="recommended">
       Recommended
     </ion-segment-button>
@@ -18,11 +20,38 @@
 </ion-header>
 
 <ion-content padding>
+
+  <!-- If selected segment is recommended -->
   <div *ngIf="selectedSegment === 'recommended'">
-    <event-card [events]="(eventProvider.events$ | async)"></event-card>
+
+    <!-- Events filtered by user interest -->
+    <ion-label class="section-title">Events By Your Interest</ion-label>
+    <ion-scroll *ngIf="userInterestSet" class="scroll-container" scrollX="true">
+      <ion-row nowrap>
+        <div *ngFor="let event of eventsByInterestCategory">
+          <event-card [event]="event"></event-card>
+        </div>
+      </ion-row>
+    </ion-scroll>
+
+    <!-- Events sorted by two parameters time and number of attendees prioritizing time -->
+    <ion-label class="section-title">Suggested</ion-label>
+    <div class="pins">
+      <div class="pin" *ngFor="let myevent of topEvents">
+        <event-card [event]="myevent"></event-card>
+      </div>
+    </div>
+
   </div>
 
+
+  <!-- If selected segment is explore -->
   <div *ngIf="selectedSegment === 'explore'">
-    <event-card [events]="(eventProvider.events$ | async)"></event-card>
+    <div class="pins">
+      <div class="pin" *ngFor="let myevent of (eventProvider.events$ | async).reverse()">
+        <event-card [event]="myevent"></event-card>
+      </div>
+    </div>
   </div>
+
 </ion-content>

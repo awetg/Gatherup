@@ -94,7 +94,10 @@ export class EditProfilePage {
   }
   updateProfile($event) {
     $event.preventDefault();
+
     const promiseArr = [];
+    promiseArr.push(this.authProvider.updateUserDBMedia(this.user));
+
     if (this.email.length > 0) {
       const data = { 'email': this.email };
       promiseArr.push(this.authProvider.updateUserInfo(data));
@@ -104,9 +107,6 @@ export class EditProfilePage {
       fd.append('title', this.appConstant.APP.AVATAR_TITLE);
       fd.append('file', this.file);
       promiseArr.push(this.authProvider.updateAvatar(fd));
-    }
-    if (this.user.full_name.length > 0 || this.user.interest.length > 0) {
-      promiseArr.push(this.authProvider.updateUserDBMedia(this.user));
     }
 
     if (promiseArr.length > 0) {

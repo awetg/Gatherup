@@ -7,8 +7,8 @@ page-event-detail {
     }
   }
   .event-title {
-    font-weight: 401;
-    font-size: 1.6rem;
+    font-weight: 501;
+    font-size: 2rem;
     margin: 0 auto;
     text-align: center;
   }
@@ -20,4 +20,33 @@ page-event-detail {
         }
     }
   }
+
+  [col-2] {
+    text-align: center;
+  }
+
+  [col-10] {
+    padding: 0;
+  }
+
+  textarea.text-input {
+    border: .5px solid #dadada;
+    border-radius: 5px;
+  }
+
+  .platform-mobile textarea.text-input {
+    padding: 0;
+  }
+
+  .action-btn {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+  }
+
+  .join-btn {
+    width: 100px;
+  }
+
 }

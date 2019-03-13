@@ -23,7 +23,7 @@ import { Camera } from '@ionic-native/camera';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, { tabsHideOnSubPages: true }),
     HttpClientModule,
     FormsModule,
     PipesModule,
