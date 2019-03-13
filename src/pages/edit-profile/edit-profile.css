@@ -1,0 +1,16 @@
+page-edit-profile .container .item-md ion-avatar img {
+  margin: 0 auto;
+  width: 128px;
+  height: 128px; }
+page-edit-profile .overlay-btn {
+  position: absolute;
+  top: calc(50% - 32px);
+  left: calc(50% - 50px);
+  text-align: center;
+  display: inline-block;
+  width: 100px; }
+page-edit-profile .upload-btn {
+  width: 100px;
+  margin: 10px auto; }
+
+/*# sourceMappingURL=edit-profile.css.map */
