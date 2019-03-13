@@ -3,7 +3,7 @@ import { IonicPage, NavController, PopoverController } from 'ionic-angular';
 import { EventProvider } from '../../providers/event/event';
 import { AuthProvider } from '../../providers/auth/auth';
 import { PageItem } from '../../interface/page';
-import { User } from '../../interface/user';
+import { User, UserDBMedia } from '../../interface/user';
 
 /**
  * Generated class for the ProfilePage page.
@@ -28,18 +28,24 @@ export class ProfilePage {
   selectedTheme: string;
   selectedSegment = 'going';
 
-  ownEventsFilter = e => e.user_id === this.user.user_id;
-  joinedEventsFilter = e => e.description.attendees ? e.description.attendees.includes(this.user.user_id) : false;
-  interstedEventsFilter = e => e.description.interested ? e.description.interested.includes(this.user.user_id) : false;
 
-  user: User = {};
+
+  user: UserDBMedia = {};
+  ownEventsFilter;
+  joinedEventsFilter;
 
   constructor(
     public navCtrl: NavController,
     public eventProvider: EventProvider,
     public authProvider: AuthProvider,
     private popoverCtrl: PopoverController) {
-    this.authProvider.user.subscribe(user => this.user = user);
+    this.authProvider.userDB.subscribe(user => {
+      if (user.description !== undefined) {
+        this.user = user;
+        this.ownEventsFilter = e => e.user_id === this.user.user_id;
+        this.joinedEventsFilter = e => this.user.description.joinedEvents ? this.user.description.joinedEvents.includes(e.file_id) : false;
+      }
+    });
   }
 
   ionViewDidLoad() {

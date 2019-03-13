@@ -71,7 +71,7 @@
   <!-- if selected segment is intrested -->
   <div *ngIf="selectedSegment === 'interested'">
     <div class="pins">
-      <div class="pin" *ngFor="let event of ((eventProvider.events$ | async) | itemFilter: interstedEventsFilter)">
+      <div class="pin" *ngFor="let event of ((eventProvider.events$ | async) | favoriteFilter | async)">
         <event-card [event]="event"></event-card>
       </div>
     </div>
