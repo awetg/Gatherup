@@ -15,7 +15,7 @@ import { EventProvider } from '../providers/event/event';
 import { AuthProvider } from '../providers/auth/auth';
 import { SettingsProvider } from '../providers/settings/settings';
 import { PipesModule } from '../pipes/pipes.module';
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
