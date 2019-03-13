@@ -7,10 +7,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { User } from '../../interface/user';
 
 /**
- * Generated class for the EventDetailPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()
@@ -34,16 +31,21 @@ export class EventDetailPage {
     public mediaProvider: MediaProvider,
     public eventProvider: EventProvider,
     public authProvider: AuthProvider) {
-    this.event = navParams.get('event');
-    this.authProvider.user.subscribe(user => {
-      if(user !== undefined) {
-        this.user = user;
-        this.setStatus();
-        this.getComments();
-      } else {
-        this.navCtrl.push('LoginPage').catch(error => console.log(error));
-      }
-    });
+
+      /* get passed param single event to show details of the event */
+      this.event = navParams.get('event');
+
+      /* get logged in user to check whether user alread joined/interested on the event and further action depending on that */
+      this.authProvider.user.subscribe(user => {
+        if (user !== undefined) {
+          this.user = user;
+          this.setStatus(); // set UI as interestd/not interested and joined/not joined for current user
+          this.getComments(); // get all comments belonging to current event
+        } else {
+          /* if none logged in user try to see event details redirect to login */
+          this.navCtrl.push('LoginPage').catch(error => console.log(error));
+        }
+      });
   }
 
   ionViewDidLoad() {

@@ -18,11 +18,13 @@ export class MyApp {
     splashScreen: SplashScreen,
     private authProvider: AuthProvider,
     private appDB: AppDbProvider) {
+      /* Set root page depending on whether user is logged in or not */
     this.authProvider.isAuthecticated().subscribe(
       authenticated => {
         this.rootPage = authenticated ? MainPage : FirstRunPage;
       }
     );
+    /* download the a media file that act as database for the App */
     this.appDB.loadAppDB();
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

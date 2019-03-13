@@ -4,10 +4,7 @@ import { PlaceItem } from '../../interface/event';
 import { AppDbProvider } from '../../providers/app-db/app-db';
 
 /**
- * Generated class for the PlaceAutocompletePage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()

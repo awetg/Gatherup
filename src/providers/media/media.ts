@@ -7,10 +7,7 @@ import { Event } from '../../interface/event';
 import { Observable } from 'rxjs';
 
 /*
-  Generated class for the MediaProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
+* Media provider for the App, all calls to media routes are done throught this provider
 */
 @Injectable()
 export class MediaProvider {
@@ -79,7 +76,9 @@ export class MediaProvider {
   }
 
   async updateAppDB(file_id: number, data: any): Promise<{ message: string }> {
-    /* App database media is owned by a user and this is the token needed to update the media file */
+    /* App database media is owned by a specific user and since logged in user can't update it, 
+    * this token is needed to update the media file
+    */
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1NjgsInVzZXJuYW1lIjoiYmIiLCJlbWFpbCI6ImNoYW5nZWRBZ2FpbkBnbWFpbC5jb20iLCJmdWxsX25hbWUiOm51bGwsImlzX2FkbWluIjpudWxsLCJ0aW1lX2NyZWF0ZWQiOiIyMDE5LTAxLTI4VDE2OjExOjAwLjAwMFoiLCJpYXQiOjE1NTI0MDQ4OTMsImV4cCI6MTU1NDQ3ODQ5M30.t4Wv3_E8Azh-Q0g0lZrnD7jtJg5eym-kXeJ_rsS-4s8';
     const httpOptions = {
       headers: new HttpHeaders({ 'x-access-token': token }),

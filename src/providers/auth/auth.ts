@@ -19,10 +19,8 @@ import { MediaUploadResponse } from '../../interface/media';
 import { EventProvider } from '../event/event';
 
 /*
-  Generated class for the AuthProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
+Provider for user and authentication functions.
+All variables are implemeted as observable so that component will always have current value of variables.
 */
 @Injectable()
 export class AuthProvider {
@@ -255,7 +253,9 @@ export class AuthProvider {
     }
   }
 
-  /* returns base64 of a file from url */
+  /* returns base64 of a file from url
+  * here th fucntion downloads a small size preuploaded file from url to be uploaded as database for a user
+  */
   async getDataUrl(url: string) {
     return new Promise((res, rej) => {
       const xhr = new XMLHttpRequest();

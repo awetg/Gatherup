@@ -1,8 +1,5 @@
 /*
-  Generated class for the AppConstantProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
+  This file is a simple javascript class not service or provider and and hold constant values for the App
 */
 // @Injectable()
 export class AppConstantProvider {

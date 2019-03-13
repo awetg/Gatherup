@@ -5,10 +5,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { PageItem } from '../../interface/page';
 
 /**
- * Generated class for the ProfileContextMenuPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()

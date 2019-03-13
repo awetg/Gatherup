@@ -6,10 +6,7 @@ import { Event } from '../../interface/event';
 import { UserDBMedia } from '../../interface/user';
 
 /**
- * Generated class for the HomePage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
 @IonicPage()
@@ -35,6 +32,7 @@ export class HomePage {
 
     this.filterTopEvents();
 
+    /* check if user already set his/her interset category to suggest events based on interest */
     this.authProvider.userDB.subscribe(
       userdb => {
         if (userdb.description !== undefined) {
