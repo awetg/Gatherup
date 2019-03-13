@@ -33,7 +33,7 @@
       </ion-item>
       <ion-item no-lines class="text-md-danger" *ngIf='password.errors && (password.dirty || password.touched)'>
         <small *ngIf="password.errors.required">Password is required</small>
-        <small *ngIf="password.errors.minlength">Password must be at least 5 charachters</small>
+        <small *ngIf="password.errors.minlength">Password must be at least 5 characters</small>
       </ion-item>
       <ion-item>
         <ion-label floating>confirm password</ion-label>

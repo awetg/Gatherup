@@ -1,0 +1,16 @@
+<!--
+  Generated template for the EditPictureContextPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<div class="edit-popover">
+<ion-list>
+  <ion-item>
+    <button ion-button clear (click)="selectMenu('gallery')">Choose from gallery</button>
+  </ion-item>
+  <ion-item *ngIf="isApp">
+    <button ion-button clear (click)="selectMenu('camera')">Take a photo</button>
+  </ion-item>
+</ion-list>
+</div>

@@ -10,6 +10,7 @@
   </ion-navbar>
 </ion-header>
 
+<div class="splash-bg"></div>
 <ion-content padding>
   <div class="form-container">
     <form #loginForm="ngForm" class="my-form" (ngSubmit)="logIn()">
@@ -22,10 +23,10 @@
         <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger" *ngIf="loginError">
-          <small>Password or username is incorrect</small>
-        </ion-item>
+        <small>Password or username is incorrect</small>
+      </ion-item>
       <button ion-button block class="my-btn" color="primary" type="submit"
-        [disabled]="!loginForm.form.valid">Login</button>
+              [disabled]="!loginForm.form.valid">Login</button>
     </form>
     <ion-row>
       <button ion-button block clear (click)="openPage(RegisterPage)">Don't have account?
@@ -33,3 +34,4 @@
     </ion-row>
   </div>
 </ion-content>
+
