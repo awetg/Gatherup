@@ -28,17 +28,17 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password" name="password" required minlength="5"
+        <ion-input type="password" [(ngModel)]="user.password" name="mypassword" required minlength="5"
           #password="ngModel"></ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger" *ngIf='password.errors && (password.dirty || password.touched)'>
         <small *ngIf="password.errors.required">Password is required</small>
-        <small *ngIf="password.errors.minlength">Password must be at least 5 charachters</small>
+        <small *ngIf="password.errors.minlength">Password must be at least 5 characters</small>
       </ion-item>
       <ion-item>
         <ion-label floating>confirm password</ion-label>
-        <ion-input type="password" [(ngModel)]="user.confirmPassword" name="confirmPassword"
-          (ionChanged)="confirmPasswordFunc()" required minlength="5" #confirmPassword="ngModel">
+        <ion-input type="password" [(ngModel)]="user.confirmPassword" name="myconfirmPassword"
+          (ionChange)="confirmPasswordFunc($event)" required minlength="5" #confirmPassword="ngModel">
         </ion-input>
       </ion-item>
       <ion-item no-lines class="text-md-danger"
