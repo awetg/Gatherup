@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { Component, ElementRef, Renderer, ViewChild } from '@angular/core';
+import {
+  IonicPage,
+  LoadingController,
+  NavController,
+  PopoverController,
+} from 'ionic-angular';
 import { AppConstantProvider } from '../../providers/app-constant/app-constant';
 import { UserDBDescription } from '../../interface/user';
 import { AuthProvider } from '../../providers/auth/auth';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the EditProfilePage page.
@@ -18,17 +24,23 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class EditProfilePage {
 
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   user: UserDBDescription = { full_name: '', interest: [] };
   email = '';
-  file: File;
+  file: any;
   fileData;
+  subComponents = { editPictureContext: 'EditPictureContextPage' };
+
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public appConstant: AppConstantProvider,
     public authProvider: AuthProvider,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public popoverCtrl: PopoverController,
+    private camera: Camera,
+    private renderer: Renderer) {
   }
 
   loading = this.loadingCtrl.create({
@@ -40,6 +52,46 @@ export class EditProfilePage {
     console.log('ionViewDidLoad EditProfilePage');
   }
 
+
+  takePicture() {
+    const options: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        const byteString = atob(imageData);
+        const dataArray = new Uint8Array(byteString.length);
+        for (let i = 0; i < byteString.length; i++) {
+          dataArray[i] = byteString.charCodeAt(i);
+        }
+        this.file = new Blob([dataArray], { type: 'image/jpeg' });
+        this.fileData = 'data:image/jpeg;base64,' + imageData;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+  // open edit popover
+  openPopover(ev: any, popoverComponet: any, onDismiss: any) {
+    const popover = this.popoverCtrl.create(popoverComponet);
+    if (onDismiss !== undefined) {
+      popover.onDidDismiss(onDismiss.bind(this));
+    }
+    popover.present({ ev }).catch(error => console.log(error));
+  }
+  onDismissEditMenu(item: string) {
+    if (item === 'gallery') {
+      this.triggerClick();
+    } else if (item === 'camera') {
+      this.takePicture();
+    }
+  }
   updateProfile($event) {
     $event.preventDefault();
 
@@ -60,17 +112,17 @@ export class EditProfilePage {
     if (promiseArr.length > 0) {
       this.loading.present().catch(error => console.log(error));
       Promise.all(promiseArr)
-      .then(
-        res => {
-          setTimeout(() => {
+        .then(
+          res => {
+            setTimeout(() => {
               this.loading.dismiss().catch(e => console.log(e));
               this.navCtrl.pop().catch(error => console.log(error));
             },
-          2000,
-          );
-        }
-      )
-      .catch(error => console.log(error));
+              2000,
+            );
+          }
+        )
+        .catch(error => console.log(error));
     } else {
       this.navCtrl.pop().catch(error => console.log(error));
     }
@@ -87,5 +139,11 @@ export class EditProfilePage {
       this.fileData = reader.result;
     };
     reader.readAsDataURL(this.file);
+  }
+
+  triggerClick() {
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+    event.stopPropagation();
+    this.renderer.invokeElementMethod(this.fileInput.nativeElement, 'dispatchEvent', [event]);
   }
 }

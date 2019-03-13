@@ -20,9 +20,9 @@
             alt="profile image">
         </ion-avatar>
         <form hidden>
-          <input type="file" accept="image/*" #file hidden (change)="addFile($event)" required>
+            <input type="file" accept="image/*" #fileInput id="fileInput" hidden (change)="addFile($event)" required>
         </form>
-        <button class="overlay-btn" ion-button icon-only clear large (click)="file.click()">
+        <button class="overlay-btn" ion-button icon-only clear large (click)="openPopover($event, subComponents.editPictureContext, onDismissEditMenu)">
           <ion-icon name="create"></ion-icon>
         </button>
       </ion-item>
