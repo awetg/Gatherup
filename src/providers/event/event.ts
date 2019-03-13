@@ -36,6 +36,7 @@ export class EventProvider {
           e.description = desc;
           return e;
         }));
+        console.log(events);
       }
     );
   }

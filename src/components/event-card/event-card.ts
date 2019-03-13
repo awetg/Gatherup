@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Event } from '../../interface/event';
+import { AuthProvider } from '../../providers/auth/auth';
 
 /**
  * Generated class for the EventCardComponent component.
@@ -16,7 +17,7 @@ export class EventCardComponent {
 
   @Input('event') event: Event;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public authProvider: AuthProvider) {
     console.log('Hello EventCardComponent Component');
   }
 
@@ -24,7 +25,11 @@ export class EventCardComponent {
    * Navigate to the detail page for this event.
    */
   openEvent(event: Event) {
-    this.navCtrl.push('EventDetailPage', { event }).catch(error => console.log(error));
+    if (this.authProvider.canEnterPage()) {
+      this.navCtrl.push('EventDetailPage', { event }).catch(error => console.log(error));
+    } else {
+      this.navCtrl.push('LoginPage').catch(error => console.log(error));
+    }
   }
 
 }
