@@ -2,11 +2,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { MediaProvider } from '../../providers/media/media';
 import { Media } from '../../interface/media';
 
-/**
- * Generated class for the ThumbnailPipe pipe.
- *
- * See https://angular.io/api/core/Pipe for more info on Angular Pipes.
- */
 @Pipe({
   name: 'thumbnail',
 })
@@ -15,7 +10,7 @@ export class ThumbnailPipe implements PipeTransform {
   constructor(public mediaProvider: MediaProvider) {}
 
   /**
-   * Takes a value and makes it lowercase.
+   * Takes a file_id of a file and return desired thumbnail of the file
    */
   async transform(file_id: number, ...args) {
     return new Promise((resolve, reject) => {

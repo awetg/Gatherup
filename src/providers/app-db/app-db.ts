@@ -8,10 +8,8 @@ import { MediaProvider } from '../media/media';
 import { PlaceAutocompleteResponse } from '../../interface/event';
 
 /*
-  Generated class for the AppDbProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
+  This provider downloads a media used as App database holding and array of key value pair user_id : file_id
+  The file_id associated with a user acts as database for users information.
 */
 @Injectable()
 export class AppDbProvider {

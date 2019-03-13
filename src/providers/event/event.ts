@@ -8,10 +8,9 @@ import { MediaProvider } from '../media/media';
 import { MediaUploadResponse } from '../../interface/media';
 
 /*
-  Generated class for the EventProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
+* Provider for media files tagged as EVENT
+* The provider doesn't make API calls to media routes to have separation of concern,
+* all API calles on media routes are done on media provider.
 */
 @Injectable()
 export class EventProvider {
@@ -27,6 +26,7 @@ export class EventProvider {
     this.loadEvents();
   }
 
+  /* load all medias tagged as event */
   loadEvents() {
     console.log('Loading Events');
     this.mediaProvider.getEventMedias().subscribe(
@@ -63,6 +63,7 @@ export class EventProvider {
     );
   }
 
+  /* Query event items, the search is done on title, categor and location */
   query(queryTerm: string) {
     return this.events$.map(events => events.filter(e => {
       const fields = e.title + ',' + e.description.category.toString() + ',' + e.description.location;

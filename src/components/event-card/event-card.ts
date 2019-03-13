@@ -4,10 +4,7 @@ import { Event } from '../../interface/event';
 import { AuthProvider } from '../../providers/auth/auth';
 
 /**
- * Generated class for the EventCardComponent component.
  *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
  */
 @Component({
   selector: 'event-card',
