@@ -1,18 +1,49 @@
 page-login {
-    .my-form {
-        margin: 0 auto;
-    }
+  .my-form {
+    margin: 0 auto;
+  }
+  .my-btn {
+    margin: 30px auto;
+  }
+  @media (min-width: 767px) {
     .my-btn {
-        margin: 30px auto;
+      max-width: 240px;
     }
-    @media (min-width: 767px) {
-        .my-btn {
-            max-width: 240px;
-        }
-    
-        .my-form{
-            max-width: 320px;
-        }
-    }
-}
 
+    .my-form{
+      max-width: 320px;
+    }
+  }
+
+  .form-container{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    z-index: 15;
+    top: 65%;
+    left: 50%;
+    margin: -100px 0 0 -150px;
+  }
+  .splash-bg {
+    position: relative;
+    background: url(../../assets/imgs/login-pic.png) no-repeat transparent;
+    background-size: cover;
+    height: 50%;
+    z-index: 1;
+    -webkit-animation: animatedBackground 40s linear infinite;
+    animation: animatedBackground 40s ease-out infinite;
+    animation-name: animatedBackground;
+    animation-duration: 40s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+  }
+  @keyframes animatedBackground {
+    0%{background-position: 0% 99%}
+    50%{background-position: 100% 1%}
+    100%{background-position: 10% 90%}
+  }
+}
